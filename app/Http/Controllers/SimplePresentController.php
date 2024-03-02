@@ -15,6 +15,6 @@ class SimplePresentController extends Controller
     }
 
     public function quest2(){
-        return view('user.tictactoepresent');
+        return view('user.dragndrop');
     }
 }
