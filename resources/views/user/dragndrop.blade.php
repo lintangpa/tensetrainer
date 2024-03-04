@@ -19,39 +19,49 @@
         }
     </style>
     <div class="p-4 sm:ml-64">
+        <!-- Bagian Header -->
+        <div id="Header" class="mb-4">
+            <div class="w-full mx-auto bg-white rounded p-6 shadow-md text-center">
+                <!-- Tambahkan Header di sini -->
+                <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
+            </div>
+        </div>
         <!-- Bagian cerita -->
         <div id="cerita">
-            <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
+            <div class="w-full mx-auto bg-white rounded p-6 shadow-md text-center">
                 <!-- Tambahkan cerita di sini -->
                 <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
                 <p id="ceritaContent"></p>
                 <!-- Tombol untuk melanjutkan ke pertanyaan -->
                 <button id="lanjutCeritaBtn"
-                    class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Next</button>
+                    class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto"
+                    style="display:none;">Next</button>
             </div>
         </div>
         <!-- Bagian pertanyaan -->
         <div id="pertanyaan" style="display: none;">
             <!-- Tambahkan konten pertanyaan di sini -->
             <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
-                <div class="mb-4">
-                    <p>Isi kalimat rumpang dengan men-drag dan drop kata-kata di bawah ini:</p>
-                    <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <p id="question"></p>
-                        <div class="droppable mt-4" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <!-- Tempat drop di sini -->
+                <div id="isipertanyaan">
+                    <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
+                    <div class="mb-4">
+                        <p>Isi kalimat rumpang dengan men-drag dan drop kata-kata di bawah ini:</p>
+                        <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <p id="question"></p>
+                            <div class="droppable mt-4" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <!-- Tempat drop di sini -->
+                            </div>
                         </div>
+                        <ul id="options"></ul>
                     </div>
-                    <ul id="options"></ul>
-                </div>
-                <div class="flex mt-4">
-                    <button id="checkBtn"
-                        class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Cek
-                        Jawaban</button>
-                    <button id="nextBtn"
-                        class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded ml-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-                        style="display: none;">Next Question</button>
+                    <div class="flex mt-4">
+                        <button id="checkBtn"
+                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Cek
+                            Jawaban</button>
+                        <button id="nextBtn"
+                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                            style="display:none;">Next Question</button>
+                    </div>
                 </div>
                 <div id="result" class="mt-4"></div>
             </div>
@@ -107,7 +117,7 @@
             if (charIndex < ceritaText.length) {
                 ceritaElement.textContent += ceritaText.charAt(charIndex);
                 charIndex++;
-                setTimeout(typeWriter, 50); // Menjalankan fungsi typeWriter setiap 50 milidetik
+                setTimeout(typeWriter, 20); // Menjalankan fungsi typeWriter setiap 50 milidetik
             } else {
                 // Setelah semua karakter ditampilkan, tampilkan tombol "Lanjutkan ke Pertanyaan"
                 lanjutCeritaBtn.style.display = 'block';
@@ -127,11 +137,8 @@
                 clearInterval(typingInterval);
                 // Perbarui tampilan dengan animasi mengetik
                 displayCerita(currentCerita);
-                // Jika sudah mencapai akhir cerita, tampilkan tombol next question
-                if (ceritaIndex === ceritaContent.length - 1) {
-                    lanjutCeritaBtn.style.display = 'block'; // Sembunyikan tombol lanjut
-                    document.getElementById('nextBtn').style.display = 'block'; // Tampilkan tombol next
-                }
+                // Sembunyikan tombol lanjut sementara animasi berlangsung
+                lanjutCeritaBtn.style.display = 'none';
             } else {
                 // Sembunyikan div cerita
                 ceritaDiv.style.display = 'none';
@@ -156,12 +163,13 @@
                 if (charIndex === cerita.length - 1) {
                     // Hentikan interval jika sudah mencapai akhir cerita
                     clearInterval(typingInterval);
+                    // Setelah animasi selesai, tampilkan tombol lanjut
+                    lanjutCeritaBtn.style.display = 'block';
                 }
                 // Tambahkan indeks karakter untuk mengambil karakter berikutnya di iterasi berikutnya
                 charIndex++;
-            }, 50); // Atur jeda waktu antara setiap karakter (dalam milidetik)
+            }, 20); // makin kecil makin cepet
         }
-
 
         // Memulai kuis
         startQuiz();
@@ -175,8 +183,11 @@
                 // Memuat pertanyaan berikutnya
                 startQuiz();
                 document.getElementById('dropzone').innerHTML = '';
+                document.getElementById('checkBtn').style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'none';
             } else {
                 // Jika tidak ada pertanyaan lagi, tampilkan hasil
+                document.getElementById('isipertanyaan').style.display = 'none';
                 showResult();
             }
         }
@@ -186,7 +197,7 @@
             // Menampilkan jumlah jawaban yang benar kepada pengguna
             document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
             // Menyembunyikan tombol cek jawaban
-            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('checkBtn').style.display = 'none';
             // Menampilkan tombol next question
             document.getElementById('nextBtn').style.display = 'none';
         }
@@ -202,10 +213,14 @@
                 // Memeriksa apakah jawaban pengguna benar
                 if (isEquivalent(sentence, expectedAnswer)) {
                     resultElement.innerHTML = "<p class='text-green-500'>Jawaban Anda benar!</p>";
+                    document.getElementById('checkBtn').style.display = 'none';
+                    document.getElementById('nextBtn').style.display = 'block';
                     // Menambahkan jumlah jawaban yang benar
                     correctAnswersCount++;
                 } else {
                     resultElement.innerHTML = "<p class='text-red-500'>Jawaban Anda salah!</p>";
+                    document.getElementById('checkBtn').style.display = 'none';
+                    document.getElementById('nextBtn').style.display = 'block';
                 }
             }
         }
