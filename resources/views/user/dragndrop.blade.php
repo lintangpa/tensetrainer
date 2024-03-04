@@ -36,7 +36,7 @@
                 Jawaban</button>
             <button id="nextBtn"
                 class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-                style="display:none;">Next
+                style="">Next
                 Question</button>
             <div id="result" class="mt-4"></div>
         </div>
@@ -129,6 +129,7 @@
                 if (currentQuestionIndex < questions.length) {
                     // Memuat pertanyaan berikutnya
                     startQuiz();
+                    document.getElementById('dropzone').innerHTML = '';
                 } else {
                     // Jika tidak ada pertanyaan lagi, tampilkan hasil
                     showResult();
@@ -140,9 +141,9 @@
                 // Menampilkan jumlah jawaban yang benar kepada pengguna
                 document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
                 // Menyembunyikan tombol cek jawaban
-                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('checkBtn').style.display = 'block';
                 // Menampilkan tombol next question
-                document.getElementById('nextBtn').style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'none';
             }
 
             // Fungsi untuk memeriksa jawaban
@@ -161,8 +162,8 @@
                     } else {
                         resultElement.innerHTML = "<p class='text-red-500'>Jawaban Anda salah!</p>";
                     }
-                    // Memanggil fungsi untuk menampilkan pertanyaan berikutnya
-                    nextQuestion();
+                    // // Memanggil fungsi untuk menampilkan pertanyaan berikutnya
+                    // nextQuestion();
                 }
             }
 
