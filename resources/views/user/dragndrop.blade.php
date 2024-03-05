@@ -30,7 +30,7 @@
         <div id="cerita">
             <div class="w-full mx-auto bg-white rounded p-6 shadow-md text-center">
                 <!-- Tambahkan cerita di sini -->
-                <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
+                {{-- <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2> --}}
                 <p id="ceritaContent"></p>
                 <!-- Tombol untuk melanjutkan ke pertanyaan -->
                 <button id="lanjutCeritaBtn"
@@ -43,9 +43,9 @@
             <!-- Tambahkan konten pertanyaan di sini -->
             <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
                 <div id="isipertanyaan">
-                    <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
+                    {{-- <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2> --}}
                     <div class="mb-4">
-                        <p>Isi kalimat rumpang dengan men-drag dan drop kata-kata di bawah ini:</p>
+                        <p>Drag your answer in to the box</p>
                         <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
                             <p id="question"></p>
                             <div class="droppable mt-4" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -53,6 +53,9 @@
                             </div>
                         </div>
                         <ul id="options"></ul>
+                        <div id="explanation"
+                            class="">
+                        </div>
                     </div>
                     <div class="flex mt-4">
                         <button id="checkBtn"
@@ -64,6 +67,10 @@
                     </div>
                 </div>
                 <div id="result" class="mt-4"></div>
+                <a id="backmenu" href="{{ route('simple-present') }} " onclick="addExp(event)" style="display: none;">
+                    <button class="mb-6 w-full h-16 bg-blue-600 rounded-md text-white text-lg font-semibold">Back to
+                        Menu</button>
+                </a>
             </div>
         </div>
     </div>
@@ -200,27 +207,32 @@
             document.getElementById('checkBtn').style.display = 'none';
             // Menampilkan tombol next question
             document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('backmenu').style.display = 'block';
         }
 
         // Fungsi untuk memeriksa jawaban
         function checkAnswer() {
             const resultElement = document.getElementById('result');
+            const explanationElement = document.getElementById('explanation');
             if (sentence.trim() === '') {
                 resultElement.innerHTML = "<p class='text-red-500'>Kalimat tidak boleh kosong!</p>";
             } else {
                 // Jawaban yang diharapkan
                 const expectedAnswer = questions[currentQuestionIndex].correct_answer;
+                const explanation = questions[currentQuestionIndex].explanation;
                 // Memeriksa apakah jawaban pengguna benar
                 if (isEquivalent(sentence, expectedAnswer)) {
                     resultElement.innerHTML = "<p class='text-green-500'>Jawaban Anda benar!</p>";
                     document.getElementById('checkBtn').style.display = 'none';
                     document.getElementById('nextBtn').style.display = 'block';
+                    explanationElement.innerHTML = `<p class='text-blue-500'> ${explanation}</p>`;
                     // Menambahkan jumlah jawaban yang benar
                     correctAnswersCount++;
                 } else {
                     resultElement.innerHTML = "<p class='text-red-500'>Jawaban Anda salah!</p>";
                     document.getElementById('checkBtn').style.display = 'none';
                     document.getElementById('nextBtn').style.display = 'block';
+                    explanationElement.innerHTML = `<p class='text-blue-500'> ${explanation}</p>`;
                 }
             }
         }
@@ -278,7 +290,7 @@
             const data = ev.dataTransfer.getData("text");
             sentence = data + ' ';
             document.getElementById('dropzone').innerHTML = ''; // Reset konten dropzone
-            document.getElementById('dropzone').innerHTML += data + ' '; // Menambahkan jawaban baru ke dropzone
+            document.getElementById('dropzone').innerHTML = data + ' '; // Menambahkan jawaban baru ke dropzone
         }
 
         // Fungsi untuk menangani sentuhan saat dimulai
@@ -298,7 +310,7 @@
             if (currentTouchTarget) {
                 sentence += currentTouchTarget.textContent + ' ';
                 // Menambahkan data yang di-drop ke dalam elemen dengan id "dropzone"
-                document.getElementById('dropzone').innerHTML += currentTouchTarget.textContent + ' ';
+                document.getElementById('dropzone').innerHTML = currentTouchTarget.textContent + ' ';
                 currentTouchTarget = null;
             }
         }
@@ -317,5 +329,23 @@
 
         // Event listener untuk tombol "Next Question"
         document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+        function addExp(event) {
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('addexp') }}", 
+                data: {
+                    exp: 50+(10*correctAnswersCount),_token: csrfToken
+                },
+                success: function(response) {
+                    window.location.href = "{{ route('simple-present') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+            event.preventDefault();
+        }
     </script>
 @endsection
