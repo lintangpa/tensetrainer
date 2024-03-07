@@ -21,21 +21,22 @@
     <div class="p-4 sm:ml-64">
         <!-- Bagian Header -->
         <div id="Header" class="mb-4">
-            <div class="w-full mx-auto bg-white rounded p-6 shadow-md text-center">
+            <div class="w-full mx-auto bg-cover bg-center bg-no-repeat rounded p-6 shadow-md text-center"
+                style="background-image: url('{{ asset('image/sekolah 1.jpg') }}');">
                 <!-- Tambahkan Header di sini -->
-                <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2>
+                <h2 class="text-xl font-bold text-white mb-4">Quiz Simple Present Tense</h2>
             </div>
         </div>
         <!-- Bagian cerita -->
         <div id="cerita">
-            <div class="w-full mx-auto bg-white rounded p-6 shadow-md text-center">
-                <!-- Tambahkan cerita di sini -->
-                {{-- <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2> --}}
-                <p id="ceritaContent"></p>
-                <!-- Tombol untuk melanjutkan ke pertanyaan -->
-                <button id="lanjutCeritaBtn"
-                    class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto"
-                    style="display:none;">Next</button>
+            <div class="relative bg-cover bg-bottom w-full mx-auto" style="background-image: url('image/sekolah 1.jpg');">
+                <div class="absolute inset-0 bg-gradient-to-t from-transparent to-white"></div>
+                <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
+                    <p id="ceritaContent"></p>
+                    <button id="lanjutCeritaBtn"
+                        class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto"
+                        style="display:none;">Next</button>
+                </div>
             </div>
         </div>
         <!-- Bagian pertanyaan -->
@@ -46,15 +47,15 @@
                     {{-- <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2> --}}
                     <div class="mb-4">
                         <p>Drag your answer in to the box</p>
-                        <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <div class="mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
                             <p id="question"></p>
-                            <div class="droppable mt-4" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="mt-4" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
                                 <!-- Tempat drop di sini -->
                             </div>
                         </div>
                         <ul id="options"></ul>
-                        <div id="explanation"
-                            class="">
+                        <div id="explanation" class="">
+                            <div id="result" class=""></div>
                         </div>
                     </div>
                     <div class="flex mt-4">
@@ -66,7 +67,7 @@
                             style="display:none;">Next Question</button>
                     </div>
                 </div>
-                <div id="result" class="mt-4"></div>
+                <div id="resultakhir" class="mt-4"></div>
                 <a id="backmenu" href="{{ route('simple-present') }} " onclick="addExp(event)" style="display: none;">
                     <button class="mb-6 w-full h-16 bg-blue-600 rounded-md text-white text-lg font-semibold">Back to
                         Menu</button>
@@ -90,19 +91,15 @@
 
         // Data pertanyaan
         const questions = [{
-                "question": "What is the formula for Simple Present Tense for singular subjects (I, you, he/she/it)?",
+                "question": "What is the formula for Simple Present Tense for singular subjects ___?",
                 "correct_answer": "Subject + Verb + -s/-es",
-                "incorrect_answers": ["Subject + Verb-ing", "Subject + Verb + -ed",
-                    "Subject + Verb + have/has"
-                ],
+                "incorrect_answers": ["Subject + Verb-ing", "Subject + Verb + -ed", "Subject + Verb + have/has"],
                 "explanation": "Dalam Simple Present Tense, untuk subjek tunggal seperti 'he', 'she', dan 'it', kata kerja (verb) ditambahkan dengan -s/-es di akhir kata."
             },
             {
-                "question": "What is the formula for Simple Present Tense for plural subjects (we, you, they)?",
+                "question": "What is the formula ___ for Simple Present Tense for plural subjects?",
                 "correct_answer": "Subject + Verb + -s/-es",
-                "incorrect_answers": ["Subject + Verb-ing", "Subject + Verb + -ed",
-                    "Subject + Verb + have/has"
-                ],
+                "incorrect_answers": ["Subject + Verb-ing", "Subject + Verb + -ed", "Subject + Verb + have/has"],
                 "explanation": "Untuk subjek jamak seperti 'we', 'you', dan 'they', kata kerja (verb) juga ditambahkan dengan -s/-es di akhir kata dalam Simple Present Tense."
             }
         ];
@@ -202,7 +199,7 @@
         // Fungsi untuk menampilkan hasil akhir
         function showResult() {
             // Menampilkan jumlah jawaban yang benar kepada pengguna
-            document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
+            document.getElementById('resultakhir').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
             // Menyembunyikan tombol cek jawaban
             document.getElementById('checkBtn').style.display = 'none';
             // Menampilkan tombol next question
@@ -244,6 +241,14 @@
             const currentQuestion = questions[currentQuestionIndex];
 
             questionElement.textContent = currentQuestion.question;
+            // Clear any previous dropzone
+            document.getElementById('dropzone').innerHTML = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('explanation').innerHTML = '';
+
+            // Inject the question text with dropzone
+            questionElement.innerHTML = currentQuestion.question.replace("___",
+                "<span id='dropzone' class='droppable' ondrop='drop(event)' ondragover='allowDrop(event)'>___</span>");
 
             // Menggabungkan jawaban yang benar dan yang salah untuk dibuat menjadi pilihan jawaban
             const allOptions = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
@@ -334,9 +339,10 @@
             var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
-                url: "{{ route('addexp') }}", 
+                url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50+(10*correctAnswersCount),_token: csrfToken
+                    exp: 50 + (10 * correctAnswersCount),
+                    _token: csrfToken
                 },
                 success: function(response) {
                     window.location.href = "{{ route('simple-present') }}";
@@ -347,5 +353,21 @@
             });
             event.preventDefault();
         }
+
+        //kontrol musik
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mengatur volume audio
+            var audio = document.getElementById("bgMusic");
+            if (audio) {
+                audio.volume = 0.2; // Atur volume ke 50%
+            } else {
+                console.error("Audio element not found");
+            }
+        });
     </script>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="{{ asset('303PM.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 @endsection

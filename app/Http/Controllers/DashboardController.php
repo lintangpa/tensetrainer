@@ -22,7 +22,7 @@ class DashboardController extends Controller
         // Menghitung persentase EXP
         $expPercentage = 0;
         if ($nextExpRequirement !== $currentExpRequirement) {
-            $expPercentage = ($user->exp - $currentExpRequirement) / ($nextExpRequirement - $currentExpRequirement) * 100;
+            $expPercentage = round(($user->exp - $currentExpRequirement) / ($nextExpRequirement - $currentExpRequirement) * 100);
         }
 
         return view('user.dashboard', compact('user', 'expPercentage'));
