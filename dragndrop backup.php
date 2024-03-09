@@ -21,8 +21,8 @@
     <div class="p-4 sm:ml-64">
         <!-- Bagian Header -->
         <div id="Header" class="mb-4">
-            <div class="w-full mx-auto bg-cover bg-center bg-no-repeat rounded p-6 shadow-md text-center"
-                style="background-image: url('{{ asset('image/sekolah 1.jpg') }}');">
+            <!-- <div class="w-full mx-auto bg-cover bg-center bg-no-repeat rounded p-6 shadow-md text-center"
+                style="background-image: url('{{ asset('image/sekolah 1.jpg') }}');"> -->
                 <!-- Tambahkan Header di sini -->
                 <h2 class="text-xl font-bold text-white mb-4">Quiz Simple Present Tense</h2>
             </div>
@@ -67,8 +67,7 @@
                     </div>
                 </div>
                 <div id="result" class="mt-4"></div>
-                <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
-                    style="display: none;">
+                <a id="backmenu" href="{{ route('simple-present') }} " onclick="addExp(event)" style="display: none;">
                     <button class="mb-6 w-full h-16 bg-blue-600 rounded-md text-white text-lg font-semibold">Back to
                         Menu</button>
                 </a>
@@ -175,8 +174,10 @@
             }, 20); // makin kecil makin cepet
         }
 
+        // Memulai kuis
         startQuiz();
 
+        // Fungsi untuk memuat pertanyaan berikutnya
         function nextQuestion() {
             // Meningkatkan indeks pertanyaan saat ini
             currentQuestionIndex++;
@@ -194,6 +195,7 @@
             }
         }
 
+        // Fungsi untuk menampilkan hasil akhir
         function showResult() {
             // Menampilkan jumlah jawaban yang benar kepada pengguna
             document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
@@ -204,6 +206,7 @@
             document.getElementById('backmenu').style.display = 'block';
         }
 
+        // Fungsi untuk memeriksa jawaban
         function checkAnswer() {
             const resultElement = document.getElementById('result');
             const explanationElement = document.getElementById('explanation');
@@ -230,6 +233,7 @@
             }
         }
 
+        // Memulai kuis
         function startQuiz() {
             const questionElement = document.getElementById('question');
             const optionsElement = document.getElementById('options');
@@ -274,14 +278,17 @@
             return array;
         }
 
+        // Fungsi untuk mengizinkan drop
         function allowDrop(ev) {
             ev.preventDefault();
         }
 
+        // Fungsi untuk memulai drag
         function dragStart(ev) {
             ev.dataTransfer.setData("text", ev.target.textContent);
         }
 
+        // Fungsi untuk men-drop item
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
@@ -290,25 +297,24 @@
             document.getElementById('dropzone').innerHTML = data + ' '; // Menambahkan jawaban baru ke dropzone
         }
 
+        // Fungsi untuk menangani sentuhan saat dimulai
         function touchStart(ev) {
             ev.preventDefault();
             currentTouchTarget = ev.target;
         }
 
+        // Fungsi untuk menangani sentuhan saat bergerak
         function touchMove(ev) {
             ev.preventDefault();
         }
 
+        // Fungsi untuk menangani sentuhan saat berakhir
         function touchEnd(ev) {
             ev.preventDefault();
             if (currentTouchTarget) {
-                sentence = currentTouchTarget.textContent + ' ';
-                var dropzone = document.getElementById('dropzone');
-                if (dropzone.firstChild) {
-                    dropzone.removeChild(dropzone.firstChild);
-                }
+                sentence += currentTouchTarget.textContent + ' ';
                 // Menambahkan data yang di-drop ke dalam elemen dengan id "dropzone"
-                dropzone.appendChild(document.createTextNode(currentTouchTarget.textContent + ' '));
+                document.getElementById('dropzone').innerHTML = currentTouchTarget.textContent + ' ';
                 currentTouchTarget = null;
             }
         }
@@ -322,27 +328,11 @@
             return answer1 === answer2;
         }
 
+        // Event listener untuk tombol "Cek Jawaban"
         document.getElementById('checkBtn').addEventListener('click', checkAnswer);
-        document.getElementById('nextBtn').addEventListener('click', nextQuestion);
 
-        function updateProgress(event) {
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $.ajax({
-                type: "POST",
-                url: "{{ route('updateprogress1Q2') }}",
-                data: {
-                    _token: csrfToken
-                },
-                success: function(response) {
-                    addExp(event);
-                    window.location.href = "{{ route('simple-present') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            event.preventDefault();
-        }
+        // Event listener untuk tombol "Next Question"
+        document.getElementById('nextBtn').addEventListener('click', nextQuestion);
 
         function addExp(event) {
             var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -353,7 +343,9 @@
                     exp: 50 + (10 * correctAnswersCount),
                     _token: csrfToken
                 },
-                success: function(response) {},
+                success: function(response) {
+                    window.location.href = "{{ route('simple-present') }}";
+                },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
@@ -363,9 +355,10 @@
 
         //kontrol musik
         document.addEventListener("DOMContentLoaded", function() {
+            // Mengatur volume audio
             var audio = document.getElementById("bgMusic");
             if (audio) {
-                audio.volume = 0.2;
+                audio.volume = 0.2; // Atur volume ke 50%
             } else {
                 console.error("Audio element not found");
             }

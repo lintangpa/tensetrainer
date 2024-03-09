@@ -37,3 +37,4 @@ Route::get('/simple-present-quest1', [SimplePresentController::class,'quest1'])-
 Route::get('/simple-present-quest2', [SimplePresentController::class,'quest2'])->name('simple-present-quest2');
 
 Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
+Route::post('/updateprogress', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');

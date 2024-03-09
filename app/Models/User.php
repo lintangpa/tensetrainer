@@ -34,6 +34,7 @@ class User extends Authenticatable
         'email',
         'password',
         'exp',
+        'progress',
     ];
 
     /**
@@ -54,5 +55,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'progress' => 'json',
     ];
 }
