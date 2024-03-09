@@ -55,7 +55,6 @@
                         </div>
                         <ul id="options"></ul>
                         <div id="explanation" class="">
-                            <div id="result" class=""></div>
                         </div>
                     </div>
                     <div class="flex mt-4">
@@ -67,7 +66,7 @@
                             style="display:none;">Next Question</button>
                     </div>
                 </div>
-                <div id="resultakhir" class="mt-4"></div>
+                <div id="result" class="mt-4"></div>
                 <a id="backmenu" href="{{ route('simple-present') }} " onclick="addExp(event)" style="display: none;">
                     <button class="mb-6 w-full h-16 bg-blue-600 rounded-md text-white text-lg font-semibold">Back to
                         Menu</button>
@@ -199,7 +198,7 @@
         // Fungsi untuk menampilkan hasil akhir
         function showResult() {
             // Menampilkan jumlah jawaban yang benar kepada pengguna
-            document.getElementById('resultakhir').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
+            document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
             // Menyembunyikan tombol cek jawaban
             document.getElementById('checkBtn').style.display = 'none';
             // Menampilkan tombol next question
