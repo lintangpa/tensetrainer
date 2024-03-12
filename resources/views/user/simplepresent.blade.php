@@ -71,6 +71,23 @@
                     </a>
                 </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            @if(isset($notifications) && count($notifications) > 0)
+            <script>
+                var notificationsMessage = "";
+                @foreach($notifications as $notification)
+                    notificationsMessage += "{{ $notification }} !<br>";
+                @endforeach
 
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Unlocked new achievement',
+                    html: notificationsMessage,
+                    showConfirmButton: true,
+                    timer: 5000
+                });
+            </script>
+        @endif
     </section>
 @endsection

@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Achievements extends Model
+class Achievement extends Model
 {
     use HasFactory;
 
-    protected $table = 'achievements'; // Nama tabel
+    protected $table = 'achievement'; 
 
     protected $fillable = [
         'nama',
         'deskripsi',
-        'syarat',
+        'requirement',
         'icon',
-        'points',
     ];
 
     protected $casts = [
-        'syarat' => 'json', // Kolom "syarat" di-cast ke dalam format JSON
+        'requirement' => 'json', 
     ];
 }

@@ -8,19 +8,19 @@ class CreateAchievementsTable extends Migration
 {
     public function up()
     {
-        Schema::create('achievements', function (Blueprint $table) {
+        Schema::create('achievement', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('deskripsi');
+            $table->string('requirement');
             $table->string('icon')->nullable();
-            $table->integer('points')->default(0);
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('achievements');
+        Schema::dropIfExists('achievement');
     }
 }
 
