@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password',
         'exp',
         'progress',
+        'achievement',
     ];
 
     /**
@@ -56,5 +57,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'progress' => 'json',
+        'achievement' => 'json',
     ];
+
+    public function achievement()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }

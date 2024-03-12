@@ -4,6 +4,25 @@
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-lg font-semibold mb-4">Edit Profil</h1>
 
+            <div class="max-w-md mx-auto mt-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h1 class="text-lg font-semibold mb-4">Profil Pengguna</h1>
+        
+                    <p><strong>Nama:</strong> {{ $user->name }}</p>
+                    <p><strong>Email:</strong> {{ $user->email }}</p>
+                    <p><strong>EXP:</strong> {{ $user->exp }}</p>
+        
+                    <h2 class="text-lg font-semibold mb-2 mt-4">Pencapaian</h2>
+                    @foreach ($achievementInfo as $achievement)
+                        <div class="mb-2">
+                            <p><strong>Nama Achievement:</strong> {{ $achievement->nama }}</p>
+                            <p><strong>Deskripsi Achievement:</strong> {{ $achievement->deskripsi }}</p>
+                            <img src="{{ $achievement->icon }}" alt="Icon Achievement" class="w-10 h-10">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

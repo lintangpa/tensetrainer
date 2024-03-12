@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achievement;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('user.profile');
+
+        $user = auth()->user();
+        $achievements = $user->achievement;
+        if ($achievements && is_array($achievements)) {
+            $achievementNames = array_keys($achievements);
+            $achievementInfo = Achievement::whereIn('nama', $achievementNames)->get();
+        } else {
+            $achievementInfo = [];
+        }
+        return view('user.profile', compact('user', 'achievementInfo'));
     }
 
     public function update(Request $request)
@@ -18,32 +28,28 @@ class ProfileController extends Controller
         /** @var \App\Models\User $user **/
         $user = auth()->user();
 
-        // Validate the form data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Update name and email
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // Update password if provided
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
 
-        // Update profile picture if provided
         if ($request->hasFile('profile_picture')) {
             $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
             $user->profile_picture = $imagePath;
         }
 
-        // Save changes
         $user->save();
 
-        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+        return view('user.profile', compact('user', 'achievements'))->with('success', 'Profil berhasil diperbarui.');
     }
+
 }

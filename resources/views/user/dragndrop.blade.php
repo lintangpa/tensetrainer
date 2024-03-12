@@ -365,7 +365,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var audio = document.getElementById("bgMusic");
             if (audio) {
-                audio.volume = 0.2;
+                audio.volume = 0.05;
             } else {
                 console.error("Audio element not found");
             }

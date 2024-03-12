@@ -84,7 +84,7 @@
                     icon: 'success',
                     title: 'Unlocked new achievement',
                     html: notificationsMessage,
-                    showConfirmButton: true,
+                    showConfirmButton: false,
                     timer: 5000
                 });
             </script>

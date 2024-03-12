@@ -10,27 +10,21 @@ class SimplePresentController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil data pengguna yang sedang login
         $user = $request->user();
-
-        // Pengecekan untuk notifikasi prestasi
         $notifications = [];
-
-        // Ambil data kemajuan pengguna dari kolom progress
         if (is_string($user->progress)) {
             $userProgress = json_decode($user->progress, true);
         } else {
             $userProgress = $user->progress;
         }
-
-        // Ambil semua prestasi yang ada
         $achievements = Achievement::all();
 
         foreach ($achievements as $achievement) {
-            // Ambil persyaratan prestasi dari kolom requirement
+            if ($user->achievement && array_key_exists($achievement->nama, $user->achievement)) {
+                continue;
+            }
             $requirement = json_decode($achievement->requirement, true);
 
-            // Periksa apakah pengguna memenuhi persyaratan untuk prestasi
             $isAchieved = true;
             foreach ($requirement['simple_present'] as $quest => $requiredProgress) {
                 if ($userProgress['simple_present'][$quest] < $requiredProgress) {
@@ -38,14 +32,11 @@ class SimplePresentController extends Controller
                     break;
                 }
             }
-
-            // Jika pengguna memenuhi syarat, tambahkan notifikasi untuk prestasi tersebut
             if ($isAchieved) {
+                $this->storeAchievement($user, $achievement->nama);
                 $notifications[] = $achievement->nama;
             }
         }
-        // dd($notifications);
-        // Tampilkan halaman menu utama dengan notifikasi jika ada
         return view('user.simplepresent', compact('notifications'));
     }
 
@@ -57,5 +48,13 @@ class SimplePresentController extends Controller
     public function quest2()
     {
         return view('user.dragndrop');
+    }
+
+    private function storeAchievement(User $user, $achievementName)
+    {
+
+        $achievements = $user->achievement ?: [];
+        $achievements[$achievementName] = true;
+        $user->update(['achievement' => $achievements]);
     }
 }
