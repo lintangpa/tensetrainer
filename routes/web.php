@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SimplePresentController;
@@ -40,3 +41,5 @@ Route::get('/simple-present-quest3', [SimplePresentController::class,'quest3'])-
 Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
 Route::post('/updateprogress', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');
 Route::post('/updateprogress', [ExpController::class, 'updateProgress1Q3'])->name('updateprogress1Q3');
+
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
