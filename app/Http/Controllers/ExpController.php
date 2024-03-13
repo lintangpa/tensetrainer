@@ -30,4 +30,16 @@ class ExpController extends Controller
             $user->save();
         }
     }
+
+    public function updateProgress1Q3(Request $request)
+    {
+        /** @var \App\Models\User $user **/
+        $user = auth()->user();
+        if ($user) {
+            $progress = $user->progress;
+            $progress['simple_present']['quest_3'] = 1;
+            $user->progress = $progress;
+            $user->save();
+        }
+    }
 }

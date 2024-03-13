@@ -43,7 +43,7 @@
                     </a>
                     <p class="mb-3 font-normal  text-white">Here are the biggest enterprise technology
                         acquisitions of 2021 so far, in reverse chronological order.</p>
-                    <a href="{{ route('simple-present-quest1') }}"
+                    <a href="{{ route('simple-present-quest3') }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                         Go
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

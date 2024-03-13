@@ -35,6 +35,8 @@ Route::put('/profile/update', [ProfileController::class, 'update'])->name('profi
 Route::get('/simple-present', [SimplePresentController::class,'index'])->name('simple-present');
 Route::get('/simple-present-quest1', [SimplePresentController::class,'quest1'])->name('simple-present-quest1');
 Route::get('/simple-present-quest2', [SimplePresentController::class,'quest2'])->name('simple-present-quest2');
+Route::get('/simple-present-quest3', [SimplePresentController::class,'quest3'])->name('simple-present-quest3');
 
 Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
 Route::post('/updateprogress', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');
+Route::post('/updateprogress', [ExpController::class, 'updateProgress1Q3'])->name('updateprogress1Q3');

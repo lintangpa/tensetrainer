@@ -50,6 +50,11 @@ class SimplePresentController extends Controller
         return view('user.dragndrop');
     }
 
+    public function quest3()
+    {
+        return view('user.dragndrop2');
+    }
+
     private function storeAchievement(User $user, $achievementName)
     {
 

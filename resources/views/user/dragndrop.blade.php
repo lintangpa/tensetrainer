@@ -41,7 +41,6 @@
         </div>
         <!-- Bagian pertanyaan -->
         <div id="pertanyaan" style="display: none;">
-            <!-- Tambahkan konten pertanyaan di sini -->
             <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
                 <div id="isipertanyaan">
                     {{-- <h2 class="text-xl font-semibold mb-4">Quiz Simple Present Tense</h2> --}}
@@ -79,9 +78,9 @@
     <script>
         let currentTouchTarget = null;
         let sentence = '';
-        let correctAnswersCount = 0; // Menyimpan jumlah jawaban yang benar
-        let currentQuestionIndex = 0; // Indeks pertanyaan saat ini
-        let ceritaIndex = 0; // Indeks cerita saat ini
+        let correctAnswersCount = 0;
+        let currentQuestionIndex = 0;
+        let ceritaIndex = 0;
         const ceritaContent = [
             "Ini adalah kalimat pertama dalam cerita.",
             "Ini adalah kalimat kedua dalam cerita.",
@@ -104,102 +103,71 @@
             }
         ];
 
-        // Menyimpan referensi ke div cerita dan pertanyaan
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
-        // Tombol untuk melanjutkan ke pertanyaan
         const lanjutCeritaBtn = document.getElementById('lanjutCeritaBtn')
-        // Mendapatkan teks cerita
         const ceritaText = ceritaContent[ceritaIndex];
-        // Mendapatkan elemen tempat cerita akan ditampilkan
         const ceritaElement = document.getElementById('ceritaContent');
-        // Mendefinisikan variabel untuk menghitung karakter yang telah ditampilkan
         let charIndex = 0;
 
-        // Mendefinisikan fungsi untuk menampilkan cerita dengan efek mengetik
         function typeWriter() {
             if (charIndex < ceritaText.length) {
                 ceritaElement.textContent += ceritaText.charAt(charIndex);
                 charIndex++;
-                setTimeout(typeWriter, 20); // Menjalankan fungsi typeWriter setiap 50 milidetik
+                setTimeout(typeWriter, 20);
             } else {
-                // Setelah semua karakter ditampilkan, tampilkan tombol "Lanjutkan ke Pertanyaan"
                 lanjutCeritaBtn.style.display = 'block';
             }
         }
 
-        // Memanggil fungsi typeWriter untuk memulai animasi mengetik
         typeWriter();;
 
         lanjutCeritaBtn.addEventListener('click', function() {
-            // Menampilkan kalimat cerita selanjutnya
             ceritaIndex++;
             if (ceritaIndex < ceritaContent.length) {
-                // Ambil konten cerita saat ini
                 const currentCerita = ceritaContent[ceritaIndex];
-                // Hentikan animasi sebelumnya jika ada
                 clearInterval(typingInterval);
-                // Perbarui tampilan dengan animasi mengetik
                 displayCerita(currentCerita);
-                // Sembunyikan tombol lanjut sementara animasi berlangsung
                 lanjutCeritaBtn.style.display = 'none';
             } else {
-                // Sembunyikan div cerita
                 ceritaDiv.style.display = 'none';
-                // Tampilkan div pertanyaan
                 pertanyaanDiv.style.display = 'block';
             }
         });
 
-        let typingInterval; // variabel untuk menyimpan interval animasi mengetik
+        let typingInterval; 
 
         function displayCerita(cerita) {
-            // Ambil elemen yang menampilkan cerita
             const ceritaElement = document.getElementById('ceritaContent');
-            ceritaElement.textContent = ''; // Mengosongkan teks cerita sebelumnya
-            // Buat variabel untuk menyimpan indeks karakter
-            let charIndex = 0;
-            // Memulai animasi mengetik
+            ceritaElement.textContent = ''; 
             typingInterval = setInterval(function() {
-                // Tambahkan karakter ke ceritaElement satu per satu
                 ceritaElement.textContent += cerita[charIndex];
-                // Periksa apakah sudah mencapai akhir cerita
                 if (charIndex === cerita.length - 1) {
-                    // Hentikan interval jika sudah mencapai akhir cerita
                     clearInterval(typingInterval);
-                    // Setelah animasi selesai, tampilkan tombol lanjut
                     lanjutCeritaBtn.style.display = 'block';
                 }
-                // Tambahkan indeks karakter untuk mengambil karakter berikutnya di iterasi berikutnya
                 charIndex++;
-            }, 20); // makin kecil makin cepet
+            }, 20); // pengaturan kecepatan animasi teks disini ngabb!!
         }
 
         startQuiz();
 
         function nextQuestion() {
-            // Meningkatkan indeks pertanyaan saat ini
             currentQuestionIndex++;
-            // Memeriksa apakah masih ada pertanyaan berikutnya
             if (currentQuestionIndex < questions.length) {
-                // Memuat pertanyaan berikutnya
                 startQuiz();
                 document.getElementById('dropzone').innerHTML = '';
                 document.getElementById('checkBtn').style.display = 'block';
                 document.getElementById('nextBtn').style.display = 'none';
             } else {
-                // Jika tidak ada pertanyaan lagi, tampilkan hasil
                 document.getElementById('isipertanyaan').style.display = 'none';
                 showResult();
             }
         }
 
         function showResult() {
-            // Menampilkan jumlah jawaban yang benar kepada pengguna
             document.getElementById('result').innerHTML = `Jumlah jawaban benar: ${correctAnswersCount}`;
-            // Menyembunyikan tombol cek jawaban
             document.getElementById('checkBtn').style.display = 'none';
-            // Menampilkan tombol next question
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
         }
@@ -210,16 +178,13 @@
             if (sentence.trim() === '') {
                 resultElement.innerHTML = "<p class='text-red-500'>Kalimat tidak boleh kosong!</p>";
             } else {
-                // Jawaban yang diharapkan
                 const expectedAnswer = questions[currentQuestionIndex].correct_answer;
                 const explanation = questions[currentQuestionIndex].explanation;
-                // Memeriksa apakah jawaban pengguna benar
                 if (isEquivalent(sentence, expectedAnswer)) {
                     resultElement.innerHTML = "<p class='text-green-500'>Jawaban Anda benar!</p>";
                     document.getElementById('checkBtn').style.display = 'none';
                     document.getElementById('nextBtn').style.display = 'block';
                     explanationElement.innerHTML = `<p class='text-blue-500'> ${explanation}</p>`;
-                    // Menambahkan jumlah jawaban yang benar
                     correctAnswersCount++;
                 } else {
                     resultElement.innerHTML = "<p class='text-red-500'>Jawaban Anda salah!</p>";
@@ -240,17 +205,11 @@
             document.getElementById('dropzone').innerHTML = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('explanation').innerHTML = '';
-
-            // Inject the question text with dropzone
             questionElement.innerHTML = currentQuestion.question.replace("___",
                 "<span id='dropzone' class='droppable' ondrop='drop(event)' ondragover='allowDrop(event)'>___</span>");
-
-            // Menggabungkan jawaban yang benar dan yang salah untuk dibuat menjadi pilihan jawaban
             const allOptions = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
-            // Mengacak urutan pilihan jawaban
             const shuffledOptions = shuffleArray(allOptions);
 
-            // Mengisi pilihan jawaban ke dalam elemen HTML
             optionsElement.innerHTML = '';
             shuffledOptions.forEach(option => {
                 const li = document.createElement('li');
@@ -286,8 +245,8 @@
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
             sentence = data + ' ';
-            document.getElementById('dropzone').innerHTML = ''; // Reset konten dropzone
-            document.getElementById('dropzone').innerHTML = data + ' '; // Menambahkan jawaban baru ke dropzone
+            document.getElementById('dropzone').innerHTML = '';
+            document.getElementById('dropzone').innerHTML = data + ' ';
         }
 
         function touchStart(ev) {
@@ -307,7 +266,6 @@
                 if (dropzone.firstChild) {
                     dropzone.removeChild(dropzone.firstChild);
                 }
-                // Menambahkan data yang di-drop ke dalam elemen dengan id "dropzone"
                 dropzone.appendChild(document.createTextNode(currentTouchTarget.textContent + ' '));
                 currentTouchTarget = null;
             }
