@@ -203,8 +203,9 @@
                 document.getElementById('result').innerHTML = '';
                 sentence = '';
                 if (currentQuestionIndex === questions.length - 1) {
-                    document.getElementById('checkBtn').style.display = 'block';
                     document.getElementById('nextBtn').style.display = 'none';
+                    document.getElementById('resetBtn').style.display = 'block';
+                    document.getElementById('checkBtn').style.display = 'block';
                 }
             } else {
                 document.getElementById('isipertanyaan').style.display = 'none';

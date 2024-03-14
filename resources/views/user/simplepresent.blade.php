@@ -80,7 +80,6 @@
                 @endforeach
 
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
                     title: 'Unlocked new achievement',
                     html: notificationsMessage,

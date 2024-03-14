@@ -17,7 +17,7 @@
                         <div class="mb-2">
                             <p><strong>Nama Achievement:</strong> {{ $achievement->nama }}</p>
                             <p><strong>Deskripsi Achievement:</strong> {{ $achievement->deskripsi }}</p>
-                            <img src="{{ $achievement->icon }}" alt="Icon Achievement" class="w-10 h-10">
+                            <img src="{{URL::asset($achievement->icon)}}" alt="Icon Achievement" class="w-10 h-10">
                         </div>
                     @endforeach
                 </div>
