@@ -11,7 +11,6 @@ class ProfileController extends Controller
 {
     public function edit()
     {
-
         $user = auth()->user();
         $achievements = $user->achievement;
         if ($achievements && is_array($achievements)) {
@@ -49,7 +48,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return view('user.profile', compact('user', 'achievements'))->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
-
 }
+

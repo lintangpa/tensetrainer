@@ -15,11 +15,9 @@ class DashboardController extends Controller
         $currentLevel = $user->level;
         $nextLevel = $currentLevel + 1;
 
-        // Mengambil batas EXP level saat ini dan level berikutnya
         $currentExpRequirement = isset(User::$expRequirements[$currentLevel]) ? User::$expRequirements[$currentLevel] : 0;
         $nextExpRequirement = isset(User::$expRequirements[$nextLevel]) ? User::$expRequirements[$nextLevel] : $currentExpRequirement;
 
-        // Menghitung persentase EXP
         $expPercentage = 0;
         if ($nextExpRequirement !== $currentExpRequirement) {
             $expPercentage = round(($user->exp - $currentExpRequirement) / ($nextExpRequirement - $currentExpRequirement) * 100);

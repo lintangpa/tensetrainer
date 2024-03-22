@@ -33,7 +33,7 @@
                 <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
                     <p id="ceritaContent" class="text-white"></p>
                     <button id="lanjutCeritaBtn"
-                        class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto"
+                        class="bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto"
                         style="display:none;">Next</button>
                 </div>
             </div>
@@ -56,10 +56,10 @@
                             class="flex-1 bg-gray-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Reset
                         </button>
                         <button id="checkBtn"
-                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Check
+                            class="flex-1 bg-amber-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-amber-600 focus:outline-none focus:bg-amber-600">Check
                             Answer</button>
                         <button id="nextBtn"
-                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                            class="flex-1 bg-amber-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-amber-600 focus:outline-none focus:bg-amber-600"
                             style="display: none;">Next
                         </button>
                     </div>
@@ -68,7 +68,7 @@
                 <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
                     style="display: none;">
                     <button
-                        class="mb-6 w-full h-16 bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto text-lg font-semibold">Back
+                        class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
                         to
                         Menu</button>
                 </a>

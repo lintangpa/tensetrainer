@@ -15,10 +15,10 @@
     <div class="h-full px-3 py-4 overflow-y-auto  bg-slate-900">
         <ul class="space-y-2 font-medium">
             <li>
-                <a class="flex title-font font-medium items-center text-white mb-4 md:mb-8">
-                    <image src="{{URL::asset('/image/tensetrainer.png')}}" class="w-10 h-10 rounded-full"></image>
-                    <span class="ml-3 text-xl">TenseTrainer</span>
+                <a class="flex flex-col items-center justify-center text-center text-white mb-4 md:mb-8">
+                    <img src="{{URL::asset('/image/logo.png')}}" class="w-36" alt="Logo">
                 </a>
+                
             </li>
 
             <li>

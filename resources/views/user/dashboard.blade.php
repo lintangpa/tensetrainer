@@ -14,14 +14,14 @@
             {{-- End of EXP Bar --}}
             {{-- <div id="quoteContainer" class="mx-6">
             </div> --}}
-            <div class="p-6 rounded-lg shadow bg-white border-violet-600 m-5">
+            <div class="p-6 rounded-lg shadow bg-white border-amber-600 m-5">
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
                     acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a href="{{ route('simple-present') }}"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-600 hover:bg-violet-900 focus:ring-violet-800">
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">
@@ -31,14 +31,14 @@
                 </a>
             </div>
 
-            <div class="p-6 rounded-lg shadow bg-white border-violet-600 m-5">
+            <div class="p-6 rounded-lg shadow bg-white border-amber-600 m-5">
                 <a href="#">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Present Continuous Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
                     acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a href="{{ route('simple-present') }}"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-600 hover:bg-violet-900 focus:ring-violet-800">
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">
@@ -48,14 +48,14 @@
                 </a>
             </div>
 
-            <div class="p-6 rounded-lg shadow bg-white border-violet-600 m-5">
+            <div class="p-6 rounded-lg shadow bg-white border-amber-600 m-5">
                 <a href="#">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Past Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
                     acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a href="{{ route('simple-present') }}"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-600 hover:bg-violet-900 focus:ring-violet-800">
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">
@@ -65,14 +65,14 @@
                 </a>
             </div>
 
-            <div class="p-6 rounded-lg shadow bg-white border-violet-600 m-5">
+            <div class="p-6 rounded-lg shadow bg-white border-amber-600 m-5">
                 <a href="#">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Past Continuous Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
                     acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a href="{{ route('simple-present') }}"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-600 hover:bg-violet-900 focus:ring-violet-800">
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">
@@ -82,14 +82,14 @@
                 </a>
             </div>
 
-            <div class="p-6 rounded-lg shadow bg-white border-violet-600 m-5">
+            <div class="p-6 rounded-lg shadow bg-white border-amber-600 m-5">
                 <a href="#">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Future Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
                     acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a href="{{ route('simple-present') }}"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-600 hover:bg-violet-900 focus:ring-violet-800">
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">

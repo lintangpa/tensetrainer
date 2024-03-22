@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                @if ($userProgress['simple_present']['quest_1'] == 0)
+                @if ($userProgress['simple_present']['quest_1'] == 1)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -68,7 +68,7 @@
                     </div>
                 @endif
 
-                @if ($userProgress['simple_present']['quest_1'] == 0)
+                @if ($userProgress['simple_present']['quest_2'] == 1)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
