@@ -39,7 +39,7 @@
                             {{-- <div class="flex items-start">
                                 <div class="flex items-center h-5">
                                     <input id="remember" aria-describedby="remember" type="checkbox"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-violet-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-violet-600 dark:ring-offset-gray-800"
+                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-slate-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-slate-600 dark:ring-offset-gray-800"
                                         required="">
                                 </div>
                                 <div class="ml-3 text-sm">
@@ -47,15 +47,15 @@
                                 </div>
                             </div> --}}
                             <a href="#"
-                                class=" text-sm font-light text-violet-600 hover:underline dark:text-violet-500">Forgot
+                                class=" text-sm font-light text-slate-600 hover:underline dark:text-slate-500">Forgot
                                 password?</a>
                         </div>
                         <button type="submit"
-                            class="w-full text-white bg-violet-400 hover:bg-violet-500 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-500 dark:hover:bg-violet-600 dark:focus:ring-violet-800">Sign
+                            class="w-full text-white bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-500 dark:hover:bg-slate-600 dark:focus:ring-slate-800">Sign
                             in</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
                             Don’t have an account yet? <a href="#"
-                                class="font-medium text-violet-600 hover:underline dark:text-violet-500">Sign up</a>
+                                class="font-medium text-slate-600 hover:underline dark:text-slate-500">Sign up</a>
                         </p>
                     </form>
                 </div>

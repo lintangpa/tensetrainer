@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="antialiased bg-violet-600">
+<body class="antialiased bg-cover bg-no-repeat bg-center min-h-screen" style="background-image: url('{{ asset('Background.jpg') }}');">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     @include('layout.partials.usernav')
     @yield('konten')

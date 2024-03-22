@@ -18,19 +18,20 @@
     </style>
     <div class="p-4 sm:ml-64">
         <!-- Bagian Header -->
+        <div class=" p-6 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
         <div id="Header" class="mb-4">
-            <div class="w-full mx-auto bg-cover bg-center bg-no-repeat rounded p-6 shadow-md text-center"
-                style="background-image: url('{{ asset('image/sekolah 1.jpg') }}');">
-                <!-- Tambahkan Header di sini -->
-                <h2 class="text-xl font-bold text-white mb-4">Quiz Simple Present Tense</h2>
+            <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center" style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
+                <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
+                <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Bloom de Fleur</h2>
             </div>
         </div>
         <!-- Bagian cerita -->
         <div id="cerita">
-            <div class="relative bg-cover bg-bottom w-full mx-auto" style="background-image: url('image/sekolah 1.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-transparent to-white"></div>
+            <div class="relative bg-cover bg-bottom h-full w-full mx-auto"
+                style="background-image: url('image/DepanSekolah.jpg'); ">
+                <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                 <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
-                    <p id="ceritaContent"></p>
+                    <p id="ceritaContent" class="text-white"></p>
                     <button id="lanjutCeritaBtn"
                         class="bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto"
                         style="display:none;">Next</button>
@@ -40,10 +41,9 @@
         <div id="pertanyaan" style="display: none;">
             <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
                 <div id="isipertanyaan">
-                    <h2 class="text-xl font-semibold mb-4">Drag and Drop Kalimat Rumpang</h2>
                     <div class="mb-4">
-                        <div class="question-container">
-                            <p></p>
+                        <div class="question-container flex items-center">
+                            <p class="inline"></p>
                         </div>
                         <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     </div>
@@ -56,29 +56,37 @@
                             class="flex-1 bg-gray-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Reset
                         </button>
                         <button id="checkBtn"
-                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Check Answer</button>
+                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Check
+                            Answer</button>
                         <button id="nextBtn"
-                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600" style="display: none;">Next
+                            class="flex-1 bg-indigo-500 text-white px-4 py-2 rounded mt-4 mr-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                            style="display: none;">Next
                         </button>
                     </div>
                 </div>
                 <div id="result" class="mt-4"></div>
                 <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
                     style="display: none;">
-                    <button class="mb-6 w-full h-16 bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto text-lg font-semibold">Back to
+                    <button
+                        class="mb-6 w-full h-16 bg-indigo-500 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 mx-auto text-lg font-semibold">Back
+                        to
                         Menu</button>
                 </a>
             </div>
         </div>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = [
-            "Ini adalah kalimat pertama dalam cerita.",
-            "Ini adalah kalimat kedua dalam cerita.",
-            "Ini adalah kalimat ketiga dalam cerita."
+            "Fred and Adelsten are two young wizards attending the prestigious Magic Academy.",
+            "Fred, a curious and adventurous soul, has always been fascinated by the wonders of magic and the mysteries of the world. ",
+            "Adelsten, on the other hand, is known for his calm demeanor and his deep connection with nature.",
+            "Despite their different personalities, Fred and Adelsten have been best friends since their first day at the academy.",
+            "They share a mutual love for exploring the magical world around them and are always seeking new adventures together."
         ];
 
         const ceritaDiv = document.getElementById('cerita');
@@ -99,7 +107,7 @@
             }
         }
 
-        typeWriter();;
+        typeWriter();
 
         lanjutCeritaBtn.addEventListener('click', function() {
             ceritaIndex++;
@@ -108,11 +116,18 @@
                 clearInterval(typingInterval);
                 displayCerita(currentCerita);
                 lanjutCeritaBtn.style.display = 'none';
+
+                // Cerita setelah berapa kalimat?
+                // if (ceritaIndex === 2) {
+                //     pertanyaanDiv.style.display = 'block';
+                //     ceritaDiv.style.display = 'none';
+                // }
             } else {
                 ceritaDiv.style.display = 'none';
                 pertanyaanDiv.style.display = 'block';
             }
         });
+
 
         let typingInterval;
 
@@ -135,14 +150,58 @@
         let sentence = '';
 
         const questions = [{
-                question: "Isi kalimat rumpang dengan men-drag dan drop kata-kata di bawah ini:",
-                draggableWords: ["I", "usually", "eat", "breakfast", "at", "7", "o'clock", "in", "the", "morning"],
-                correctAnswer: ["I", "usually", "eat", "breakfast", "at", "7", "o'clock", "in", "the", "morning"]
+                question: "Fred: Adelsten, do you know about the ancient magic of blooming flowers?",
+                draggableWords: ["Yes,", "I", "do.", "It's", "fascinating", "how", "magic", "enhances", "the", "beauty",
+                    "of", "nature.", "Apple", "table", "blue", "jump"
+                ],
+                correctAnswer: ["Yes,", "I", "do.", "It's", "fascinating", "how", "magic", "enhances", "the", "beauty",
+                    "of", "nature."
+                ],
+                imagePath: "{{ asset('image/chara/Fred.png') }}",
+                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                wrongAnswer: "I don't understand what you say!?",
+                correct: "*Smile*"
             },
             {
-                question: "Susunlah kalimat dengan benar berdasarkan rumus simple present:",
-                draggableWords: ["They", "work", "hard", "every", "day"],
-                correctAnswer: ["They", "work", "hard", "every", "day"]
+                question: "Fred: I practice a spell to make flowers bloom instantly.",
+                draggableWords: ["That", "sounds", "incredible!", "Imagine", "walking", "through", "a", "garden", "and",
+                    "seeing", "flowers.", "sky", "delicious", "joyful", "unexpected"
+                ],
+                correctAnswer: ["That", "sounds", "incredible!", "Imagine", "walking", "through", "a", "garden", "and",
+                    "seeing", "flowers."
+                ],
+                imagePath: "{{ asset('image/chara/Fred.png') }}",
+                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                wrongAnswer: "I don't understand what you say!?",
+                correct: "*Grint*"
+            },
+            {
+                question: "Fred: It's like painting the world with colors and fragrance.",
+                draggableWords: ["Exactly!", "We", "can", "create", "the", "most", "mesmerizing", "floral", "displays.",
+                    "sky", "mountain", "garden"
+                ],
+                correctAnswer: ["Exactly!", "We", "can", "create", "the", "most", "mesmerizing", "floral", "displays."],
+                imagePath: "{{ asset('image/chara/Fred.png') }}",
+                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                wrongAnswer: "I don't understand what you say!?",
+                correct: "*Grint*"
+            },
+            {
+                question: "Fred: I can't wait to master this spell and share it with others.",
+                draggableWords: ["Let's", "practice", "together", "after", "school", "and", "see", "how", "many",
+                    "flowers", "we", "can", "bloom.", "beautiful", "colorful", "blossom", "chair", "lamp", "book"
+                ],
+                correctAnswer: ["Let's", "practice", "together", "after", "school", "and", "see", "how", "many",
+                    "flowers", "we", "can", "bloom."
+                ],
+                imagePath: "{{ asset('image/chara/Fred.png') }}",
+                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                wrongAnswer: "I don't understand what you say!?",
+                correct: "*Grint*"
             }
         ];
 
@@ -154,15 +213,19 @@
             const question = questions[index];
             const questionElement = document.querySelector('.question-container');
             const wordsContainer = document.querySelector('.draggable-container');
-            const questionTitleElement = document.querySelector('.question-container p');
-            questionTitleElement.textContent = question.question;
+            // const questionTitleElement = document.querySelector('.question-container p');
+
+            const questionHTML =
+                `<img src="${question.imagePath}" alt="Question Image" class="inline-block mr-2 w-10 h-10"> <p>${question.question}</p>`;
+            document.querySelector('.question-container').innerHTML = questionHTML;
+
+
             wordsContainer.innerHTML = '';
             const shuffledDraggableWords = shuffleArray(question.draggableWords);
             shuffledDraggableWords.forEach(word => {
                 const draggableElement = createDraggableElement(word);
                 wordsContainer.appendChild(draggableElement);
             });
-            
         }
 
         function createDraggableElement(word) {
@@ -202,16 +265,22 @@
                 document.getElementById('droppable').innerHTML = '';
                 document.getElementById('result').innerHTML = '';
                 sentence = '';
-                if (currentQuestionIndex === questions.length - 1) {
-                    document.getElementById('nextBtn').style.display = 'none';
-                    document.getElementById('resetBtn').style.display = 'block';
-                    document.getElementById('checkBtn').style.display = 'block';
-                }
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('resetBtn').style.display = 'block';
+                document.getElementById('checkBtn').style.display = 'block';
             } else {
                 document.getElementById('isipertanyaan').style.display = 'none';
                 showResult();
             }
+            //cerita setelah berapa kalimat?
+            // if (answeredQuestionsCount === 2) {
+            //     document.getElementById('pertanyaan').style.display = 'none';
+            //     document.getElementById('cerita').style.display = 'block';
+            //     return;
+            // }
         });
+
+        let answeredQuestionsCount = 0;
 
         document.getElementById('checkBtn').addEventListener('click', function() {
             const resultElement = document.getElementById('result');
@@ -230,13 +299,29 @@
                 }
             }
             if (isCorrect) {
-                resultElement.innerHTML = "<p class='text-green-500'>Kalimat tersusun dengan benar!</p>";
+                answeredQuestionsCount++;
+                Swal.fire({
+                    text: currentQuestion.correct,
+                    imageUrl: currentQuestion.imageCorrect,
+                    imageWidth: 100,
+                    imageHeight: 100
+                    // timer: 2000,
+                    // showConfirmButton: false
+                });
                 document.getElementById('resetBtn').style.display = 'none';
                 document.getElementById('checkBtn').style.display = 'none';
                 document.getElementById('nextBtn').style.display = 'block';
                 correctAnswersCount++;
             } else {
-                resultElement.innerHTML = "<p class='text-red-500'>Kalimat tidak tersusun dengan benar!</p>";
+                answeredQuestionsCount++;
+                Swal.fire({
+                    text: currentQuestion.wrongAnswer,
+                    imageUrl: currentQuestion.imageWrong,
+                    imageWidth: 100,
+                    imageHeight: 100
+                    // timer: 2000,
+                    // showConfirmButton: false
+                });
                 document.getElementById('resetBtn').style.display = 'none';
                 document.getElementById('checkBtn').style.display = 'none';
                 document.getElementById('nextBtn').style.display = 'block';
@@ -284,23 +369,30 @@
         }
 
         function updateProgress(event) {
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $.ajax({
-                type: "POST",
-                url: "{{ route('updateprogress1Q3') }}",
-                data: {
-                    _token: csrfToken
-                },
-                success: function(response) {
-                    addExp(event);
-                    window.location.href = "{{ route('simple-present') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            var correctPercentage = (correctAnswersCount / questions.length) * 100;
+            if (correctPercentage >= 50) {
+                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('updateprogress1Q3') }}",
+                    data: {
+                        _token: csrfToken
+                    },
+                    success: function(response) {
+                        addExp(event);
+                        window.location.href = "{{ route('simple-present') }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                addExp(event);
+                window.location.href = "{{ route('simple-present') }}";
+            }
             event.preventDefault();
         }
+
 
         function addExp(event) {
             var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -324,15 +416,14 @@
         document.addEventListener("DOMContentLoaded", function() {
             var audio = document.getElementById("bgMusic");
             if (audio) {
-                audio.volume = 0.0;
+                audio.volume = 0.1;
             } else {
                 console.error("Audio element not found");
             }
         });
     </script>
 
-    {{-- <audio id="bgMusic" loop autoplay>
-        <source src="{{ asset('303PM.mp3') }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio> --}}
+    <audio id="bgMusic" loop autoplay>
+        <source src="{{ asset('Bloom.mp3') }}" type="audio/mpeg">
+    </audio>
 @endsection

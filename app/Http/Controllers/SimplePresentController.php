@@ -37,12 +37,12 @@ class SimplePresentController extends Controller
                 $notifications[] = $achievement->nama;
             }
         }
-        return view('user.simplepresent', compact('notifications'));
+        return view('user.simplepresent', compact('notifications', 'userProgress'));
     }
 
     public function quest1()
     {
-        return view('user.quizsimplepresent');
+        return view('user.dragndrop2');
     }
 
     public function quest2()
