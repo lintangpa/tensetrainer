@@ -8,11 +8,9 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <div class="relative z-10">
                         <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Bloom de Fleur</h5>
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 1</h5>
                         </a>
-                        <p class="mb-3 font-normal  text-white">Fred and Adelsten are two young wizards attending the
-                            prestigious
-                            Magic Academy ...</p>
+                        <p class="mb-3 font-normal  text-white">At a renowned school in the city of Yden, a selection test for magic is being held....</p>
                         <a href="{{ route('simple-present-quest1') }}"
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                             Go
@@ -50,11 +48,9 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Bloom de Fleur 2</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 2</h5>
                             </a>
-                            <p class="mb-3 font-normal  text-white">Fred and Adelsten are two young wizards attending the
-                                prestigious
-                                Magic Academy ...</p>
+                            <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice together...</p>
                             <a href="{{ route('simple-present-quest1') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
@@ -93,11 +89,9 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Bloom de Fleur 3</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 3</h5>
                             </a>
-                            <p class="mb-3 font-normal  text-white">Fred and Adelsten are two young wizards attending the
-                                prestigious
-                                Magic Academy ...</p>
+                            <p class="mb-3 font-normal  text-white">there is bad news brought by Adelsten. What bad news does Adelsten convey?...</p>
                             <a href="{{ route('simple-present-quest1') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go

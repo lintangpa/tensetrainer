@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Achievement;
 use App\Models\User;
 use Illuminate\Http\Request;
+use OpenAI;
+use OpenAI\Client;
 
 class SimplePresentController extends Controller
 {

@@ -18,8 +18,7 @@
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Present Tense</h5>
                 </a>
-                <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
-                    acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-3 font-normal text-neutral-900">Fred and Adelsten, two childhood friends, are preparing for a magic selection test to become level 3 wizards at a prestigious school in the city of Yden. They plan to practice together but ...</p>
                 <a href="{{ route('simple-present') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
@@ -35,8 +34,7 @@
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Present Continuous Tense</h5>
                 </a>
-                <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
-                    acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-3 font-normal text-neutral-900">Fred and Adelsten embark on a journey to find a basic knowledge book for their magic practice at the library. Despite their efforts, the book proves elusive ...</p>
                 <a href="{{ route('simple-present') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
@@ -52,8 +50,7 @@
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Past Tense</h5>
                 </a>
-                <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
-                    acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-3 font-normal text-neutral-900">Adelsten, after studying the basic knowledge book at the library, begins practicing magic in the park daily. One day, he encounters his friend Rose, who is saddened by her inability to participate in the magic selection ...</p>
                 <a href="{{ route('simple-present') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
@@ -69,8 +66,8 @@
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Past Continuous Tense</h5>
                 </a>
-                <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
-                    acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-3 font-normal text-neutral-900">
+                    As the magic selection exam draws near, Adelsten practices diligently in his front yard. Fred pays him a visit, expressing a desire to practice together. Adelsten reveals that he met Rose the previous day at the park ...</p>
                 <a href="{{ route('simple-present') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
@@ -86,8 +83,7 @@
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Future Tense</h5>
                 </a>
-                <p class="mb-3 font-normal text-neutral-900">Here are the biggest enterprise technology
-                    acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-3 font-normal text-neutral-900">Adelsten faces the oral exam confidently, expressing his desire to help others and embark on an adventure if he becomes a level 3 wizard. Mrs. Elsker acknowledges his responses positively, hinting at his potential success ...</p>
                 <a href="{{ route('simple-present') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
