@@ -39,22 +39,22 @@ class SimplePresentController extends Controller
                 $notifications[] = $achievement->nama;
             }
         }
-        return view('user.simplepresent', compact('notifications', 'userProgress'));
+        return view('user.simplepresenthome', compact('notifications', 'userProgress'));
     }
 
     public function quest1()
     {
-        return view('user.dragndrop2');
+        return view('user.simplepresent1');
     }
 
     public function quest2()
     {
-        return view('user.dragndrop');
+        return view('user.simplepresent2');
     }
 
     public function quest3()
     {
-        return view('user.dragndrop2');
+        return view('user.simplepresent3');
     }
 
     private function storeAchievement(User $user, $achievementName)
