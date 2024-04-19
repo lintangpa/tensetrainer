@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                @if ($userProgress['simple_present']['quest_1'] == 1)
+                @if ($userProgress['simple_present']['quest_1'] == 0)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -51,7 +51,7 @@
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 2</h5>
                             </a>
                             <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice together...</p>
-                            <a href="{{ route('simple-present-quest1') }}"
+                            <a href="{{ route('simple-present-quest2') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -64,7 +64,7 @@
                     </div>
                 @endif
 
-                @if ($userProgress['simple_present']['quest_2'] == 1)
+                @if ($userProgress['simple_present']['quest_2'] == 0)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -92,7 +92,7 @@
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 3</h5>
                             </a>
                             <p class="mb-3 font-normal  text-white">there is bad news brought by Adelsten. What bad news does Adelsten convey?...</p>
-                            <a href="{{ route('simple-present-quest1') }}"
+                            <a href="{{ route('simple-present-quest3') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"

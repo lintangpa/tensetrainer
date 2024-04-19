@@ -69,13 +69,11 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
-                        style="display: none;">
-                        <button
-                            class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
-                            to
-                            Menu</button>
-                    </a>
+                    <button id="backmenu" onclick="updateProgress(event)" style="display: none;"
+                        class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
+                        Back to Menu
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -86,10 +84,9 @@
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = [
-            "At a renowned school in the city of Yden, a selection test for magic is being held.",
-            "Fred and Adelsten are childhood friends.",
-            "Because they are now 15 years old, they will take the magic selection test to prove themselves worthy of becoming a level 3 wizard. ",
-            "Meanwhile, when in front of Fred's house.",
+            "Today, Adelsten goes to Fred's house again to practice together. ",
+            "But, there is bad news brought by Adelsten.",
+            "What bad news does Adelsten convey?",
             "..."
         ];
 
@@ -190,34 +187,28 @@
         let sentence = '';
 
         const questions = [{
-                question: "Hi, Adelsten! How are you today?",
-                draggableWords: [
-                    "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
-                    "magic", "selection", "test", "next", "week?"
+                question: "Hello Adelsten, do you bring your book?",
+                draggableWords: ["Sorry,", "my", "book", "is", "missing", "was", "are", "has", "isn't", "I", "forget",
+                    "to", "bring", "it",
                 ],
-                correctAnswer: [
-                    "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
-                    "magic", "selection", "test", "next", "week?"
-                ],
+                correctAnswer: ["Sorry,", "my", "book", "is", "missing"],
+                negativeAnswer: ["forget"],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
             },
             {
-                question: "Oh, yes, I have to prepare for it. How about you?",
-                draggableWords: ["I", "practice", "practiced", "every", "day", "practicing"],
-                correctAnswer: ["I", "practice", "every", "day"],
+                question: "No need to be sad, Adelsten, there is always a way",
+                draggableWords: ["Do", "we", "go", "to", "the", "library?", "Does", "Do", "Are", "Will"],
+                correctAnswer: ["Do", "we", "go", "to", "the", "library?"],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
             },
             {
-                question: "How about we practice together?",
-                draggableWords: ["Great", "idea,", "when", "do", "we", "start", "practicing", "practiced",
-                    "together?", "I", "am", "lazy", "to", "practice", "every", "day",
-                ],
-                correctAnswer: ["Great", "idea,", "when", "do", "we", "start", "practicing", "together?"],
-                negativeAnswer: ["I", "am", "lazy", "to", "practice", "every", "day"],
+                question: "But I can't leave the house today, I have to clean the house because it's my routine",
+                draggableWords: ["It's", "okay,", "We", "meet", "again", "tomorrow.", "met", "will", "meets"],
+                correctAnswer: ["It's", "okay,", "We", "meet", "again", "tomorrow."],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
@@ -306,16 +297,16 @@
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
                 const simplePresentPrompt =
-                    `Is this sentence in simple present tense? "${userAnswer}" answer with yes or no`;
+                    ` Is this sentence in the simple present tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
 
                 const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
                 const simplePresentData = await simplePresentResponse.json();
                 const simplePresentAnswer = await simplePresentData.choices[0].text.trim().toLowerCase();
-
+                let imageFred;
                 let prompt;
                 if (simplePresentAnswer === 'yes') {
                     const negativeAnswerPrompt =
-                        `Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
                     const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
                     const negativeAnswerData = await negativeAnswerResponse.json();
                     const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
@@ -324,27 +315,29 @@
                         prompt =
                             `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
                         karma += 1;
+                        imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.`;
-                    }
-                } else if (simplePresentAnswer === 'no') {
-                    const negativeAnswerPrompt =
-                        `Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
-                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
-                    const negativeAnswerData = await negativeAnswerResponse.json();
-                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
-
-                    if (negativeAnswer === 'yes') {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
-                        karma += 1;
-                    } else {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.`;
+                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using simple present tenses. Fred answer must based on context ${questions}`;
+                        imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
-                    throw new Error('Unexpected response from AI.');
+                    const negativeAnswerPrompt =
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
+                    const negativeAnswerData = await negativeAnswerResponse.json();
+                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
+
+                    if (negativeAnswer === 'yes') {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                        karma += 1;
+                        imageFred = currentQuestion.imageWrong;
+                    } else {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
+                        imageFred = currentQuestion.imageWrong;
+                    }
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -355,7 +348,7 @@
                     const generatedText = data.choices[0].text.trim();
                     Swal.fire({
                         text: generatedText,
-                        imageUrl: currentQuestion.imagePath,
+                        imageUrl: imageFred,
                         imageWidth: 100,
                         imageHeight: 100
                     });
@@ -401,7 +394,7 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
+            document.getElementById('result').innerHTML = `Final Score: ${karma}`;
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
@@ -440,33 +433,36 @@
             }
         }
 
+        // ... kode lainnya di atas ...
+
+        document.getElementById('backmenu').addEventListener('click', function(event) {
+            updateProgress(event);
+        });
+
         function updateProgress(event) {
-            var correctPercentage = (correctAnswersCount / questions.length) * 100;
-            if (correctPercentage >= 50) {
-                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('updateprogress1Q3') }}",
-                    data: {
-                        _token: csrfToken
-                    },
-                    success: function(response) {
-                        addExp(event);
-                        window.location.href = "{{ route('simple-present') }}";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                addExp(event);
-                window.location.href = "{{ route('simple-present') }}";
-            }
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('updateprogress1Q1') }}",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    karmaValue: karma / 2
+                },
+                success: function(response) {
+                    addExp(event);
+                    window.location.href = "{{ route('simple-present') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
             event.preventDefault();
         }
 
         function addExp(event) {
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
                 url: "{{ route('addexp') }}",
@@ -481,6 +477,7 @@
             });
             event.preventDefault();
         }
+
 
         //kontrol musik
         document.addEventListener("DOMContentLoaded", function() {

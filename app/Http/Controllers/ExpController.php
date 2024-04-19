@@ -19,6 +19,30 @@ class ExpController extends Controller
         return response()->json(['message' => 'EXP successfully added'], 200);
     }
 
+    public function getKarma()
+    {
+        $user = Auth::user();
+        $progress = $user->progress;
+        $nilaiKarma = $progress['karma'];
+
+        return response()->json(['karma' => $nilaiKarma]);
+    }
+
+    public function updateProgress1Q1(Request $request)
+    {
+        /** @var \App\Models\User $user **/
+        $user = auth()->user();
+        if ($user) {
+            $progress = $user->progress;
+            $progress['karma'] += $request->karmaValue;
+            $progress['simple_present']['quest_1'] = 1;
+            $user->progress = $progress;
+            $user->save();
+
+            return response()->json(['message' => 'Progress updated successfully'], 200);
+        }
+    }
+
     public function updateProgress1Q2(Request $request)
     {
         /** @var \App\Models\User $user **/

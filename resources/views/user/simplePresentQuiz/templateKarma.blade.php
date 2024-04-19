@@ -188,44 +188,54 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = [{
-                question: "Hi, Adelsten! How are you today?",
-                draggableWords: [
-                    "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
-                    "magic", "selection", "test", "next", "week?"
-                ],
-                correctAnswer: [
-                    "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
-                    "magic", "selection", "test", "next", "week?"
-                ],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+        let questions;
+        $.ajax({
+            url: '/get-karma',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                const karma = response.karma; 
+                if (karma > 1) {
+                    questions = [{
+                        question: "How about we practice together?",
+                        draggableWords: ["Great", "idea,", "when", "do", "we", "start", "practicing",
+                            "practiced",
+                            "together?", "I", "am", "lazy", "to", "practice", "every", "day",
+                        ],
+                        correctAnswer: ["Great", "idea,", "when", "do", "we", "start", "practicing",
+                            "together?"
+                        ],
+                        negativeAnswer: ["I", "am", "lazy", "to", "practice", "every", "day"],
+                        imagePath: "{{ asset('image/chara/Fred.png') }}",
+                        imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                    }];
+                } else {
+                    questions = [{
+                        question: "Hi, Fred! How are you today?",
+                        draggableWords: [
+                            "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for",
+                            "the",
+                            "magic", "selection", "test", "next", "week?"
+                        ],
+                        correctAnswer: [
+                            "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for",
+                            "the",
+                            "magic", "selection", "test", "next", "week?"
+                        ],
+                        imagePath: "{{ asset('image/chara/Fred.png') }}",
+                        imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
+                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+                    }];
+                }
+                initializeQuestion(currentQuestionIndex);
             },
-            {
-                question: "Oh, yes, I have to prepare for it. How about you?",
-                draggableWords: ["I", "practice", "practiced", "every", "day", "practicing"],
-                correctAnswer: ["I", "practice", "every", "day"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "How about we practice together?",
-                draggableWords: ["Great", "idea,", "when", "do", "we", "start", "practicing", "practiced",
-                    "together?", "I", "am", "lazy", "to", "practice", "every", "day",
-                ],
-                correctAnswer: ["Great", "idea,", "when", "do", "we", "start", "practicing", "together?"],
-                negativeAnswer: ["I", "am", "lazy", "to", "practice", "every", "day"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
 
         let currentQuestionIndex = 0;
-        initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
 
         function initializeQuestion(index) {
@@ -311,7 +321,7 @@
                 const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
                 const simplePresentData = await simplePresentResponse.json();
                 const simplePresentAnswer = await simplePresentData.choices[0].text.trim().toLowerCase();
-
+                let imageFred;
                 let prompt;
                 if (simplePresentAnswer === 'yes') {
                     const negativeAnswerPrompt =
@@ -324,11 +334,13 @@
                         prompt =
                             `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
                         karma += 1;
+                        imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
                             `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.`;
-                    }
-                } else if (simplePresentAnswer === 'no') {
+                            imageFred = currentQuestion.imageCorrect;
+                        }
+                } else {
                     const negativeAnswerPrompt =
                         `Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
                     const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
@@ -339,12 +351,12 @@
                         prompt =
                             `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
                         karma += 1;
+                        imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
                             `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.`;
-                    }
-                } else {
-                    throw new Error('Unexpected response from AI.');
+                        imageFred = currentQuestion.imageWrong;
+                        }
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -355,7 +367,7 @@
                     const generatedText = data.choices[0].text.trim();
                     Swal.fire({
                         text: generatedText,
-                        imageUrl: currentQuestion.imagePath,
+                        imageUrl: imageFred,
                         imageWidth: 100,
                         imageHeight: 100
                     });
@@ -401,7 +413,7 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
+            document.getElementById('result').innerHTML = `Final Score: ${karma}`;
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
