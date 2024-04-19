@@ -54,6 +54,7 @@ class LoginController extends Controller
         $data['email']= $request->email;
         $data['password']= Hash::make($request->password);
         $progressData = '{
+            "karma": 0,
             "simple_past": {
                 "quest_1": 0,
                 "quest_2": 0,

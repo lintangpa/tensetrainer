@@ -313,7 +313,7 @@
                 let prompt;
                 if (simplePresentAnswer === 'yes') {
                     const negativeAnswerPrompt =
-                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
                     const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
                     const negativeAnswerData = await negativeAnswerResponse.json();
                     const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();

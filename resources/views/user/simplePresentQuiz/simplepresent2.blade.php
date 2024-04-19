@@ -444,7 +444,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
-                url: "{{ route('updateprogress1Q1') }}",
+                url: "{{ route('updateprogress1Q2') }}",
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },

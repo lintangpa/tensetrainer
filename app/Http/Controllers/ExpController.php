@@ -61,6 +61,7 @@ class ExpController extends Controller
         $user = auth()->user();
         if ($user) {
             $progress = $user->progress;
+            $progress['karma'] += $request->karmaValue;
             $progress['simple_present']['quest_3'] = 1;
             $user->progress = $progress;
             $user->save();

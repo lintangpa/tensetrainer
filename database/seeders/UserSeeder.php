@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
                 'email' => 'lintang2505@gmail.com',
                 'password' => Hash::make('wonagoliku'),
                 'progress' => [
+                    "karma" => 0,
                     "simple_present" => [
                         "quest_1" => 0,
                         "quest_2" => 0,
