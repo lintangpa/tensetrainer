@@ -13,7 +13,7 @@ class AchievementSeeder extends Seeder
             'deskripsi' => 'Master all quests in Simple Present Tense',
             'requirement' => json_encode([
                 'simple_present' => [
-                    'quest_2' => 1
+                    'quest_3' => 1
                 ]
             ]),
             'icon' => '',

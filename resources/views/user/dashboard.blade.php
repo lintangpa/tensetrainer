@@ -35,7 +35,7 @@
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Present Continuous Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Fred and Adelsten embark on a journey to find a basic knowledge book for their magic practice at the library. Despite their efforts, the book proves elusive ...</p>
-                <a href="{{ route('simple-present') }}"
+                <a href="{{ route('present-continuous') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
