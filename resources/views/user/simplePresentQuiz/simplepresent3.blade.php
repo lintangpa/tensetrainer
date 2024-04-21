@@ -69,15 +69,15 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
+                    {{-- <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
                         style="display: none;">
                         <button class="mb-6 w-full h-16 bg-amber-600 rounded-md text-white text-lg font-semibold">Back to
                             Menu</button>
-                    </a>
-                    {{-- <button id="backmenu" onclick="updateProgress(event)" style="display: none;"
+                    </a> --}}
+                    <button id="backmenu" onclick="" style="display: none;"
                         class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
                         Back to Menu
-                    </button> --}}
+                    </button>
 
                 </div>
             </div>
@@ -310,6 +310,7 @@
                 let imageFred;
                 let prompt;
                 if (simplePresentAnswer === 'yes') {
+                    correctAnswersCount++;
                     const negativeAnswerPrompt =
                         `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
                     const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
@@ -438,9 +439,13 @@
             }
         }
 
-        // document.getElementById('backmenu').addEventListener('click', function(event) {
-        //     updateProgress(event);
-        // });
+        document.getElementById('backmenu').addEventListener('click', function(event) {
+            if (correctAnswersCount>=2){
+                updateProgress(event);
+            } else {
+                window.location.href = "{{ route('simple-present') }}";
+            }
+        });
 
         function updateProgress(event) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -451,7 +456,7 @@
                     'X-CSRF-TOKEN': csrfToken
                 },
                 data: {
-                    karmaValue: karma / 2
+                    karmaValue: karma
                 },
                 success: function(response) {
                     addExp(event);

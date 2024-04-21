@@ -23,7 +23,7 @@
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
                     style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Bloom de Fleur</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Present Continuous 1</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    {{-- <a id="backmenu" href="{{ route('simple-present') }} " onclick="updateProgress(event)"
+                    {{-- <a id="backmenu" href="{{ route('present-continuous') }} " onclick="updateProgress(event)"
                         style="display: none;">
                         <button class="mb-6 w-full h-16 bg-amber-600 rounded-md text-white text-lg font-semibold">Back to
                             Menu</button>
@@ -89,10 +89,11 @@
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = [
-            "The next day...",
-            "Adelsten comes to Fred's house to practice together.",
-            "Fred goes inside to find a basic knowledge book.",
-            "After a few minutes ..."
+            "In the following days, Fred and Adelsten are going to the library to search for the basic knowledge book.",
+            "After a while...",
+            "Adelsten is searching for it but still isn't finding it",
+            "What is this book actually like?",
+            " Will they be finding it?"
         ];
 
         const ceritaDiv = document.getElementById('cerita');
@@ -157,12 +158,10 @@
                 lanjutCeritaBtn.style.display = 'none';
                 stopTimer();
                 // Cerita setelah berapa kalimat?
-                if (ceritaIndex === 2) {
-                    pertanyaanDiv.style.display = 'block';
-                    ceritaDiv.style.display = 'none';
-                    startTimer(60);
-                }
-
+                // if (ceritaIndex === 2) {
+                //     pertanyaanDiv.style.display = 'block';
+                //     ceritaDiv.style.display = 'none';
+                // }
             } else {
                 stopTimer();
                 ceritaDiv.style.display = 'none';
@@ -194,49 +193,26 @@
         let sentence = '';
 
         const questions = [{
-                question: "Adelsten, you're here",
-                draggableWords: [
-                    "what", "are", "we", "going", "to", "learn", "today?", "Do",
-                ],
-                correctAnswer: [
-                    "Do", "we", "learn", "today?"
-                ],
+                question: "Adelsten, are you finding your book?",
+                draggableWords: ["I", "am", "searching", "for", "30", "minutes" ,"have", "been","will", "searched"],
+                correctAnswer: ["I", "am", "searching", "for", "30", "minutes"],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
             },
             {
-                question: "We'll just focus on strengthening basic techniques today",
-                draggableWords: [
-                    "That", "is", "important", "has", "been", "was",
-                ],
-                correctAnswer: [
-                    "That", "is", "important"
-                ],
+                question: "Yes, are you finding it?",
+                draggableWords: ["I", "am", "not finding", "it", "yet", "was","have","will","not found","not find",],
+                correctAnswer: ["I", "am", "not finding", "it", "yet"],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
             },
             {
-                question: "Do you have the basic book, Adelsten?",
-                draggableWords: [
-                    "I", "don't", "have", "it", "with", "me", "right", "now", "didn't", "won't", "haven't",
-                ],
-                correctAnswer: [
-                    "I", "don't", "have", "it", "with", "me", "right", "now"
-                ],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Do we start tomorrow?",
-                draggableWords: [
-                    "Okay,", "then", "we'll", "practice", "tomorrow"
-                ],
-                correctAnswer: [
-                    "Okay,", "then", "we'll", "practice", "tomorrow"
-                ],
+                question: "The book should be on this shelf.",
+                draggableWords: ["We", "are", "be","will", "searched", "searching", "again", "going", "home"],
+                correctAnswer: ["We", "will","be", "searching", "again"],
+                negativeAnswer: ["going", "home"],
                 imagePath: "{{ asset('image/chara/Fred.png') }}",
                 imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
                 imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
@@ -294,11 +270,8 @@
             sentence = '';
         });
 
-        let answeredQuestionsCount = 0;
-
         document.getElementById('nextBtn').addEventListener('click', function() {
             currentQuestionIndex++;
-            answeredQuestionsCount++;
             stopTimer();
             if (currentQuestionIndex < questions.length) {
                 initializeQuestion(currentQuestionIndex);
@@ -308,20 +281,19 @@
                 document.getElementById('nextBtn').style.display = 'none';
                 document.getElementById('resetBtn').style.display = 'block';
                 document.getElementById('checkBtn').style.display = 'block';
-            } //cerita setelah berapa kalimat?
-            else {
+            } else {
                 document.getElementById('isipertanyaan').style.display = 'none';
                 showResult();
             }
-
-            if (answeredQuestionsCount === 2) {
-                pertanyaanDiv.style.display = 'none';
-                ceritaDiv.style.display = 'block';
-                stopTimer();
-                return;
-            }
+            //cerita setelah berapa kalimat?
+            // if (answeredQuestionsCount === 2) {
+            //     document.getElementById('pertanyaan').style.display = 'none';
+            //     document.getElementById('cerita').style.display = 'block';
+            //     return;
+            // }
         });
         let karma = 0;
+        let answeredQuestionsCount = 0;
 
         document.getElementById('checkBtn').addEventListener('click', async function() {
             try {
@@ -329,7 +301,7 @@
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
                 const simplePresentPrompt =
-                    ` Is this sentence in the simple present tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no. `;
+                    ` Is this sentence in the present continuous tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
 
                 const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
                 const simplePresentData = await simplePresentResponse.json();
@@ -337,14 +309,40 @@
                 let imageFred;
                 let prompt;
                 if (simplePresentAnswer === 'yes') {
-                    prompt =
-                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using simple present tenses. Fred answer must based on context ${questions}`;
-                    imageFred = currentQuestion.imageCorrect;
-                    correctAnswersCount ++;
+                    correctAnswersCount++;
+                    const negativeAnswerPrompt =
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
+                    const negativeAnswerData = await negativeAnswerResponse.json();
+                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
+
+                    if (negativeAnswer === 'yes') {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                        karma += 1;
+                        imageFred = currentQuestion.imageWrong;
+                    } else {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.`;
+                        imageFred = currentQuestion.imageCorrect;
+                    }
                 } else {
-                    prompt =
-                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
-                    imageFred = currentQuestion.imageWrong;
+                    const negativeAnswerPrompt =
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
+                    const negativeAnswerData = await negativeAnswerResponse.json();
+                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
+
+                    if (negativeAnswer === 'yes') {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                        karma += 1;
+                        imageFred = currentQuestion.imageWrong;
+                    } else {
+                        prompt =
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using present continuous tenses. feeling sad and confused.`;
+                        imageFred = currentQuestion.imageWrong;
+                    }
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -401,7 +399,7 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${answeredQuestionsCount}`;
+            document.getElementById('result').innerHTML = `Final Score: ${karma}`;
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
@@ -444,7 +442,7 @@
             if (correctAnswersCount>=2){
                 updateProgress(event);
             } else {
-                window.location.href = "{{ route('simple-present') }}";
+                window.location.href = "{{ route('present-continuous') }}";
             }
         });
 
@@ -452,7 +450,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
-                url: "{{ route('updateprogress1Q2') }}",
+                url: "{{ route('updateprogress2Q1') }}",
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
@@ -461,7 +459,7 @@
                 },
                 success: function(response) {
                     addExp(event);
-                    window.location.href = "{{ route('simple-present') }}";
+                    window.location.href = "{{ route('present-continuous') }}";
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

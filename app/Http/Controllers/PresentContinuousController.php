@@ -44,17 +44,17 @@ class PresentContinuousController extends Controller
 
     public function quest1()
     {
-        return view('user.simplePresentQuiz.simplepresent1');
+        return view('user.presentContinuousQuiz.presentContinuous1');
     }
 
     public function quest2()
     {
-        return view('user.simplePresentQuiz.simplepresent2');
+        return view('user.presentContinuousQuiz.presentContinuous2');
     }
 
     public function quest3()
     {
-        return view('user.simplePresentQuiz.simplepresent3');
+        return view('user.presentContinuousQuiz.presentContinuous3');
     }
 
     private function storeAchievement(User $user, $achievementName)

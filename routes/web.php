@@ -50,7 +50,9 @@ Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
 Route::post('/updateprogress1Q1', [ExpController::class, 'updateProgress1Q1'])->name('updateprogress1Q1');
 Route::post('/updateprogress1Q2', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');
 Route::post('/updateprogress1Q3', [ExpController::class, 'updateProgress1Q3'])->name('updateprogress1Q3');
-Route::post('/updateprogress1Q3', [ExpController::class, 'updateProgress1Q3'])->name('updateprogress1Q3');
+Route::post('/updateprogress2Q1', [ExpController::class, 'updateProgress2Q1'])->name('updateprogress2Q1');
+Route::post('/updateprogress2Q2', [ExpController::class, 'updateProgress2Q2'])->name('updateprogress2Q2');
+Route::post('/updateprogress2Q3', [ExpController::class, 'updateProgress2Q3'])->name('updateprogress2Q3');
 Route::get('/get-karma',[ExpController::class, 'getKarma'])->name('getKarma');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
