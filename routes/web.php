@@ -7,6 +7,7 @@ use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PresentContinuousController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SimplePastController;
 use App\Http\Controllers\SimplePresentController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,11 @@ Route::get('/present-continuous-quest1', [PresentContinuousController::class,'qu
 Route::get('/present-continuous-quest2', [PresentContinuousController::class,'quest2'])->name('present-continuous-quest2');
 Route::get('/present-continuous-quest3', [PresentContinuousController::class,'quest3'])->name('present-continuous-quest3');
 
+Route::get('/simple-past', [SimplePastController::class,'index'])->name('simple-past');
+Route::get('/simple-past-quest1', [SimplePastController::class,'quest1'])->name('simple-past-quest1');
+Route::get('/simple-past-quest2', [SimplePastController::class,'quest2'])->name('simple-past-quest2');
+Route::get('/simple-past-quest3', [SimplePastController::class,'quest3'])->name('simple-past-quest3');
+
 Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
 Route::post('/updateprogress1Q1', [ExpController::class, 'updateProgress1Q1'])->name('updateprogress1Q1');
 Route::post('/updateprogress1Q2', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');
@@ -53,6 +59,9 @@ Route::post('/updateprogress1Q3', [ExpController::class, 'updateProgress1Q3'])->
 Route::post('/updateprogress2Q1', [ExpController::class, 'updateProgress2Q1'])->name('updateprogress2Q1');
 Route::post('/updateprogress2Q2', [ExpController::class, 'updateProgress2Q2'])->name('updateprogress2Q2');
 Route::post('/updateprogress2Q3', [ExpController::class, 'updateProgress2Q3'])->name('updateprogress2Q3');
+Route::post('/updateprogress3Q1', [ExpController::class, 'updateProgress3Q1'])->name('updateprogress3Q1');
+Route::post('/updateprogress3Q2', [ExpController::class, 'updateProgress3Q2'])->name('updateprogress3Q2');
+Route::post('/updateprogress3Q3', [ExpController::class, 'updateProgress3Q3'])->name('updateprogress3Q3');
 Route::get('/get-karma',[ExpController::class, 'getKarma'])->name('getKarma');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');

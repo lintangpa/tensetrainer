@@ -326,12 +326,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
@@ -343,12 +343,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageWrong;
                     }
                 }

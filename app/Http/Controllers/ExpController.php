@@ -112,4 +112,49 @@ class ExpController extends Controller
             return response()->json(['message' => 'Progress updated successfully'], 200);
         }
     }
+
+    public function updateProgress3Q1(Request $request)
+    {
+        /** @var \App\Models\User $user **/
+        $user = auth()->user();
+        if ($user) {
+            $progress = $user->progress;
+            $progress['karma'] += $request->karmaValue;
+            $progress['simple_past']['quest_1'] = 1;
+            $user->progress = $progress;
+            $user->save();
+
+            return response()->json(['message' => 'Progress updated successfully'], 200);
+        }
+    }
+
+    public function updateProgress3Q2(Request $request)
+    {
+        /** @var \App\Models\User $user **/
+        $user = auth()->user();
+        if ($user) {
+            $progress = $user->progress;
+            $progress['karma'] += $request->karmaValue;
+            $progress['simple_past']['quest_2'] = 1;
+            $user->progress = $progress;
+            $user->save();
+
+            return response()->json(['message' => 'Progress updated successfully'], 200);
+        }
+    }
+
+    public function updateProgress3Q3(Request $request)
+    {
+        /** @var \App\Models\User $user **/
+        $user = auth()->user();
+        if ($user) {
+            $progress = $user->progress;
+            $progress['karma'] += $request->karmaValue;
+            $progress['simple_past']['quest_3'] = 1;
+            $user->progress = $progress;
+            $user->save();
+
+            return response()->json(['message' => 'Progress updated successfully'], 200);
+        }
+    }
 }

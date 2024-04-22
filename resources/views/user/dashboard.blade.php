@@ -51,7 +51,7 @@
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Past Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Adelsten, after studying the basic knowledge book at the library, begins practicing magic in the park daily. One day, he encounters his friend Rose, who is saddened by her inability to participate in the magic selection ...</p>
-                <a href="{{ route('simple-present') }}"
+                <a href="{{ route('simple-past') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

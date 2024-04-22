@@ -306,15 +306,15 @@
                 const currentQuestion = questions[currentQuestionIndex];
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
-                const simplePresentPrompt =
+                const presentContinuousPrompt =
                     ` Is this sentence in the present continuous tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no. `;
 
-                const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
-                const simplePresentData = await simplePresentResponse.json();
-                const simplePresentAnswer = await simplePresentData.choices[0].text.trim().toLowerCase();
+                const presentContinuousResponse = await fetchOpenAI(presentContinuousPrompt);
+                const presentContinuousData = await presentContinuousResponse.json();
+                const presentContinuousAnswer = await presentContinuousData.choices[0].text.trim().toLowerCase();
                 let imageFred;
                 let prompt;
-                if (simplePresentAnswer === 'yes') {
+                if (presentContinuousAnswer === 'yes') {
                     prompt =
                         `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using present continuous tenses. Fred answer must based on context ${questions}`;
                     imageFred = currentQuestion.imageCorrect;

@@ -23,7 +23,7 @@
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
                     style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Present Continuous 2</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Past 1</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
@@ -69,16 +69,13 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    {{-- <a id="backmenu" href="{{ route('present-continuous') }} " onclick="updateProgress(event)"
+                    <a id="backmenu" href="{{ route('simple-past') }} " onclick=""
                         style="display: none;">
-                        <button class="mb-6 w-full h-16 bg-amber-600 rounded-md text-white text-lg font-semibold">Back to
+                        <button
+                            class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
+                            to
                             Menu</button>
-                    </a> --}}
-                    <button id="backmenu" onclick="" style="display: none;"
-                        class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
-                        Back to Menu
-                    </button>
-
+                    </a>
                 </div>
             </div>
         </div>
@@ -89,11 +86,10 @@
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = [
-            "10 minutes later, Fred and Adelsten are finishing their break.",
-            "Both of them are starting to learn about basic knowledge.",
-            "Heart..., Mind..., are the most essential foundations.",
-            "...",
-            "The day is already nearing evening without them realizing it."
+            "After reading the basic knowledge book at the library",
+            "Adelsten continued his practice in the park every day.",
+            "During his practice, Adelsten met Rose.",
+            "Rose herself was his friend from the wizard academy.",
         ];
 
         const ceritaDiv = document.getElementById('cerita');
@@ -191,35 +187,69 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = [{
-                question: "A calm mind and heart are the most important things, remember that, Adelsten.",
-                draggableWords: ["Yes!", "I", "am", "always", "keeping", "it", "in", "mind","keep","thinking"],
-                correctAnswer: ["Yes!", "I", "am", "always", "keeping", "it", "in", "mind"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
+        let questions;
+        $.ajax({
+            url: '/get-karma',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                const karma = response.karma; 
+                if (karma > 3) {
+                    questions = [
+                        {
+                        question: "Adelsten, what did you do here?",
+                        draggableWords: ["Hello,", "it's", "a", "long", "time", "since", "saw", "each", "other", "we", "are", "seeing","been","meet"],
+                        correctAnswer: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other"],
+                        imagePath: "{{ asset('image/chara/Rose.png') }}",
+                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
+                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
+                        },
+                        {
+                        question: "What did you do here",
+                        draggableWords: ["That", "was", "none", "of", "your", "business."],
+                        correctAnswer: ["That", "was", "none", "of", "your", "business."],
+                        negativeAnswer: ["business"],
+                        imagePath: "{{ asset('image/chara/Rose.png') }}",
+                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
+                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
+                        },
+                ];
+                } else {
+                    questions = [
+                        {
+                        question: "Adelsten, what did you do here?",
+                        draggableWords: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other", "we", "are", "seeing","been","meet"],
+                        correctAnswer: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other"],
+                        imagePath: "{{ asset('image/chara/Rose.png') }}",
+                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
+                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
+                        },
+                        {
+                        question: "What are you doing here?",
+                        draggableWords: ["I", "was", "practicing", "basic", "magic","practiced","daily","practice"],
+                        correctAnswer: ["I", "was", "practicing", "basic", "magic"],
+                        imagePath: "{{ asset('image/chara/Rose.png') }}",
+                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
+                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
+                        },
+                        {
+                        question: "Ah, I see. Yesterday I saw you walking to the library with Fred",
+                        draggableWords: ["Yes!", "Yesterday", "I", "went", "to", "the", "library.","am", "going","have", "gone","go", "will"],
+                        correctAnswer: ["Yes!", "Yesterday", "I", "went", "to", "the", "library."],
+                        imagePath: "{{ asset('image/chara/Rose.png') }}",
+                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
+                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
+                        },
+                    ];
+                }
+                initializeQuestion(currentQuestionIndex);
             },
-            {
-                question: "This basic knowledge book by Fengxian is really good",
-                draggableWords: [ "It's", "so", "good", "but", "the", "day", "is", "already", "getting", "late"],
-                correctAnswer: [ "It's", "so", "good", "but", "the", "day", "is", "already", "getting", "late"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "you're right, time passes so quickly",
-                draggableWords: ["Let's", "be", "going", "home", "go","to"],
-                correctAnswer: ["Let's", "be", "going", "home"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
 
         let currentQuestionIndex = 0;
-        initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
 
         function initializeQuestion(index) {
@@ -299,23 +329,48 @@
                 const currentQuestion = questions[currentQuestionIndex];
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
-                const presentContinuousPrompt =
-                    ` Is this sentence in the present continuous tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no. `;
-
-                const presentContinuousResponse = await fetchOpenAI(presentContinuousPrompt);
-                const presentContinuousData = await presentContinuousResponse.json();
-                const presentContinuousAnswer = await presentContinuousData.choices[0].text.trim().toLowerCase();
-                let imageFred;
+                const simplePastPrompt =
+                    `Is this sentence in the simple past tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
+                const simplePastResponse = await fetchOpenAI(simplePastPrompt);
+                const simplePastData = await simplePastResponse.json();
+                const simplePastAnswer = await simplePastData.choices[0].text.trim().toLowerCase();
+                let imageRose;
                 let prompt;
-                if (presentContinuousAnswer === 'yes') {
-                    prompt =
-                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using present continuous tenses. Fred answer must based on context ${questions}`;
-                    imageFred = currentQuestion.imageCorrect;
-                    correctAnswersCount ++;
+                if (simplePastAnswer === 'yes') {
+                    correctAnswersCount++;
+                    const negativeAnswerPrompt =
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
+                    const negativeAnswerData = await negativeAnswerResponse.json();
+                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
+
+                    if (negativeAnswer === 'yes') {
+                        prompt =
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response sad because answer is negative.Rose answer must based on context ${questions}`;
+                        karma += 1;
+                        imageRose = currentQuestion.imagePath;
+                    } else {
+                        prompt =
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Rose's response must be a question that the answer is ${nextQuestion.correctAnswer}.Rose answer must based on context ${questions}`;
+                            imageRose = currentQuestion.imageSmile;
+                        }
                 } else {
-                    prompt =
-                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using present continuous tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
-                    imageFred = currentQuestion.imageWrong;
+                    const negativeAnswerPrompt =
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
+                    const negativeAnswerData = await negativeAnswerResponse.json();
+                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
+
+                    if (negativeAnswer === 'yes') {
+                        prompt =
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response sad because answer is negative. Rose answer must based on context ${questions}`;
+                        karma += 1;
+                        imageRose = currentQuestion.imageWrong;
+                    } else {
+                        prompt =
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused.Rose answer must based on context ${questions}`;
+                        imageRose = currentQuestion.imageWrong;
+                        }
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -326,7 +381,7 @@
                     const generatedText = data.choices[0].text.trim();
                     Swal.fire({
                         text: generatedText,
-                        imageUrl: imageFred,
+                        imageUrl: imageRose,
                         imageWidth: 100,
                         imageHeight: 100
                     });
@@ -372,7 +427,7 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${karma}`;
+            document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
@@ -415,34 +470,37 @@
             if (correctAnswersCount>=2){
                 updateProgress(event);
             } else {
-                window.location.href = "{{ route('present-continuous') }}";
+                window.location.href = "{{ route('simple-past') }}";
             }
         });
 
         function updateProgress(event) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $.ajax({
-                type: "POST",
-                url: "{{ route('updateprogress2Q3') }}",
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                data: {
-                    karmaValue: karma
-                },
-                success: function(response) {
-                    addExp(event);
-                    window.location.href = "{{ route('present-continuous') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            var correctPercentage = (correctAnswersCount / questions.length) * 100;
+            if (correctPercentage >= 50) {
+                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('updateprogress3Q1') }}",
+                    data: {
+                        _token: csrfToken
+                    },
+                    success: function(response) {
+                        addExp(event);
+                        window.location.href = "{{ route('simple-past') }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                addExp(event);
+                window.location.href = "{{ route('simple-past') }}";
+            }
             event.preventDefault();
         }
 
         function addExp(event) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
                 url: "{{ route('addexp') }}",
@@ -457,7 +515,6 @@
             });
             event.preventDefault();
         }
-
 
         //kontrol musik
         document.addEventListener("DOMContentLoaded", function() {
