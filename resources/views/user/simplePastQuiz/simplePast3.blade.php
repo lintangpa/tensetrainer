@@ -23,7 +23,7 @@
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
                     style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Past 1</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Bloom de Fleur</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
@@ -69,12 +69,16 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    <a id="backmenu" href="{{ route('simple-past') }} " onclick="" style="display: none;">
-                        <button
-                            class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
-                            to
+                    {{-- <a id="backmenu" href="{{ route('simple-past') }} " onclick="updateProgress(event)"
+                        style="display: none;">
+                        <button class="mb-6 w-full h-16 bg-amber-600 rounded-md text-white text-lg font-semibold">Back to
                             Menu</button>
-                    </a>
+                    </a> --}}
+                    <button id="backmenu" onclick="" style="display: none;"
+                        class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
+                        Back to Menu
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -187,6 +191,7 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
+
         const questions = [{
                 question: "This store makes me nostalgic",
                 draggableWords: ["You", "were", "right,", "I", "always", "liked", "ice", "cream", "here.","are"],
@@ -199,7 +204,6 @@
                 question: "After watching you practice, I want to give you one advice.",
                 draggableWords: ["Gave", "your", "advice,", "Rose","Give","Giving",],
                 correctAnswer: ["Gave", "your", "advice,", "Rose"],
-                negativeAnswer: ["business"],
                 imagePath: "{{ asset('image/chara/Rose.png') }}",
                 imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
                 imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
@@ -216,6 +220,7 @@
         ];
 
         let currentQuestionIndex = 0;
+        initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
 
         function initializeQuestion(index) {
@@ -296,7 +301,8 @@
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
                 const simplePastPrompt =
-                    `Is this sentence in the simple past tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
+                    `Is this sentence in the simple past tense in either the interrogative, negative, or positive form? "${userAnswer}".The order must also be in accordance with the rules of the simple past tense. answer with yes or no.`;
+
                 const simplePastResponse = await fetchOpenAI(simplePastPrompt);
                 const simplePastData = await simplePastResponse.json();
                 const simplePastAnswer = await simplePastData.choices[0].text.trim().toLowerCase();
@@ -312,29 +318,29 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response sad because answer is negative.Rose answer must based on context ${questions}. response is not shown for rose`;
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response angry because answer is negative`;
                         karma += 1;
-                        imageRose = currentQuestion.imagePath;
+                        imageRose = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Rose's response must be a question that the answer is ${nextQuestion.correctAnswer}.Rose answer must based on context ${questions}.response is not shown for rose`;
+                        `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Rose should say without any command. Rose response happy because ${userAnswer} using simple past tenses. Rose answer must based on context ${questions}`;
                         imageRose = currentQuestion.imageSmile;
                     }
                 } else {
                     const negativeAnswerPrompt =
-                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
+                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
                     const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
                     const negativeAnswerData = await negativeAnswerResponse.json();
                     const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response sad because answer is negative. Rose answer must based on context ${questions}.response is not shown for rose`;
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response angry because answer is negative`;
                         karma += 1;
                         imageRose = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused.Rose answer must based on context ${questions}.response is not shown for rose`;
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused. Rose answer must based on context ${questions}`;
                         imageRose = currentQuestion.imageWrong;
                     }
                 }
@@ -433,7 +439,7 @@
         }
 
         document.getElementById('backmenu').addEventListener('click', function(event) {
-            if (correctAnswersCount >= 2) {
+            if (correctAnswersCount>=2){
                 updateProgress(event);
             } else {
                 window.location.href = "{{ route('simple-past') }}";
@@ -441,32 +447,29 @@
         });
 
         function updateProgress(event) {
-            var correctPercentage = (correctAnswersCount / questions.length) * 100;
-            if (correctPercentage >= 50) {
-                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('updateprogress3Q2') }}",
-                    data: {
-                        _token: csrfToken
-                    },
-                    success: function(response) {
-                        addExp(event);
-                        window.location.href = "{{ route('simple-past') }}";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                addExp(event);
-                window.location.href = "{{ route('simple-past') }}";
-            }
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('updateprogress3Q3') }}",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    karmaValue: karma
+                },
+                success: function(response) {
+                    addExp(event);
+                    window.location.href = "{{ route('simple-past') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
             event.preventDefault();
         }
 
         function addExp(event) {
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
                 url: "{{ route('addexp') }}",
@@ -481,6 +484,7 @@
             });
             event.preventDefault();
         }
+
 
         //kontrol musik
         document.addEventListener("DOMContentLoaded", function() {

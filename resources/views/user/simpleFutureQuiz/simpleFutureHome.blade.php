@@ -3,7 +3,7 @@
     <section>
         <div class="p-4 sm:ml-64">
             <div class=" p-6 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
-                @if ($userProgress['simple_past']['quest_3'] == 0)
+                @if ($userProgress['past_continuous']['quest_3'] == 0)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -28,10 +28,10 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Past Continuous - 1</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Future - 1</h5>
                             </a>
                             <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice together...</p>
-                            <a href="{{ route('past-continuous-quest1') }}"
+                            <a href="{{ route('simple-future-quest1') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -44,7 +44,7 @@
                     </div>
                 @endif
 
-                @if ($userProgress['past_continuous']['quest_1'] == 0)
+                @if ($userProgress['simple_future']['quest_1'] == 0)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -69,10 +69,10 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Past Continuous - 2</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Future - 2</h5>
                             </a>
                             <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice together...</p>
-                            <a href="{{ route('past-continuous-quest2') }}"
+                            <a href="{{ route('simple-future-quest2') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -85,7 +85,7 @@
                     </div>
                 @endif
 
-                @if ($userProgress['past_continuous']['quest_2'] == 0)
+                @if ($userProgress['simple_future']['quest_2'] == 0)
                     <div class="locked-div">
                         <div
                             class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded-lg p-6 shadow-md text-center m-5">
@@ -110,10 +110,10 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Past Continuous - 3</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Future - 3</h5>
                             </a>
                             <p class="mb-3 font-normal  text-white">there is bad news brought by Adelsten. What bad news does Adelsten convey?...</p>
-                            <a href="{{ route('past-continuous-quest3') }}"
+                            <a href="{{ route('simple-future-quest3') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"

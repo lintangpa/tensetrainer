@@ -68,7 +68,7 @@
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">
                     As the magic selection exam draws near, Adelsten practices diligently in his front yard. Fred pays him a visit, expressing a desire to practice together. Adelsten reveals that he met Rose the previous day at the park ...</p>
-                <a href="{{ route('simple-present') }}"
+                <a href="{{ route('past-continuous') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-slate-900">Simple Future Tense</h5>
                 </a>
                 <p class="mb-3 font-normal text-neutral-900">Adelsten faces the oral exam confidently, expressing his desire to help others and embark on an adventure if he becomes a level 3 wizard. Mrs. Elsker acknowledges his responses positively, hinting at his potential success ...</p>
-                <a href="{{ route('simple-present') }}"
+                <a href="{{ route('simple-future') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-600 hover:bg-amber-900 focus:ring-amber-800">
                     Go
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

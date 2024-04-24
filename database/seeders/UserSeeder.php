@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
                         "quest_3" => 0,
                         "quest_4" => 0
                     ],
-                    "future_continuous" => [
+                    "simple_future" => [
                         "quest_1" => 0,
                         "quest_2" => 0,
                         "quest_3" => 0,

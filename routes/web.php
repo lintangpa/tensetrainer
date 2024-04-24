@@ -5,8 +5,10 @@ use App\Http\Controllers\ExpController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PastContinuousController;
 use App\Http\Controllers\PresentContinuousController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SimpleFutureController;
 use App\Http\Controllers\SimplePastController;
 use App\Http\Controllers\SimplePresentController;
 use Illuminate\Support\Facades\Route;
@@ -52,16 +54,37 @@ Route::get('/simple-past-quest1', [SimplePastController::class,'quest1'])->name(
 Route::get('/simple-past-quest2', [SimplePastController::class,'quest2'])->name('simple-past-quest2');
 Route::get('/simple-past-quest3', [SimplePastController::class,'quest3'])->name('simple-past-quest3');
 
+Route::get('/past-continuous', [PastContinuousController::class,'index'])->name('past-continuous');
+Route::get('/past-continuous-quest1', [PastContinuousController::class,'quest1'])->name('past-continuous-quest1');
+Route::get('/past-continuous-quest2', [PastContinuousController::class,'quest2'])->name('past-continuous-quest2');
+Route::get('/past-continuous-quest3', [PastContinuousController::class,'quest3'])->name('past-continuous-quest3');
+
+Route::get('/simple-future', [SimpleFutureController::class,'index'])->name('simple-future');
+Route::get('/simple-future-quest1', [SimpleFutureController::class,'quest1'])->name('simple-future-quest1');
+Route::get('/simple-future-quest2', [SimpleFutureController::class,'quest2'])->name('simple-future-quest2');
+Route::get('/simple-future-quest3', [SimpleFutureController::class,'quest3'])->name('simple-future-quest3');
+
 Route::post('/add-exp', [ExpController::class, 'addExp'])->name('addexp');
+Route::get('/get-karma',[ExpController::class, 'getKarma'])->name('getKarma');
+
 Route::post('/updateprogress1Q1', [ExpController::class, 'updateProgress1Q1'])->name('updateprogress1Q1');
 Route::post('/updateprogress1Q2', [ExpController::class, 'updateProgress1Q2'])->name('updateprogress1Q2');
 Route::post('/updateprogress1Q3', [ExpController::class, 'updateProgress1Q3'])->name('updateprogress1Q3');
+
 Route::post('/updateprogress2Q1', [ExpController::class, 'updateProgress2Q1'])->name('updateprogress2Q1');
 Route::post('/updateprogress2Q2', [ExpController::class, 'updateProgress2Q2'])->name('updateprogress2Q2');
 Route::post('/updateprogress2Q3', [ExpController::class, 'updateProgress2Q3'])->name('updateprogress2Q3');
+
 Route::post('/updateprogress3Q1', [ExpController::class, 'updateProgress3Q1'])->name('updateprogress3Q1');
 Route::post('/updateprogress3Q2', [ExpController::class, 'updateProgress3Q2'])->name('updateprogress3Q2');
 Route::post('/updateprogress3Q3', [ExpController::class, 'updateProgress3Q3'])->name('updateprogress3Q3');
-Route::get('/get-karma',[ExpController::class, 'getKarma'])->name('getKarma');
+
+Route::post('/updateprogress4Q1', [ExpController::class, 'updateProgress4Q1'])->name('updateprogress4Q1');
+Route::post('/updateprogress4Q2', [ExpController::class, 'updateProgress4Q2'])->name('updateprogress4Q2');
+Route::post('/updateprogress4Q3', [ExpController::class, 'updateProgress4Q3'])->name('updateprogress4Q3');
+
+Route::post('/updateprogress5Q1', [ExpController::class, 'updateProgress5Q1'])->name('updateprogress5Q1');
+Route::post('/updateprogress5Q2', [ExpController::class, 'updateProgress5Q2'])->name('updateprogress5Q2');
+Route::post('/updateprogress5Q3', [ExpController::class, 'updateProgress5Q3'])->name('updateprogress5Q3');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
