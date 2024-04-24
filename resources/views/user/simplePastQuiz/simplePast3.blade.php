@@ -88,13 +88,7 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "Adelsten and Rose bought their favorite ice cream when they were still studying at the academy",
-            "Rose seemed entertained and happy to be with her friend when she was sad",
-            "Indeed, as a friend...",
-            "we should always help each other...",
-            "and always be there in times of joy or sadness"
-        ];
+        const ceritaContent = @json($ceritaContent);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -192,32 +186,7 @@
         let currentTouchTarget = null;
         let sentence = '';
 
-        const questions = [{
-                question: "This store makes me nostalgic",
-                draggableWords: ["You", "were", "right,", "I", "always", "liked", "ice", "cream", "here.","are"],
-                correctAnswer: ["You", "were", "right,", "I", "always", "liked", "ice", "cream", "here.",],
-                imagePath: "{{ asset('image/chara/Rose.png') }}",
-                imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-            },
-            {
-                question: "After watching you practice, I want to give you one advice.",
-                draggableWords: ["Gave", "your", "advice,", "Rose","Give","Giving",],
-                correctAnswer: ["Gave", "your", "advice,", "Rose"],
-                imagePath: "{{ asset('image/chara/Rose.png') }}",
-                imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-            },
-            {
-                question: "You forget something. The flow of chi. You must feel the flow of chi within you, Adelsten",
-                draggableWords: ["Oh", "my,", "I", "forgot", "about", "that,", "thank", "you", "knew"],
-                correctAnswer: ["Oh", "my,", "I", "forgot", "about", "that,", "thank", "you"],
-                negativeAnswer: ["knew"],
-                imagePath: "{{ asset('image/chara/Rose.png') }}",
-                imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-            },
-        ];
+        const questions = @json($questions);
 
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);

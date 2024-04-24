@@ -88,13 +88,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "In the following days, Fred and Adelsten are going to the library to search for the basic knowledge book.",
-            "After a while...",
-            "Adelsten is searching for it but still isn't finding it",
-            "What is this book actually like?",
-            " Will they be finding it?"
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -191,33 +186,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = [{
-                question: "Adelsten, are you finding your book?",
-                draggableWords: ["I", "am", "searching", "for", "30", "minutes" ,"have", "been","will", "searched"],
-                correctAnswer: ["I", "am", "searching", "for", "30", "minutes"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Yes, are you finding it?",
-                draggableWords: ["I", "am", "not finding", "it", "yet", "was","have","will","not found","not find",],
-                correctAnswer: ["I", "am", "not finding", "it", "yet"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "The book should be on this shelf.",
-                draggableWords: ["We", "are", "be","will", "searched", "searching", "again", "going", "home"],
-                correctAnswer: ["We", "will","be", "searching", "again"],
-                negativeAnswer: ["going", "home"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
 
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
@@ -318,12 +286,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}. Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
@@ -335,12 +303,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using present continuous tenses. feeling sad and confused.`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using present continuous tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageWrong;
                     }
                 }

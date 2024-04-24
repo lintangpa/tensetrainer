@@ -85,12 +85,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "After reading the basic knowledge book at the library",
-            "Adelsten continued his practice in the park every day.",
-            "During his practice, Adelsten met Rose.",
-            "Rose herself was his friend from the wizard academy.",
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -187,67 +183,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-        let questions;
-        $.ajax({
-            url: '/get-karma',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                const karma = response.karma; 
-                if (karma > 3) {
-                    questions = [
-                        {
-                        question: "Adelsten, what did you do here?",
-                        draggableWords: ["Hello,", "it's", "a", "long", "time", "since", "saw", "each", "other", "we", "are", "seeing","been","meet"],
-                        correctAnswer: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "What did you do here",
-                        draggableWords: ["That", "was", "none", "of", "your", "business."],
-                        correctAnswer: ["That", "was", "none", "of", "your", "business."],
-                        negativeAnswer: ["business"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                ];
-                } else {
-                    questions = [
-                        {
-                        question: "Adelsten, what did you do here?",
-                        draggableWords: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other", "we", "are", "seeing","been","meet"],
-                        correctAnswer: ["Hello,", "it's", "a", "long", "time", "since", "we", "saw", "each", "other"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "What are you doing here?",
-                        draggableWords: ["I", "was", "practicing", "basic", "magic","practiced","daily","practice"],
-                        correctAnswer: ["I", "was", "practicing", "basic", "magic"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "Ah, I see. Yesterday I saw you walking to the library with Fred",
-                        draggableWords: ["Yes!", "Yesterday", "I", "went", "to", "the", "library.","am", "going","have", "gone","go", "will"],
-                        correctAnswer: ["Yes!", "Yesterday", "I", "went", "to", "the", "library."],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                    ];
-                }
-                initializeQuestion(currentQuestionIndex);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
 
         let currentQuestionIndex = 0;
         let correctAnswersCount = 0;
@@ -322,6 +257,7 @@
             // }
         });
         let karma = 0;
+        initializeQuestion(currentQuestionIndex);
         let answeredQuestionsCount = 0;
 
         document.getElementById('checkBtn').addEventListener('click', async function() {

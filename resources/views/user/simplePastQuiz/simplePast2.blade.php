@@ -85,12 +85,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "Adelsten, who was practicing...",
-            "was approached by his friend Rose.",
-            "Confused by what happened with Rose.",
-            "What's really going on with Rose...",
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -187,94 +183,9 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-        let questions;
-        $.ajax({
-            url: '/get-karma',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                const karma = response.karma; 
-                if (karma > 4) {
-                    questions = [
-                        {
-                        question: "Adelsten, would you like to accompany me to buy our favorite ice cream first?",
-                        draggableWords: ["You", "went", "by", "yourself.","go","are", "going", "had", "gone","could", "go",],
-                        correctAnswer: ["You", "went", "by", "yourself."],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: " Once again, I ask if you want to accompany me to buy our favorite ice cream first?",
-                        draggableWords: ["I", "didn't", "want", "to", "go.","don't", "wanted"],
-                        correctAnswer: ["I", "didn't", "want", "to", "go."],
-                        negativeAnswer: ["business"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "I'll treat you",
-                        draggableWords: ["Okay,", "Then", "I", "joined", "you","join","have"],
-                        correctAnswer: ["Okay,", "Then", "I", "joined", "you"],
-                        negativeAnswer: ["business"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                ];
-                } else {
-                    questions = [
-                        {
-                        question: "Adelsten, would you like to accompany me to buy our favorite ice cream first?",
-                        draggableWords: ["What", "was", "wrong", "with", "you,", "Rose?", "is","were"],
-                        correctAnswer: ["What", "was", "wrong", "with", "you,", "Rose?"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "It seems I can't participate in the magic selection this year",
-                        draggableWords: ["Why?", "Told", "me,", "Rose","Tell","Telling",],
-                        correctAnswer: ["Why?", "Told", "me,", "Rose"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "Since a week ago, my mother fell ill. There's no one taking care of her.",
-                        draggableWords: ["Was", "your", "father", "not", "at", "home?", "Were"],
-                        correctAnswer: ["Was", "your", "father", "not", "at", "home?"],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "My father went on a dungeon mission three days ago.",
-                        draggableWords: ["I", "hoped", "your", "mother", "got", "well", "soon,", "Rose","gets","hope","hoping"],
-                        correctAnswer: ["I", "hoped", "your", "mother", "got", "well", "soon,", "Rose",],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                        {
-                        question: "Again, would you like to accompany me to buy our favorite ice cream first?",
-                        draggableWords: ["Yes,", "of", "course", "I", "came", "after", "practicing!","come","will"],
-                        correctAnswer: ["Yes,", "of", "course", "I", "came", "after", "practicing!",],
-                        imagePath: "{{ asset('image/chara/Rose.png') }}",
-                        imageWrong: "{{ asset('image/chara/RoseSad.png') }}",
-                        imageSmile: "{{ asset('image/chara/RoseSmile.png') }}",
-                        },
-                    ];
-                }
-                initializeQuestion(currentQuestionIndex);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
 
         let currentQuestionIndex = 0;
+        initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
 
         function initializeQuestion(index) {

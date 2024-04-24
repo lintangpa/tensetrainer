@@ -88,12 +88,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "After an hour and a half of searching for the book in the library.",
-            "Fred and Adelsten are feeling dizzy and tired.",
-            "However, their youthful spirit and enthusiasm",
-            "still haven't surrendered yet in finding it."
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -190,40 +186,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = [{
-                question: "I am feeling very tired",
-                draggableWords: ["We", "are", "currently", "searching","still","have", "been","will", "be"],
-                correctAnswer: ["We", "are", "currently", "searching"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Do you see that brown book up there?",
-                draggableWords: ["I", "get", "it", "am", "was","will","getting"],
-                correctAnswer: ["I", "am", "getting", "it"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Yes, this is indeed the book, finally we are finding it",
-                draggableWords: ["I", "am", "being", "happy", "to", "hear", "that", "feeling","glad"],
-                correctAnswer: ["I", "am", "feeling", "happy", "to", "hear", "that"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "How about we take a short break before starting to read it?",
-                draggableWords: ["Yes!", "I", "am", "also", "resting", "for", "10", "minutes","taking", "a", "break"],
-                correctAnswer: ["Yes!", "I", "am", "also", "resting", "for", "10", "minutes"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
 
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);

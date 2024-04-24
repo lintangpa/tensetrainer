@@ -88,13 +88,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "10 minutes later, Fred and Adelsten are finishing their break.",
-            "Both of them are starting to learn about basic knowledge.",
-            "Heart..., Mind..., are the most essential foundations.",
-            "...",
-            "The day is already nearing evening without them realizing it."
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -191,32 +186,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = [{
-                question: "A calm mind and heart are the most important things, remember that, Adelsten.",
-                draggableWords: ["Yes!", "I", "am", "always", "keeping", "it", "in", "mind","keep","thinking"],
-                correctAnswer: ["Yes!", "I", "am", "always", "keeping", "it", "in", "mind"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "This basic knowledge book by Fengxian is really good",
-                draggableWords: [ "It's", "so", "good", "but", "the", "day", "is", "already", "getting", "late"],
-                correctAnswer: [ "It's", "so", "good", "but", "the", "day", "is", "already", "getting", "late"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "you're right, time passes so quickly",
-                draggableWords: ["Let's", "be", "going", "home", "go","to"],
-                correctAnswer: ["Let's", "be", "going", "home"],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
 
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
