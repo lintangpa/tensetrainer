@@ -328,7 +328,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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'
+                    'Authorization': 'Bearer sk-proj-ERRvBL3NHq6VDEoklpkeT3BlbkFJOzjh6vRKjNjvHgPk0Flt'
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct',

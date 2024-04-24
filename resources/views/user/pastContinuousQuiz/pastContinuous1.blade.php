@@ -81,6 +81,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         //Script Cerita
         let ceritaIndex = 0;
@@ -348,7 +349,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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'
+                    'Authorization': 'Bearer sk-proj-ERRvBL3NHq6VDEoklpkeT3BlbkFJOzjh6vRKjNjvHgPk0Flt'
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct',

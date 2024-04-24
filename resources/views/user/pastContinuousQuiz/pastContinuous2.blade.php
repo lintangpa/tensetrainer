@@ -85,21 +85,25 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "During the training session with Fred.",
-            "Adelsten was impressing him with his highly skilled magic.",
-            "Fred was curious to know the secret behind Adelsten's proficiency",
-        ];
-
+        let karma = 0;
+        let answeredQuestionsCount = 0;
+        let charIndex = 0;
+        let timerElement = document.getElementById('timer');
+        let timerInterval;
+        let typingInterval;
+        let currentTouchTarget = null;
+        let sentence = '';
+        let currentQuestionIndex = 0;
+        let correctAnswersCount = 0;
+        
+        const questions = @json($questions);
+        const ceritaContent = @json($ceritaContent);
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
         const lanjutCeritaBtn = document.getElementById('lanjutCeritaBtn')
         const ceritaText = ceritaContent[ceritaIndex];
         const ceritaElement = document.getElementById('ceritaContent');
-        let charIndex = 0;
 
-        let timerElement = document.getElementById('timer');
-        let timerInterval;
 
         function startTimer(durationInSeconds) {
             let timer = durationInSeconds;
@@ -165,9 +169,6 @@
             }
         });
 
-
-        let typingInterval;
-
         function displayCerita(cerita) {
             stopTimer();
             const ceritaElement = document.getElementById('ceritaContent');
@@ -184,78 +185,12 @@
         }
 
         //Script dragndrop2
-        let currentTouchTarget = null;
-        let sentence = '';
-        let questions;
-        $.ajax({
-            url: '/get-karma',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                const karma = response.karma; 
-                if (karma > 5) {
-                    questions = [
-                        {
-                        question: "Wow Adelsten, where were you learning control like that?",
-                        draggableWords: ["Rose", "was", "giving", "me", "advice.","gives","gave","is"],
-                        correctAnswer: ["Rose", "was", "giving", "me", "advice."],
-                        imagePath: "{{ asset('image/chara/Fred.png') }}",
-                        imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-                        },
-                        {
-                        question: "Tell me too!",
-                        draggableWords: ["I", "couldn't be", "telling", "you.", "wasn't", "won't be",],
-                        correctAnswer: ["I", "couldn't", "be", "telling", "you.",],
-                        imagePath: "{{ asset('image/chara/Fred.png') }}",
-                        imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-                        },
-                        
-                ];
-                } else {
-                    questions = [
-                        {
-                        question: "Wow Adelsten, where were you learning control like that?",
-                        draggableWords: ["Rose", "was", "giving", "me", "advice.","gives","gave","is"],
-                        correctAnswer: ["Rose", "was", "giving", "me", "advice."],
-                        imagePath: "{{ asset('image/chara/Fred.png') }}",
-                        imageWrong: "{{ asset('image/chara/FredAngry.png') }}",
-                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-                        },
-                        {
-                        question: "Tell me too, please!",
-                        draggableWords: ["I", "was", "feeling", "the", "flow", "of", "chi", "within", "me.", "felt", "feel",],
-                        correctAnswer: ["I", "was", "feeling", "the", "flow", "of", "chi", "within", "me.",],
-                        imagePath: "{{ asset('image/chara/Fred.png') }}",
-                        imageWrong: "{{ asset('image/chara/FredSad.png') }}",
-                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-                        },
-                        {
-                        question: "Ah, like that, try practicing it again while I watch",
-                        draggableWords: ["Were", "you", "ready", "now?","Are",],
-                        correctAnswer: ["Were", "you", "ready", "now?",],
-                        imagePath: "{{ asset('image/chara/Fred.png') }}",
-                        imageWrong: "{{ asset('image/chara/FredSad.png') }}",
-                        imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-                        },
-                    ];
-                }
-                initializeQuestion(currentQuestionIndex);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
-
-        let currentQuestionIndex = 0;
-        let correctAnswersCount = 0;
+        initializeQuestion(currentQuestionIndex);
 
         function initializeQuestion(index) {
-            const question = questions[index];
             const questionElement = document.querySelector('.question-container');
             const wordsContainer = document.querySelector('.draggable-container');
-            // const questionTitleElement = document.querySelector('.question-container p');
+            const question = questions[index];
             const questionHTML =
                 `<img src="${question.imagePath}" alt="Question Image" class="inline-block mr-2 w-10 h-10"> <p>${question.question}</p>`;
             document.querySelector('.question-container').innerHTML = questionHTML;
@@ -320,8 +255,6 @@
             //     return;
             // }
         });
-        let karma = 0;
-        let answeredQuestionsCount = 0;
 
         document.getElementById('checkBtn').addEventListener('click', async function() {
             try {
@@ -413,7 +346,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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'
+                    'Authorization': 'Bearer sk-proj-ERRvBL3NHq6VDEoklpkeT3BlbkFJOzjh6vRKjNjvHgPk0Flt'
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct',
