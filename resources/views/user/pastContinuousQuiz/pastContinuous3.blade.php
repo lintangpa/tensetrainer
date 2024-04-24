@@ -84,13 +84,8 @@
     <script>
         //Script Cerita
         let ceritaIndex = 0;
-        const ceritaContent = [
-            "BOOM!! BLAMM!!",
-            "The magic sound produced by Fred was very loud",
-            "Fred was very impressed with his own magic.",
-            "Fred was very happy with the results of his training.",
-            "Adelsten and Fred were very ready to take the selection exam tomorrow.",
-        ];
+        const ceritaContent = @json($ceritaContent);
+        const questions = @json($questions);
 
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
@@ -187,31 +182,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-        const questions = [{
-                question: "Adelsten, were you seeing that? It was very cool",
-                draggableWords: [ "You", "were", "looking", "very", "different", "compared", "to", "yesterday","looked","look"],
-                correctAnswer: [ "You", "were", "looking", "very", "different", "compared", "to", "yesterday",],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAnggry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Yes, I was feeling the same way. It's all thanks to you, Adelsten",
-                draggableWords: [ "Were", "you", "bringing", "the", "book", "we", "borrowed", "from", "the", "library", "yesterday?",],
-                correctAnswer: [ "Were", "you", "bringing", "the", "book", "we", "borrowed", "from", "the", "library", "yesterday?",],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAnggry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-            {
-                question: "Yes, of course, here is the book",
-                draggableWords: [ "I", "was", "wanting", "to", "read", "the", "book", "while", "you", "were", "training","wanted","want",],
-                correctAnswer: [  "I", "was", "wanting", "to", "read", "the", "book", "while", "you", "were", "training",],
-                imagePath: "{{ asset('image/chara/Fred.png') }}",
-                imageWrong: "{{ asset('image/chara/FredAnggry.png') }}",
-                imageCorrect: "{{ asset('image/chara/FredSmile.png') }}",
-            },
-        ];
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
@@ -373,12 +343,14 @@
             }
         });
 
+        window.OPENAI_API_KEY = "{{ env('OPENAI_API_KEY') }}";
+
         async function fetchOpenAI(prompt) {
             const response = await fetch('https://api.openai.com/v1/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer sk-proj-ERRvBL3NHq6VDEoklpkeT3BlbkFJOzjh6vRKjNjvHgPk0Flt'
+                    'Authorization': `Bearer ${window.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct',

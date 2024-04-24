@@ -83,7 +83,9 @@ class PastContinuousController extends Controller
 
     public function quest3()
     {
-        return view('user.pastContinuousQuiz.pastContinuous3');
+        $ceritaContent = $this->questContent3;
+        $questions = $this->questions3();
+        return view('user.pastContinuousQuiz.pastContinuous3', compact('ceritaContent', 'questions'));
     }
 
     protected $questContent1 = [
@@ -93,9 +95,17 @@ class PastContinuousController extends Controller
     ];
 
     protected $questContent2 = [
-            "During the training session with Fred.",
-            "Adelsten was impressing him with his highly skilled magic.",
-            "Fred was curious to know the secret behind Adelsten's proficiency",
+        "During the training session with Fred.",
+        "Adelsten was impressing him with his highly skilled magic.",
+        "Fred was curious to know the secret behind Adelsten's proficiency",
+    ];
+
+    protected $questContent3 = [
+        "BOOM!! BLAMM!!",
+        "The magic sound produced by Fred was very loud",
+        "Fred was very impressed with his own magic.",
+        "Fred was very happy with the results of his training.",
+        "Adelsten and Fred were very ready to take the selection exam tomorrow.",
     ];
 
     protected function questions1()
@@ -144,18 +154,18 @@ class PastContinuousController extends Controller
                     'question' => "Wow Adelsten, where were you learning control like that?",
                     'draggableWords' => ["Rose", "was", "giving", "me", "advice.", "gives", "gave", "is"],
                     'correctAnswer' => ["Rose", "was", "giving", "me", "advice."],
-                    'imagePath' => "{{ asset('image/chara/Fred.png') }}",
-                    'imageWrong' => "{{ asset('image/chara/FredAngry.png') }}",
-                    'imageCorrect' => "{{ asset('image/chara/FredSmile.png') }}"
+                    'imagePath' => asset('image/chara/Fred.png'),
+                    'imageWrong' => asset('image/chara/FredAngry.png'),
+                    'imageCorrect' => asset('image/chara/FredSmile.png'),
                 ],
                 [
                     'question' => "Tell me too!",
                     'draggableWords' => ["I", "couldn't be", "telling", "you.", "wasn't", "won't be"],
                     'correctAnswer' => ["I", "couldn't", "be", "telling", "you."],
-                    'imagePath' => "{{ asset('image/chara/Fred.png') }}",
-                    'imageWrong' => "{{ asset('image/chara/FredAngry.png') }}",
-                    'imageCorrect' => "{{ asset('image/chara/FredSmile.png') }}"
-                ]
+                    'imagePath' => asset('image/chara/Fred.png'),
+                    'imageWrong' => asset('image/chara/FredAngry.png'),
+                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                ],
             ]
             );
         } else {
@@ -187,5 +197,36 @@ class PastContinuousController extends Controller
             ]
             );
         }
+    }
+
+    protected function questions3()
+    {
+        return ([
+            [
+                'question' => "Adelsten, were you seeing that? It was very cool",
+                'draggableWords' => ["You", "were", "looking", "very", "different", "compared", "to", "yesterday", "looked", "look"],
+                'correctAnswer' => ["You", "were", "looking", "very", "different", "compared", "to", "yesterday"],
+                'imagePath' =>  asset('image/chara/Fred.png'),
+                'imageWrong' =>  asset('image/chara/FredAngry.png'),
+                'imageCorrect' =>  asset('image/chara/FredSmile.png'),
+            ],
+            [
+                'question' => "Yes, I was feeling the same way. It's all thanks to you, Adelsten",
+                'draggableWords' => ["Were", "you", "bringing", "the", "book", "we", "borrowed", "from", "the", "library", "yesterday?"],
+                'correctAnswer' => ["Were", "you", "bringing", "the", "book", "we", "borrowed", "from", "the", "library", "yesterday?"],
+                'imagePath' =>  asset('image/chara/Fred.png'),
+                'imageWrong' =>  asset('image/chara/FredAngry.png'),
+                'imageCorrect' =>  asset('image/chara/FredSmile.png'),
+            ],
+            [
+                'question' => "Yes, of course, here is the book",
+                'draggableWords' => ["I", "was", "wanting", "to", "read", "the", "book", "while", "you", "were", "training", "wanted", "want"],
+                'correctAnswer' => ["I", "was", "wanting", "to", "read", "the", "book", "while", "you", "were", "training"],
+                'imagePath' =>  asset('image/chara/Fred.png'),
+                'imageWrong' =>  asset('image/chara/FredAngry.png'),
+                'imageCorrect' =>  asset('image/chara/FredSmile.png'),
+            ],
+        ]
+        );
     }
 }

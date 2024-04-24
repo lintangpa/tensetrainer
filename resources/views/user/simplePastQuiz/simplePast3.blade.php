@@ -381,12 +381,14 @@
             }
         });
 
+        window.OPENAI_API_KEY = "{{ env('OPENAI_API_KEY') }}";
+
         async function fetchOpenAI(prompt) {
             const response = await fetch('https://api.openai.com/v1/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer sk-proj-ERRvBL3NHq6VDEoklpkeT3BlbkFJOzjh6vRKjNjvHgPk0Flt'
+                    'Authorization': `Bearer ${window.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct',
@@ -397,7 +399,7 @@
             });
             return response;
         }
-
+        
         function showResult() {
             document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
             document.getElementById('checkBtn').style.display = 'none';
