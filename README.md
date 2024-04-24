@@ -10,7 +10,7 @@ Tense Trainer fokus pada pembelajaran dan latihan 5 tenses utama dalam Bahasa In
 2. Present Continuous
 3. Simple Past
 4. Past Continuous
-5. Future Continuous
+5. Simple Future
 
 Anda akan menemukan berbagai fitur dan aktivitas interaktif di aplikasi ini untuk membantu Anda memahami dan mengasah keterampilan menggunakan tenses secara tepat dalam konteks yang berbeda.
 
