@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('exp')->default(0)->after('password');
+            $table->unsignedInteger('exp')->default(0)->after('role');
             $table->unsignedInteger('level')->default(1)->after('exp');
             $table->json('progress')->nullable()->after('level');
         });
@@ -26,6 +26,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('exp');
             $table->dropColumn('level');
+            $table->dropColumn('progress');
         });
     }
 };

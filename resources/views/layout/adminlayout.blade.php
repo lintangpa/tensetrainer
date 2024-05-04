@@ -17,14 +17,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    
 
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="antialiased bg-cover bg-no-repeat bg-center min-h-screen" style="background-image: url('{{ asset('Background.jpg') }}');">
+<body class="antialiased bg-slate-950 bg-no-repeat bg-center min-h-screen" style="">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-    @include('layout.partials.usernav')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    @include('layout.partials.adminnav')
     @yield('konten')
 
 </body>

@@ -9,7 +9,7 @@ class LeaderboardController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('exp', 'desc')->get();
+        $users = User::where('role', 'student')->orderBy('exp', 'desc')->get();
         $rank = 1;
         foreach ($users as $user) {
             $user->rank = $rank;

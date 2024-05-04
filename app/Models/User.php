@@ -64,4 +64,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Achievement::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

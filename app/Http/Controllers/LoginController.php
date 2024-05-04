@@ -25,12 +25,16 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($data)){
-            return redirect()->route('dashboard');
-        }else{
+        if (Auth::attempt($data)) {
+            $user = Auth::user();
+            if ($user->isAdmin()) {
+                return redirect()->route('admin-dashboard');
+            } else {
+                return redirect()->route('dashboard');
+            }
+        } else {
             return redirect()->route('login')->with('failed','Wrong email or password');
-        };
-        
+    }
     }
 
     public function logout(){

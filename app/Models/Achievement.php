@@ -19,6 +19,9 @@ class Achievement extends Model
     ];
 
     protected $casts = [
+        'nama' => 'string', 
+        'deskripsi' => 'string', 
         'requirement' => 'json', 
+        'icon' => 'string', 
     ];
 }
