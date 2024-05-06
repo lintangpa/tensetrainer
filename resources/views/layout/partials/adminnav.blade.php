@@ -59,12 +59,6 @@
                         <span class="ms-3">Kelola Achievement</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('admin-kelola-akun') }}"
-                        class="flex items-center p-2 rounded-lg text-white  hover:bg-slate-700 group">
-                        <span class="ms-3">Kelola Akun</span>
-                    </a>
-                </li>
             </ul>
             </li>
 

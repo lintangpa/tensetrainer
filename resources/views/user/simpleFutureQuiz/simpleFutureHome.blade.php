@@ -24,7 +24,7 @@
                     </div>
                 @else
                     <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center m-5"
-                        style="background-image: url('{{ asset('image/bloom2.jpg') }}');">
+                        style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
@@ -65,7 +65,7 @@
                     </div>
                 @else
                     <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center m-5"
-                        style="background-image: url('{{ asset('image/bloom2.jpg') }}');">
+                        style="background-image: url('{{ asset('image/DepanSekolah2.jpg') }}');">
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
@@ -106,7 +106,7 @@
                     </div>
                 @else
                     <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center m-5"
-                        style="background-image: url('{{ asset('image/bloom3.jpg') }}');">
+                        style="background-image: url('{{ asset('image/DepanSekolah3.jpg') }}');">
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">

@@ -24,6 +24,9 @@
                                         <button
                                             class="bg-amber-500 text-white p-1 rounded hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto aksiBtn"
                                             data-user-id="{{ $user->id }}">Aksi</button>
+                                        <button
+                                            class="bg-red-500 text-white p-1 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600 mx-auto deleteBtn"
+                                            data-user-id="{{ $user->id }}">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -82,7 +85,7 @@
                         <label for="progress" class="block text-sm font-medium text-gray-700">Progress</label>
                         <input type="text" name="progress" id="progress"
                             class="mt-1 p-2 block w-full h-auto rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                            data-user-id='{{ $user->progress }}'>
+                            data-user-id="{{ json_encode($user->progress) }}">
                     </div>
 
                     <div class="mb-4">
@@ -103,6 +106,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
     <script>
+        var token = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function() {
             $('#leaderboardTable').DataTable({
                 "paging": true,
@@ -157,6 +161,25 @@
                         console.error(xhr.responseText);
                     }
                 });
+            });
+
+            $('.deleteBtn').click(function() {
+                var userId = $(this).data('user-id');
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: '/usersDelete/' + userId,
+                        type: 'DELETE',
+                        data: {
+                            _token: token
+                        },
+                        success: function(response) {
+                            window.location.href = "{{ route('admin-kelola-akun') }}";
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
             });
         });
     </script>

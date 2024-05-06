@@ -1,16 +1,24 @@
 @extends('layout.userlayout')
 @section('konten')
+<div id="tutorialPopup" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Welcome to Our Website Tutorial</h2>
+        <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of your experience.</p>
+        <button id="gotItBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Got it!</button>
+    </div>
+</div>
     <section>
         <div class="p-4 sm:ml-64">
             <div class=" p-6 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
-                    style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
+                    style="background-image: url('{{ asset('image/rumahFred.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <div class="relative z-10">
                         <a href="#">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 1</h5>
                         </a>
-                        <p class="mb-3 font-normal  text-white">At a renowned school in the city of Yden, a selection test for magic is being held....</p>
+                        <p class="mb-3 font-normal  text-white">At a renowned school in the city of Yden, a selection test
+                            for magic is being held....</p>
                         <a href="{{ route('simple-present-quest1') }}"
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                             Go
@@ -44,13 +52,14 @@
                     </div>
                 @else
                     <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center m-5"
-                        style="background-image: url('{{ asset('image/bloom2.jpg') }}');">
+                        style="background-image: url('{{ asset('image/rumahFred2.jpg') }}');">
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 2</h5>
                             </a>
-                            <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice together...</p>
+                            <p class="mb-3 font-normal  text-white">The next day, Adelsten comes to Fred's house to practice
+                                together...</p>
                             <a href="{{ route('simple-present-quest2') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
@@ -85,13 +94,14 @@
                     </div>
                 @else
                     <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center m-5"
-                        style="background-image: url('{{ asset('image/bloom3.jpg') }}');">
+                        style="background-image: url('{{ asset('image/rumahFred3.jpg') }}');">
                         <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                         <div class="relative z-10">
                             <a href="#">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Simple Present - 3</h5>
                             </a>
-                            <p class="mb-3 font-normal  text-white">there is bad news brought by Adelsten. What bad news does Adelsten convey?...</p>
+                            <p class="mb-3 font-normal  text-white">there is bad news brought by Adelsten. What bad news
+                                does Adelsten convey?...</p>
                             <a href="{{ route('simple-present-quest3') }}"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-700">
                                 Go
@@ -104,7 +114,7 @@
                         </div>
                     </div>
                 @endif
-                
+
             </div>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             @if (isset($notifications) && count($notifications) > 0)
@@ -123,5 +133,15 @@
                     });
                 </script>
             @endif
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var popup = document.getElementById('tutorialPopup');
+                    var gotItButton = document.getElementById('gotItBtn');
+                    gotItButton.addEventListener('click', function() {
+                        popup.classList.add('hidden');
+                    });
+                    popup.classList.remove('hidden');
+                });
+            </script>            
     </section>
 @endsection

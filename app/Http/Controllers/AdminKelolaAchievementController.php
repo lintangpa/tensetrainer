@@ -30,5 +30,39 @@ class AdminKelolaAchievementController extends Controller
 
         return response()->json($achievement);
     }
+
+    public function destroy($id)
+    {
+        $achievement = Achievement::find($id);
+        if ($achievement) {
+            $achievement->delete();
+            return response()->json(['message' => 'Achievement deleted successfully.']);
+        } else {
+            return response()->json(['error' => 'Achievement not found.'], 404);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'deskripsi' => 'required|string',
+            'requirement' => 'required|json',
+            'icon' => 'required|string',
+        ]);
+
+        $nama = $request->input('nama');
+        $deskripsi = $request->input('deskripsi');
+        $requirement = $request->input('requirement'); 
+        $icon = $request->input('icon');
+
+        $achievement = new Achievement();
+        $achievement->nama = $nama;
+        $achievement->deskripsi = $deskripsi;
+        $achievement->requirement = $requirement;
+        $achievement->icon = $icon;
+        $achievement->save();
+        return redirect()->route('admin-kelola-achievement');
+    }
 }
 

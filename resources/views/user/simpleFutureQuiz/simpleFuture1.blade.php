@@ -93,6 +93,8 @@
         let sentence = '';
         let currentQuestionIndex = 0;
         let correctAnswersCount = 0;
+
+        let timertotal = {{ $timertotal }};
         
         const questions = @json($questions);
         const ceritaContent = @json($ceritaContent);
@@ -163,7 +165,7 @@
                 stopTimer();
                 ceritaDiv.style.display = 'none';
                 pertanyaanDiv.style.display = 'block';
-                startTimer(30);
+                startTimer(timertotal);
             }
         });
 
@@ -198,7 +200,7 @@
                 const draggableElement = createDraggableElement(word);
                 wordsContainer.appendChild(draggableElement);
             });
-            startTimer(30);
+            startTimer(timertotal);
         }
 
         function createDraggableElement(word) {
@@ -333,43 +335,75 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
+            let resultText = '';
+            if (correctAnswersCount >= 2) {
+                resultText = `Congratulations! You can proceed.`;
+                imagePath = 'image/chara/adelstenSmile.png';
+            } else {
+                resultText = `Oops! You didn't pass.`;
+                imagePath = 'image/chara/adelstenAngry.png';
+            }
+
+            resultText += `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
+
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('timer').style.display = 'none';
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
         }
 
+        let touchStartX, touchStartY;
+        let draggableElement;
+
+        // Fungsi touchStart
+        function touchStart(event) {
+            event.preventDefault();
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+            draggableElement = event.target;
+        }
+
+        // Fungsi touchMove
+        function touchMove(event) {
+            event.preventDefault();
+            const touchX = event.touches[0].clientX;
+            const touchY = event.touches[0].clientY;
+            const deltaX = touchX - touchStartX;
+            const deltaY = touchY - touchStartY;
+            if (draggableElement) {
+                draggableElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            }
+        }
+
+        // Fungsi touchEnd
+        function touchEnd(event) {
+            event.preventDefault();
+            if (draggableElement) {
+                draggableElement.style.transition = 'transform 0.2s ease';
+                draggableElement.style.transform = 'translate(0, 0)';
+                sentence += draggableElement.textContent + ' ';
+                document.getElementById('droppable').innerHTML += draggableElement.textContent + ' ';
+                draggableElement = null;
+            }
+        }
+
+        // Fungsi allowDrop
         function allowDrop(ev) {
             ev.preventDefault();
         }
 
+        // Fungsi dragStart
         function dragStart(ev) {
             ev.dataTransfer.setData("text", ev.target.textContent);
         }
 
+        // Fungsi drop
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
             sentence += data + ' ';
             ev.target.innerHTML += data + ' ';
-        }
-
-        function touchStart(ev) {
-            ev.preventDefault();
-            currentTouchTarget = ev.target;
-        }
-
-        function touchMove(ev) {
-            ev.preventDefault();
-        }
-
-        function touchEnd(ev) {
-            ev.preventDefault();
-            if (currentTouchTarget) {
-                sentence += currentTouchTarget.textContent + ' ';
-                document.getElementById('droppable').innerHTML += currentTouchTarget.textContent + ' ';
-                currentTouchTarget = null;
-            }
         }
 
         document.getElementById('backmenu').addEventListener('click', function(event) {

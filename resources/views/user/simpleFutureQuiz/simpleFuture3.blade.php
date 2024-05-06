@@ -21,15 +21,15 @@
         <div class=" p-1 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
             <div id="Header" class="mb-4">
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
-                    style="background-image: url('{{ asset('image/rumahAdelsten.jpg') }}');">
+                    style="background-image: url('{{ asset('image/DepanSekolah3.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Past Continuous 1</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Future 2</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
             <div id="cerita">
                 <div class="relative bg-cover bg-bottom h-full w-full mx-auto"
-                    style="background-image: url('image/rumahAdelsten.jpg'); ">
+                    style="background-image: url('image/DepanSekolah3.jpg'); ">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
                         <p id="ceritaContent" class="text-white"></p>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    <a id="backmenu" href="{{ route('past-continuous') }} " onclick="" style="display: none;">
+                    <a id="backmenu" href="{{ route('simple-future') }} " onclick="" style="display: none;">
                         <button
                             class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
                             to
@@ -81,23 +81,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         //Script Cerita
         let ceritaIndex = 0;
+        let charIndex = 0;
+        let timerElement = document.getElementById('timer');
+        let timerInterval;
+        let currentTouchTarget = null;
+        let sentence = '';
+        let currentQuestionIndex = 0;
+        let correctAnswersCount = 0;
         const ceritaContent = @json($ceritaContent);
         const questions = @json($questions);
-
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
         const lanjutCeritaBtn = document.getElementById('lanjutCeritaBtn')
         const ceritaText = ceritaContent[ceritaIndex];
         const ceritaElement = document.getElementById('ceritaContent');
-        let charIndex = 0;
-
-        let timerElement = document.getElementById('timer');
-        let timerInterval;
-
         let timertotal = {{ $timertotal }};
 
         function startTimer(durationInSeconds) {
@@ -183,17 +183,12 @@
         }
 
         //Script dragndrop2
-        let currentTouchTarget = null;
-        let sentence = '';
-        let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
-        let correctAnswersCount = 0;
 
         function initializeQuestion(index) {
             const question = questions[index];
             const questionElement = document.querySelector('.question-container');
             const wordsContainer = document.querySelector('.draggable-container');
-            // const questionTitleElement = document.querySelector('.question-container p');
             const questionHTML =
                 `<img src="${question.imagePath}" alt="Question Image" class="inline-block mr-2 w-10 h-10"> <p>${question.question}</p>`;
             document.querySelector('.question-container').innerHTML = questionHTML;
@@ -266,48 +261,22 @@
                 const currentQuestion = questions[currentQuestionIndex];
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
-                const pastContinuousPrompt =
-                    `Is this sentence in the past continuous tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
-                const pastContinuousResponse = await fetchOpenAI(pastContinuousPrompt);
-                const pastContinuousData = await pastContinuousResponse.json();
-                const pastContinuousAnswer = await pastContinuousData.choices[0].text.trim().toLowerCase();
+                const simpleFuturePrompt =
+                    ` Is this sentence in the simple future tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no. `;
+                const simpleFutureResponse = await fetchOpenAI(simpleFuturePrompt);
+                const simpleFutureData = await simpleFutureResponse.json();
+                const simpleFutureAnswer = await simpleFutureData.choices[0].text.trim().toLowerCase();
                 let imageFred;
                 let prompt;
-                if (pastContinuousAnswer === 'yes') {
-                    correctAnswersCount++;
-                    const negativeAnswerPrompt =
-                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
-                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
-                    const negativeAnswerData = await negativeAnswerResponse.json();
-                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
-
-                    if (negativeAnswer === 'yes') {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response sad because answer is negative.Fred answer must based on context ${questions}. response is not shown for rose`;
-                        karma += 1;
-                        imageFred = currentQuestion.imagePath;
-                    } else {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.Fred answer must based on context ${questions}.response is not shown for rose`;
-                        imageFred = currentQuestion.imageCorrect;
-                    }
+                if (simpleFutureAnswer === 'yes') {
+                    prompt =
+                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using simple future tenses. Fred answer must based on context ${questions}`;
+                    imageFred = currentQuestion.imageCorrect;
+                    correctAnswersCount ++;
                 } else {
-                    const negativeAnswerPrompt =
-                        `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
-                    const negativeAnswerResponse = await fetchOpenAI(negativeAnswerPrompt);
-                    const negativeAnswerData = await negativeAnswerResponse.json();
-                    const negativeAnswer = negativeAnswerData.choices[0].text.trim().toLowerCase();
-
-                    if (negativeAnswer === 'yes') {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response sad because answer is negative. Fred answer must based on context ${questions}.response is not shown for rose`;
-                        karma += 1;
-                        imageFred = currentQuestion.imageWrong;
-                    } else {
-                        prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using past continuous tenses. feeling sad and confused.Fred answer must based on context ${questions}.response is not shown for rose`;
-                        imageFred = currentQuestion.imageWrong;
-                    }
+                    prompt =
+                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple future tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
+                    imageFred = currentQuestion.imageWrong;
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -441,7 +410,7 @@
             if (correctAnswersCount >= 2) {
                 updateProgress(event);
             } else {
-                window.location.href = "{{ route('past-continuous') }}";
+                window.location.href = "{{ route('simple-future') }}";
             }
         });
 
@@ -451,13 +420,13 @@
                 var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('updateprogress4Q1') }}",
+                    url: "{{ route('updateprogress5Q3') }}",
                     data: {
                         _token: csrfToken
                     },
                     success: function(response) {
                         addExp(event);
-                        window.location.href = "{{ route('past-continuous') }}";
+                        window.location.href = "{{ route('simple-future') }}";
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -465,7 +434,7 @@
                 });
             } else {
                 addExp(event);
-                window.location.href = "{{ route('past-continuous') }}";
+                window.location.href = "{{ route('simple-future') }}";
             }
             event.preventDefault();
         }

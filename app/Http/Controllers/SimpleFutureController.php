@@ -71,20 +71,25 @@ class SimpleFutureController extends Controller
         $nilaiKarma = $this->getKarma();
         $ceritaContent = $this->questContent1;
         $questions = $this->questions1($nilaiKarma);
+        $timertotal = 240;
         // dump($questions);
-        return view('user.simpleFutureQuiz.simpleFuture1', compact('ceritaContent', 'questions'));
+        return view('user.simpleFutureQuiz.simpleFuture1', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     public function quest2()
     {
         $ceritaContent = $this->questContent2;
         $questions = $this->questions2();
-        return view('user.simpleFutureQuiz.simpleFuture2', compact('ceritaContent', 'questions'));
+        $timertotal = 240;
+        return view('user.simpleFutureQuiz.simpleFuture2', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     public function quest3()
     {
-        return view('user.simpleFutureQuiz.simpleFuture3');
+        $ceritaContent = $this->questContent3;
+        $questions = $this->questions3();
+        $timertotal = 240;
+        return view('user.simpleFutureQuiz.simpleFuture3', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     protected $questContent1 = [
@@ -101,6 +106,13 @@ class SimpleFutureController extends Controller
         "Will Adelsten be able to take the practical exam smoothly later?",
     ];
 
+    protected $questContent3 = [
+        "After Adelsten shows his fire magic",
+        "he will leave the room and meet Fred in the academy's courtyard",
+        "They will discuss their future plans.",
+    ];
+
+
     protected function questions1($nilaiKarma)
     {
         if ($nilaiKarma > 4) {
@@ -109,25 +121,25 @@ class SimpleFutureController extends Controller
                     'question' => "So, what are your plans if you become a level 3 wizard?",
                     'draggableWords' => ["I", "still", "haven't", "thought", "about", "the", "future", "don't"],
                     'correctAnswer' => ["I", "still", "haven't", "thought", "about", "the", "future"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredAngry.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
                 [
                     'question' => "Hmm okay",
                     'draggableWords' => ["Will", "I", "be", "passing", "the", "oral", "exam,", "ma'am?", "pass"],
                     'correctAnswer' => ["Will", "I", "be", "passing", "the", "oral", "exam,", "ma'am?"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredAngry.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
                 [
                     'question' => "We'll see later, for now you can leave the room and continue with the practical exam",
                     'draggableWords' => ["Okay,", "I'll", "leave", "the", "room", "and", "continue", "with", "the", "practical", "exam", "leaving"],
                     'correctAnswer' => ["Okay,", "I'll", "leave", "the", "room", "and", "continue", "with", "the", "practical", "exam"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredAngry.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
             ]);
         } else {
@@ -136,25 +148,25 @@ class SimpleFutureController extends Controller
                     'question' => "So, what are your plans if you become a level 3 wizard?",
                     'draggableWords' => ["I", "will", "be", "helping", "others", "across", "the", "country,", "ma'am", "help"],
                     'correctAnswer' => ["I", "will", "be", "helping", "others", "across", "the", "country,", "ma'am"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredAngry.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
                 [
                     'question' => "Is there anything else?",
                     'draggableWords' => ["I", "will", "be", "starting", "my", "adventure", "from", "tomorrow", "started", "start"],
                     'correctAnswer' => ["I", "will", "be", "starting", "my", "adventure", "from", "tomorrow"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredSad.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
                 [
                     'question' => "Well done. For now you can leave the room and continue with the practical exam",
                     'draggableWords' => ["I", "will", "also", "be", "gathering", "new", "magic", "while", "I", "am", "on", "my", "adventure"],
                     'correctAnswer' => ["I", "will", "also", "be", "gathering", "new", "magic", "while", "I", "am", "on", "my", "adventure"],
-                    'imagePath' => asset('image/chara/Fred.png'),
-                    'imageWrong' => asset('image/chara/FredSad.png'),
-                    'imageCorrect' => asset('image/chara/FredSmile.png'),
+                    'imagePath' => asset('image/chara/elsker.png'),
+                    'imageWrong' => asset('image/chara/elskerAngry.png'),
+                    'imageCorrect' => asset('image/chara/elskerSmile.png'),
                 ],
             ]);
         }
@@ -167,22 +179,52 @@ class SimpleFutureController extends Controller
                 'question' => "Adelsten, step forward and please show me your best magic!",
                 'draggableWords' => ["Alright", "sir,", "I", "will", "show", "you", "a", "magic", "of", "flower", "arrangement", "showed", "showing"],
                 'correctAnswer' => ["Alright", "sir,", "I", "will", "show", "you", "a", "magic", "of", "flower", "arrangement"],
-                'imagePath' => asset('image/chara/Fred.png'),
-                'imageWrong' => asset('image/chara/FredAngry.png'),
-                'imageCorrect' => asset('image/chara/FredSmile.png'),
+                'imagePath' => asset('image/chara/vinde.png'),
+                'imageWrong' => asset('image/chara/vindeAngry.png'),
+                'imageCorrect' => asset('image/chara/vindeSmile.png'),
             ],
             [
                 'question' => "Why are you showing that magic?",
                 'draggableWords' => ["I", "will", "spread", "joy", "around", "the", "world,", "sir.", "spreading"],
                 'correctAnswer' => ["I", "will", "spread", "joy", "around", "the", "world,", "sir."],
-                'imagePath' => asset('image/chara/Fred.png'),
-                'imageWrong' => asset('image/chara/FredAngry.png'),
-                'imageCorrect' => asset('image/chara/FredSmile.png'),
+                'imagePath' => asset('image/chara/vinde.png'),
+                'imageWrong' => asset('image/chara/vindeAngry.png'),
+                'imageCorrect' => asset('image/chara/vindeSmile.png'),
             ],
             [
                 'question' => "Very noble, but can you also perform attack magic?",
                 'draggableWords' => ["Yes,", "I", "will", "perform", "fire", "magic", "performing", "performed"],
                 'correctAnswer' => ["Yes,", "I", "will", "perform", "fire", "magic"],
+                'imagePath' => asset('image/chara/vinde.png'),
+                'imageWrong' => asset('image/chara/vindeAngry.png'),
+                'imageCorrect' => asset('image/chara/vindeSmile.png'),
+            ],
+        ]);
+    }
+
+    protected function questions3()
+    {
+        return ([
+            [
+                'question' => "Adelsten, did you finish your exam?",
+                'draggableWords' => ["Yes,", "I", "think", "I'll", "pass", "the", "exam.","thought",],
+                'correctAnswer' => ["Yes,", "I", "think", "I'll", "pass", "the", "exam."],
+                'imagePath' => asset('image/chara/Fred.png'),
+                'imageWrong' => asset('image/chara/FredAngry.png'),
+                'imageCorrect' => asset('image/chara/FredSmile.png'),
+            ],
+            [
+                'question' => "What your plans after this, Adelsten?",
+                'draggableWords' => ["I", "will", "help", "people", "around", "me", "while", "waiting", "for", "the", "exam", "results.", "helped","be"],
+                'correctAnswer' => ["I", "will", "help", "people", "around", "me", "while", "waiting", "for", "the", "exam", "results."],
+                'imagePath' => asset('image/chara/Fred.png'),
+                'imageWrong' => asset('image/chara/FredAngry.png'),
+                'imageCorrect' => asset('image/chara/FredSmile.png'),
+            ],
+            [
+                'question' => "Wow, you will indeed be very kind, Adelsten.",
+                'draggableWords' => ["I", "will", "become", "a", "kind", "witch."],
+                'correctAnswer' => ["I", "will", "become", "a", "kind", "witch."],
                 'imagePath' => asset('image/chara/Fred.png'),
                 'imageWrong' => asset('image/chara/FredAngry.png'),
                 'imageCorrect' => asset('image/chara/FredSmile.png'),

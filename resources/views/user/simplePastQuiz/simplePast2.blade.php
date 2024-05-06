@@ -21,7 +21,7 @@
         <div class=" p-1 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
             <div id="Header" class="mb-4">
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
-                    style="background-image: url('{{ asset('image/DepanSekolah.jpg') }}');">
+                    style="background-image: url('{{ asset('image/taman1.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Past 1</h2>
                 </div>
@@ -29,7 +29,7 @@
             <!-- Bagian cerita -->
             <div id="cerita">
                 <div class="relative bg-cover bg-bottom h-full w-full mx-auto"
-                    style="background-image: url('image/DepanSekolah.jpg'); ">
+                    style="background-image: url('image/taman1.jpg'); ">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
                         <p id="ceritaContent" class="text-white"></p>
@@ -69,8 +69,7 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4"></div>
-                    <a id="backmenu" href="{{ route('simple-past') }} " onclick=""
-                        style="display: none;">
+                    <a id="backmenu" href="{{ route('simple-past') }} " onclick="" style="display: none;">
                         <button
                             class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
                             to
@@ -97,6 +96,8 @@
 
         let timerElement = document.getElementById('timer');
         let timerInterval;
+
+        let timertotal = {{ $timertotal }};
 
         function startTimer(durationInSeconds) {
             let timer = durationInSeconds;
@@ -158,7 +159,7 @@
                 stopTimer();
                 ceritaDiv.style.display = 'none';
                 pertanyaanDiv.style.display = 'block';
-                startTimer(30);
+                startTimer(timertotal);
             }
         });
 
@@ -202,7 +203,7 @@
                 const draggableElement = createDraggableElement(word);
                 wordsContainer.appendChild(draggableElement);
             });
-            startTimer(30);
+            startTimer(timertotal);
         }
 
         function createDraggableElement(word) {
@@ -288,8 +289,8 @@
                     } else {
                         prompt =
                             `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Rose's response must be a question that the answer is ${nextQuestion.correctAnswer}.Rose answer must based on context ${questions}.response is not shown for rose`;
-                            imageRose = currentQuestion.imageSmile;
-                        }
+                        imageRose = currentQuestion.imageSmile;
+                    }
                 } else {
                     const negativeAnswerPrompt =
                         `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
@@ -306,7 +307,7 @@
                         prompt =
                             `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused.Rose answer must based on context ${questions}.response is not shown for rose`;
                         imageRose = currentQuestion.imageWrong;
-                        }
+                    }
                 }
 
                 const response = await fetchOpenAI(prompt);
@@ -365,20 +366,70 @@
         }
 
         function showResult() {
-            document.getElementById('result').innerHTML = `Final Score: ${correctAnswersCount}`;
+            let resultText = '';
+            if (correctAnswersCount >= 2) {
+                resultText = `Congratulations! You can proceed.`;
+                imagePath = 'image/chara/adelstenSmile.png';
+            } else {
+                resultText = `Oops! You didn't pass.`;
+                imagePath = 'image/chara/adelstenAngry.png';
+            }
+
+            resultText += `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
+
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('timer').style.display = 'none';
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('backmenu').style.display = 'block';
         }
 
+        let touchStartX, touchStartY;
+        let draggableElement;
+
+        // Fungsi touchStart
+        function touchStart(event) {
+            event.preventDefault();
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+            draggableElement = event.target;
+        }
+
+        // Fungsi touchMove
+        function touchMove(event) {
+            event.preventDefault();
+            const touchX = event.touches[0].clientX;
+            const touchY = event.touches[0].clientY;
+            const deltaX = touchX - touchStartX;
+            const deltaY = touchY - touchStartY;
+            if (draggableElement) {
+                draggableElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            }
+        }
+
+        // Fungsi touchEnd
+        function touchEnd(event) {
+            event.preventDefault();
+            if (draggableElement) {
+                draggableElement.style.transition = 'transform 0.2s ease';
+                draggableElement.style.transform = 'translate(0, 0)';
+                sentence += draggableElement.textContent + ' ';
+                document.getElementById('droppable').innerHTML += draggableElement.textContent + ' ';
+                draggableElement = null;
+            }
+        }
+
+        // Fungsi allowDrop
         function allowDrop(ev) {
             ev.preventDefault();
         }
 
+        // Fungsi dragStart
         function dragStart(ev) {
             ev.dataTransfer.setData("text", ev.target.textContent);
         }
 
+        // Fungsi drop
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
@@ -386,26 +437,8 @@
             ev.target.innerHTML += data + ' ';
         }
 
-        function touchStart(ev) {
-            ev.preventDefault();
-            currentTouchTarget = ev.target;
-        }
-
-        function touchMove(ev) {
-            ev.preventDefault();
-        }
-
-        function touchEnd(ev) {
-            ev.preventDefault();
-            if (currentTouchTarget) {
-                sentence += currentTouchTarget.textContent + ' ';
-                document.getElementById('droppable').innerHTML += currentTouchTarget.textContent + ' ';
-                currentTouchTarget = null;
-            }
-        }
-
         document.getElementById('backmenu').addEventListener('click', function(event) {
-            if (correctAnswersCount>=2){
+            if (correctAnswersCount >= 2) {
                 updateProgress(event);
             } else {
                 window.location.href = "{{ route('simple-past') }}";

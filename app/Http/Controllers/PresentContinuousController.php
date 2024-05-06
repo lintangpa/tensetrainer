@@ -63,21 +63,24 @@ class PresentContinuousController extends Controller
     {
         $ceritaContent = $this->questContent1;
         $questions = $this->questions1();
-        return view('user.presentContinuousQuiz.presentContinuous1', compact('ceritaContent', 'questions'));
+        $timertotal = 360;
+        return view('user.presentContinuousQuiz.presentContinuous1', compact('ceritaContent', 'questions' ,'timertotal'));
     }
 
     public function quest2()
     {
         $ceritaContent = $this->questContent2;
         $questions = $this->questions2();
-        return view('user.presentContinuousQuiz.presentContinuous2', compact('ceritaContent', 'questions'));
+        $timertotal = 360;
+        return view('user.presentContinuousQuiz.presentContinuous2', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     public function quest3()
     {
         $ceritaContent = $this->questContent3;
         $questions = $this->questions3();
-        return view('user.presentContinuousQuiz.presentContinuous3', compact('ceritaContent', 'questions'));
+        $timertotal = 360;
+        return view('user.presentContinuousQuiz.presentContinuous3', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     protected $questContent1 = [

@@ -42,10 +42,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     Route::get('/admin-kelola-akun', [AdminKelolaAkunController::class, 'index'])->name('admin-kelola-akun');
     Route::get('/users/{id}', [AdminKelolaAkunController::class, 'findId']);
+    Route::delete('/usersDelete/{id}', [AdminKelolaAkunController::class, 'destroy']);
     Route::put('/usersDetail/{id}', [AdminKelolaAkunController::class, 'updateDetail'])->name('updateDetailAkun');
     Route::get('/admin-kelola-achievement', [AdminKelolaAchievementController::class, 'index'])->name('admin-kelola-achievement');
     Route::get('/achievement/{id}', [AdminKelolaAchievementController::class, 'findId']);
     Route::put('/achievementDetail/{id}', [AdminKelolaAchievementController::class, 'updateDetail'])->name('updateDetail');
+    Route::delete('/achievementDelete/{id}', [AdminKelolaAchievementController::class, 'destroy']);
+    Route::post('/achievementTambah', [AdminKelolaAchievementController::class, 'store'])->name('achievementTambah');
 });
 
 Route::group(['middleware' => ['auth', 'studentadmin']], function () {

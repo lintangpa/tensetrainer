@@ -28,7 +28,7 @@
                 <h1 class="text-3xl text-amber-500 font-bold mb-4">Explore, learn, and master the 5 tenses with Adelsten!</h1>
                 <p class="">Join this magical journey and let's make grammar learning an exciting adventure!</p>
             </div>
-            <div class="flex justify-center mt-8">
+            <div class="flex justify-center flex-wrap mt-8">
                 <img src="{{URL::asset('/image/Simple Present.png')}}" alt="" class="mx-2 w-56 h-auto object-contain">
                 <img src="{{URL::asset('/image/Present Continuous.png')}}" alt="" class="mx-2 w-64 h-auto object-contain">
                 <img src="{{URL::asset('/image/Simple Past.png')}}" alt="" class="mx-2 w-44 h-auto object-contain">

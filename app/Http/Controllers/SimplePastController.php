@@ -71,7 +71,8 @@ class SimplePastController extends Controller
         $nilaiKarma = $this->getKarma();
         $ceritaContent = $this->questContent1;
         $questions = $this->questions1($nilaiKarma);
-        return view('user.simplePastQuiz.simplePast1', compact('ceritaContent', 'questions'));
+        $timertotal = 300;
+        return view('user.simplePastQuiz.simplePast1', compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     public function quest2()
@@ -79,14 +80,16 @@ class SimplePastController extends Controller
         $nilaiKarma = $this->getKarma();
         $ceritaContent = $this->questContent2;
         $questions = $this->questions2($nilaiKarma);
-        return view('user.simplePastQuiz.simplePast2',compact('ceritaContent', 'questions'));
+        $timertotal = 300;
+        return view('user.simplePastQuiz.simplePast2',compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     public function quest3()
     {
         $ceritaContent = $this->questContent3;
         $questions = $this->questions3();
-        return view('user.simplePastQuiz.simplePast3',compact('ceritaContent', 'questions'));
+        $timertotal = 300;
+        return view('user.simplePastQuiz.simplePast3',compact('ceritaContent', 'questions', 'timertotal'));
     }
 
     protected $questContent1 = [
