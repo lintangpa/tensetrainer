@@ -68,7 +68,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="result" class="mt-4"></div>
+                    <div id="result" class="mt-4 text-center font-semibold text-xl"></div>
                     <a id="backmenu" href="{{ route('simple-past') }} " onclick=""
                         style="display: none;">
                         <button

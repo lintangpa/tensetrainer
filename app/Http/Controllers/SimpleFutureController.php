@@ -86,10 +86,12 @@ class SimpleFutureController extends Controller
 
     public function quest3()
     {
+        $nilaiKarma = $this->getKarma();
         $ceritaContent = $this->questContent3;
+        $endingContent = $this->ending($nilaiKarma);
         $questions = $this->questions3();
         $timertotal = 240;
-        return view('user.simpleFutureQuiz.simpleFuture3', compact('ceritaContent', 'questions', 'timertotal'));
+        return view('user.simpleFutureQuiz.simpleFuture3', compact('ceritaContent', 'questions', 'timertotal', 'endingContent'));
     }
 
     protected $questContent1 = [
@@ -230,5 +232,26 @@ class SimpleFutureController extends Controller
                 'imageCorrect' => asset('image/chara/FredSmile.png'),
             ],
         ]);
+    }
+
+    protected function ending($nilaiKarma)
+    {
+        if ($nilaiKarma > 5) {
+            return ([
+                "Three weeks later, they will receive the announcement letter of the selection exam results.",
+                "A total of 18 participants will be declared passed in the Class 3 Wizard Selection Exam",
+                "But among the 18 participants, only Fred will be there.",
+                "Adelsten will not be declared passed the selection.",
+                "Adelsten will have to retake it next year.",
+            ]);
+        } else {
+            return ([
+                "Three weeks later, they will receive the announcement letter of the selection exam results.",
+                "A total of 18 participants will be declared passed in the Class 3 Wizard Selection Exam",
+                "Including Adelsten and Fred, both of whom will be declared passed",
+                "Fred will join the adventure guild and continue exploring dungeons",
+                "Adelsten will go explore the world and collect all the magic.",
+            ]);
+        }
     }
 }

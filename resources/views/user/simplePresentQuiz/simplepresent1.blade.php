@@ -66,7 +66,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="result" class="mt-4">
+                    <div id="result" class="mt-4 text-center font-semibold text-xl">
                     </div>
                     <button id="backmenu" onclick="" style="display: none;"
                         class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">

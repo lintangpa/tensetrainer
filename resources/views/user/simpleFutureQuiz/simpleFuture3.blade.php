@@ -23,7 +23,7 @@
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
                     style="background-image: url('{{ asset('image/DepanSekolah3.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Future 2</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Simple Future 3</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
@@ -68,7 +68,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="result" class="mt-4"></div>
+                    <div id="result" class="mt-4 text-center font-semibold text-xl"></div>
                     <a id="backmenu" href="{{ route('simple-future') }} " onclick="" style="display: none;">
                         <button
                             class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">Back
@@ -272,7 +272,7 @@
                     prompt =
                         `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using simple future tenses. Fred answer must based on context ${questions}`;
                     imageFred = currentQuestion.imageCorrect;
-                    correctAnswersCount ++;
+                    correctAnswersCount++;
                 } else {
                     prompt =
                         `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple future tenses. feeling sad and confused. Fred answer must based on context ${questions}`;
@@ -336,21 +336,35 @@
 
         function showResult() {
             let resultText = '';
-            if (correctAnswersCount >= 2) {
-                resultText = `Congratulations! You can proceed.`;
-                imagePath = 'image/chara/adelstenSmile.png';
-            } else {
-                resultText = `Oops! You didn't pass.`;
-                imagePath = 'image/chara/adelstenAngry.png';
-            }
-
-            resultText += `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
-
+            resultText += `<div id="ceritaResult" class=""></div>`;
             document.getElementById('result').innerHTML = resultText;
             document.getElementById('timer').style.display = 'none';
             document.getElementById('checkBtn').style.display = 'none';
             document.getElementById('nextBtn').style.display = 'none';
-            document.getElementById('backmenu').style.display = 'block';
+            typeWriterResult();
+        }
+         const endingContent = @json($endingContent)
+
+        function typeWriterResult() {
+            const ceritaResult = document.getElementById('ceritaResult');
+            let ceritaIndex = 0;
+            let charIndex = 0;
+            const typingInterval = setInterval(function() {
+                if (ceritaIndex < endingContent.length) {
+                    const currentCerita = endingContent[ceritaIndex];
+                    if (charIndex < currentCerita.length) {
+                        ceritaResult.innerHTML += currentCerita[charIndex];
+                        charIndex++;
+                    } else {
+                        ceritaResult.innerHTML += '<p></p><br>';
+                        ceritaIndex++;
+                        charIndex = 0;
+                    }
+                } else {
+                    clearInterval(typingInterval);
+                    document.getElementById('backmenu').style.display = 'block';
+                }
+            }, 25);
         }
 
         let touchStartX, touchStartY;
@@ -416,7 +430,7 @@
 
         function updateProgress(event) {
             var correctPercentage = (correctAnswersCount / questions.length) * 100;
-            if (correctPercentage >= 50) {
+            if (correctPercentage >= 0) {
                 var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 $.ajax({
                     type: "POST",
