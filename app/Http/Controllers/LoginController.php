@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
+use App\Models\PasswordResetToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('login');
     }
 
-    public function login_proses(Request $request){
+    public function login_proses(Request $request)
+    {
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -33,11 +37,12 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
         } else {
-            return redirect()->route('login')->with('failed','Wrong email or password');
-    }
+            return redirect()->route('login')->with('failed', 'Wrong email or password');
+        }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('home');
     }
@@ -47,16 +52,17 @@ class LoginController extends Controller
         return view('register');
     }
 
-    public function register_proses(Request $request){
+    public function register_proses(Request $request)
+    {
         $request->validate([
-            'name'=> 'required',
-            'email'=> 'required|email|unique:users,email',
-            'password'=> 'required|min:8'
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
         ]);
 
-        $data['name']= $request->name;
-        $data['email']= $request->email;
-        $data['password']= Hash::make($request->password);
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
         $progressData = '{
             "karma": 0,
             "simple_past": {
@@ -99,11 +105,79 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($login)){
+        if (Auth::attempt($login)) {
             return redirect()->route('dashboard');
-        }else{
-            return redirect()->route('login')->with('failed','Wrong email or password');
+        } else {
+            return redirect()->route('login')->with('failed', 'Wrong email or password');
         };
+    }
 
+    public function forgot_password()
+    {
+        return view('forgotPassword');
+    }
+
+    public function forgot_password_act(Request $request)
+    {
+
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $token = \Str::random(60);
+
+        PasswordResetToken::updateOrCreate(
+            [
+                'email' => $request->email,
+            ],
+            [
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => now(),
+            ]
+        );
+
+        Mail::to($request->email)->send(new ResetPasswordMail($token));
+
+        return redirect()->route('forgot-password')->with('success', 'Please check your email to reset your password');
+    }
+
+    public function validasi_forgot_password(Request $request, $token)
+    {
+        $getToken = PasswordResetToken::where('token', $token)->first();
+
+        if (!$getToken) {
+            return redirect()->route('login')->with('failed', 'Invalid Token');
+        }
+
+        return view('validasiToken', compact('token'));
+    }
+
+    public function validasi_forgot_password_act(Request $request)
+    {
+
+        $request->validate([
+            'password' => 'required|min:8',
+        ]);
+
+        $token = PasswordResetToken::where('token', $request->token)->first();
+
+        if (!$token) {
+            return redirect()->route('login')->with('failed', 'Invalid Token');
+        }
+
+        $user = User::where('email', $token->email)->first();
+
+        if (!$user) {
+            return redirect()->route('login')->with('failed', 'Email not found');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        $token->delete();
+
+        return redirect()->route('login')->with('success', 'Password reset successfully');
     }
 }

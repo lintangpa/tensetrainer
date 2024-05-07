@@ -29,17 +29,7 @@
                                 required="">
                         </div>
                         <div class="flex items-center justify-end">
-                            {{-- <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input id="remember" aria-describedby="remember" type="checkbox"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-slate-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-slate-600 dark:ring-offset-gray-800"
-                                        required="">
-                                </div>
-                                <div class="ml-3 text-sm">
-                                    <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-                                </div>
-                            </div> --}}
-                            <a href="#"
+                            <a href="{{route('forgot-password')}}"
                                 class=" text-sm font-light text-slate-600 hover:underline dark:text-slate-500">Forgot
                                 password?</a>
                         </div>

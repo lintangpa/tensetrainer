@@ -1,12 +1,35 @@
 @extends('layout.userlayout')
 @section('konten')
-<div id="tutorialPopup" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-xl font-semibold mb-4">Welcome to Our Website Tutorial</h2>
-        <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of your experience.</p>
-        <button id="gotItBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Got it!</button>
+    <div id="tutorialPopup"
+        class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-xl font-semibold mb-4 text-center">Hey!! Welcome to Adelste:Re Memories</h2>
+            <div id="tutorialSteps">
+                <div class="tutorial-step" style="display: none">
+                    <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of your experience.</p>
+                </div>
+                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none">
+                    <img src="{{ URL::asset('/image/dragAndDrop.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
+                    <p class="text-center">Drag and drop words from the options provided into the conversation box.</p>
+                </div>
+                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                    <img src="{{ URL::asset('/image/resetButton.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
+                    <p class="text-center">If you make a mistake, use the "Reset" button to start over.</p>
+                </div>
+                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                    <img src="{{ URL::asset('/image/checkAnswer.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
+                    <p class="text-center">Once you've arranged your response, click "Check Answer".</p>
+                </div>
+                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                    <p class="text-center p-2">Make sure your response adheres to the correct tense rules to proceed.</p>
+                </div>
+            </div>
+            <button id="nextStepBtn" class="mt-4 px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto">Next</button>
+            <button id="gotItBtn" class="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto" style="display: none;">Got it!</button>
+        </div>
+        
+
     </div>
-</div>
     <section>
         <div class="p-4 sm:ml-64">
             <div class=" p-6 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
@@ -134,6 +157,37 @@
                 </script>
             @endif
             <script>
+                var currentStep = 0;
+                var tutorialSteps = document.querySelectorAll(".tutorial-step");
+                var nextStepBtn = document.getElementById("nextStepBtn");
+                var gotItBtn = document.getElementById("gotItBtn");
+
+                function showStep(stepIndex) {
+                    tutorialSteps.forEach(function(step, index) {
+                        if (index === stepIndex) {
+                            step.style.display = "block";
+                        } else {
+                            step.style.display = "none";
+                        }
+                    });
+                }
+
+                function updateButtons() {
+                    if (currentStep === tutorialSteps.length - 1) {
+                        nextStepBtn.style.display = "none";
+                        gotItBtn.style.display = "block";
+                    } else {
+                        nextStepBtn.style.display = "block";
+                        gotItBtn.style.display = "none";
+                    }
+                }
+
+                nextStepBtn.addEventListener("click", function() {
+                    currentStep++;
+                    showStep(currentStep);
+                    updateButtons();
+                });
+
                 document.addEventListener("DOMContentLoaded", function() {
                     var popup = document.getElementById('tutorialPopup');
                     var gotItButton = document.getElementById('gotItBtn');
@@ -142,6 +196,9 @@
                     });
                     popup.classList.remove('hidden');
                 });
-            </script>            
+
+                showStep(currentStep);
+                updateButtons();
+            </script>
     </section>
 @endsection
