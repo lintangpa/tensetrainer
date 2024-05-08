@@ -139,10 +139,10 @@ class SimplePresentController extends Controller
             [
                 'question' => "How about we practice together?",
                 'draggableWords' => [
-                    "Great", "idea,", "when", "do", "we", "start", "practicing", "practiced",
+                    "When", "do", "we", "start", "practicing", "practiced",
                     "together?", "I", "am", "lazy", "to", "practice", "every", "day",
                 ],
-                'correctAnswer' => ["Great", "idea,", "when", "do", "we", "start", "practicing", "together?"],
+                'correctAnswer' => ["When", "do", "we", "start", "practicing", "together?"],
                 'negativeAnswer' => ["lazy"],
                 'imagePath' => asset('image/chara/Fred.png'),
                 'imageWrong' => asset('image/chara/FredAngry.png'),
