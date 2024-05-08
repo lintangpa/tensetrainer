@@ -16,7 +16,7 @@
 </head>
 
 <body class="antialiased">
-
+    <script src="https://cdn.tailwindcss.com"></script>
     @include('layout.partials.nav')
     @yield('konten')
     @include('layout.partials.footer')

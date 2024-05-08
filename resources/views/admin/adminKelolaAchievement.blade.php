@@ -21,22 +21,26 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 text-left text-black">
-                                @foreach ($achievement as $achievement)
+                                @forelse ($achievement as $penghargaan)
                                     <tr>
-                                        <td>{{ $achievement->nama }}</td>
-                                        <td>{{ $achievement->deskripsi }}</td>
-                                        <td>{{ $achievement->requirement }}</td>
-                                        <td>{{ $achievement->icon }}</td>
+                                        <td>{{ $penghargaan->nama }}</td>
+                                        <td>{{ $penghargaan->deskripsi }}</td>
+                                        <td>{{ $penghargaan->requirement }}</td>
+                                        <td>{{ $penghargaan->icon }}</td>
                                         <td>
                                             <button
                                                 class="bg-amber-500 text-white p-1 rounded hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto aksiBtn"
-                                                data-achievement-id="{{ $achievement->id }}">Aksi</button>
+                                                data-penghargaan-id="{{ $penghargaan->id }}">Aksi</button>
                                             <button
                                                 class="bg-red-500 text-white p-1 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600 mx-auto deleteBtn"
-                                                data-achievement-id="{{ $achievement->id }}">Delete</button>
+                                                data-penghargaan-id="{{ $penghargaan->id }}">Delete</button>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">Tidak ada data.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -66,31 +70,32 @@
                             <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
                             <input type="text" name="nama" id="nama"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                                required value="{{ $achievement->nama }}">
+                                required data-penghargaan-id="{{ $penghargaan->nama ?? '' }}">
                         </div>
                         <div class="mb-4">
                             <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                             <input type="text" name="deskripsi" id="deskripsi"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                                required value="{{ $achievement->deskripsi }}">
+                                required data-penghargaan-id="{{ $penghargaan->deskripsi ?? '' }}">
                         </div>
                         <div class="mb-4">
                             <label for="requirement" class="block text-sm font-medium text-gray-700">Requirement</label>
                             <input type="text" name="requirement" id="requirement"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                                required value="{{ $achievement->requirement }}">
+                                required data-penghargaan-id="{{ $penghargaan->requirement ?? '' }}">
                         </div>
                         <div class="mb-4">
                             <label for="icon" class="block text-sm font-medium text-gray-700">Icon</label>
                             <input type="text" name="icon" id="icon"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                                required value="{{ $achievement->icon }}">
+                                required data-penghargaan-id="{{ $penghargaan->icon ?? '' }}">
                         </div>
                         <div class="flex justify-end">
                             <button type="submit"
                                 class="bg-amber-500 text-white py-2 px-4 rounded-md hover:bg-amber-600 focus:outline-none focus:bg-amber-600">Update</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -15,27 +15,27 @@ class AdminKelolaAchievementController extends Controller
 
     public function findId($id)
     {
-        $achievement = Achievement::findOrFail($id);
-        return response()->json($achievement);
+        $penghargaan = Achievement::findOrFail($id);
+        return response()->json($penghargaan);
     }
 
     public function updateDetail(Request $request, $id)
     {
-        $achievement= Achievement::findOrFail($id);
-        $achievement->nama = $request->input('nama');
-        $achievement->deskripsi = $request->input('deskripsi');
-        $achievement->requirement = $request->input('requirement');
-        $achievement->icon = $request->input('icon');
-        $achievement->save();
+        $penghargaan= Achievement::findOrFail($id);
+        $penghargaan->nama = $request->input('nama');
+        $penghargaan->deskripsi = $request->input('deskripsi');
+        $penghargaan->requirement = $request->input('requirement');
+        $penghargaan->icon = $request->input('icon');
+        $penghargaan->save();
 
-        return response()->json($achievement);
+        return response()->json($penghargaan);
     }
 
     public function destroy($id)
     {
-        $achievement = Achievement::find($id);
-        if ($achievement) {
-            $achievement->delete();
+        $penghargaan = Achievement::find($id);
+        if ($penghargaan) {
+            $penghargaan->delete();
             return response()->json(['message' => 'Achievement deleted successfully.']);
         } else {
             return response()->json(['error' => 'Achievement not found.'], 404);
@@ -56,12 +56,12 @@ class AdminKelolaAchievementController extends Controller
         $requirement = $request->input('requirement'); 
         $icon = $request->input('icon');
 
-        $achievement = new Achievement();
-        $achievement->nama = $nama;
-        $achievement->deskripsi = $deskripsi;
-        $achievement->requirement = $requirement;
-        $achievement->icon = $icon;
-        $achievement->save();
+        $penghargaan = new Achievement();
+        $penghargaan->nama = $nama;
+        $penghargaan->deskripsi = $deskripsi;
+        $penghargaan->requirement = $requirement;
+        $penghargaan->icon = $icon;
+        $penghargaan->save();
         return redirect()->route('admin-kelola-achievement');
     }
 }

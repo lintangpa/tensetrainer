@@ -17,7 +17,7 @@
 
 <body class="antialiased bg-slate-900">
     
-
+    <script src="https://cdn.tailwindcss.com"></script>
     @yield('konten')
     @include('layout.partials.footer')
 

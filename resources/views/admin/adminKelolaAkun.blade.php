@@ -92,7 +92,7 @@
                         <label for="achievement" class="block text-sm font-medium text-gray-700">Achievement</label>
                         <input type="text" name="achievement" id="achievement"
                             class="mt-1 p-2 block w-full rounded-md border-gray-300 focus:border-amber-500 focus:ring focus:ring-amber-200"
-                            data-user-id="{{ $user->achievement }}">
+                            data-user-id="{{ json_encode($user->achievement) }}">
                     </div>
                     <div class="flex justify-end">
                         <button type="submit"

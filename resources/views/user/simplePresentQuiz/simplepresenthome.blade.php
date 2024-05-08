@@ -1,33 +1,45 @@
 @extends('layout.userlayout')
 @section('konten')
-    <div id="tutorialPopup"
-        class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-xl font-semibold mb-4 text-center">Hey!! Welcome to Adelste:Re Memories</h2>
-            <div id="tutorialSteps">
-                <div class="tutorial-step" style="display: none">
-                    <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of your experience.</p>
+    @if ($userProgress['simple_present']['quest_1'] == 0)
+        <div id="tutorialPopup"
+            class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4 text-center">Hey!! Welcome to Adelste:Re Memories</h2>
+                <div id="tutorialSteps">
+                    <div class="tutorial-step" style="display: none">
+                        <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of
+                            your experience.</p>
+                    </div>
+                    <div class="tutorial-step flex flex-col items-center justify-center" style="display: none">
+                        <img src="{{ URL::asset('/image/dragAndDrop.gif') }}" class="h-auto w-72 mb-4 mx-auto"
+                            alt="">
+                        <p class="text-center">Drag and drop words from the options provided into the conversation box.</p>
+                    </div>
+                    <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                        <img src="{{ URL::asset('/image/resetButton.gif') }}" class="h-auto w-72 mb-4 mx-auto"
+                            alt="">
+                        <p class="text-center">If you make a mistake, use the "Reset" button to start over.</p>
+                    </div>
+                    <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                        <img src="{{ URL::asset('/image/checkAnswer.gif') }}" class="h-auto w-72 mb-4 mx-auto"
+                            alt="">
+                        <p class="text-center">Once you've arranged your response, click "Check Answer".</p>
+                    </div>
+                    <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
+                        <img src="{{ URL::asset('/image/chara/adelstenSmile.png') }}" class="h-auto w-24 mb-4 mx-auto"
+                            alt="">
+                        <p class="text-center p-2">Make sure your response adheres to the correct tense rules to proceed.
+                        </p>
+                    </div>
                 </div>
-                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none">
-                    <img src="{{ URL::asset('/image/dragAndDrop.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
-                    <p class="text-center">Drag and drop words from the options provided into the conversation box.</p>
-                </div>
-                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
-                    <img src="{{ URL::asset('/image/resetButton.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
-                    <p class="text-center">If you make a mistake, use the "Reset" button to start over.</p>
-                </div>
-                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
-                    <img src="{{ URL::asset('/image/checkAnswer.gif') }}" class="h-auto w-72 mb-4 mx-auto" alt="">
-                    <p class="text-center">Once you've arranged your response, click "Check Answer".</p>
-                </div>
-                <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
-                    <p class="text-center p-2">Make sure your response adheres to the correct tense rules to proceed.</p>
-                </div>
+                <button id="nextStepBtn"
+                    class="mt-4 px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto">Next</button>
+                <button id="gotItBtn"
+                    class="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto"
+                    style="display: none;">Got it!</button>
             </div>
-            <button id="nextStepBtn" class="mt-4 px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto">Next</button>
-            <button id="gotItBtn" class="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto" style="display: none;">Got it!</button>
-        </div>
-        
+    @endif
+
 
     </div>
     <section>

@@ -21,32 +21,31 @@ class SimplePresentController extends Controller
         $achievements = Achievement::all();
 
         foreach ($achievements as $achievement) {
-            if ($this->isAchievementUnlocked($user, $achievement)) {
+            if ($user->achievement && array_key_exists($achievement->nama, $user->achievement)) {
                 continue;
             }
+            $requirement = json_decode($achievement->requirement, true);
 
             if ($this->isAchievementRequirementsMet($achievement, $userProgress)) {
                 $this->storeAchievement($user, $achievement->nama);
                 $notifications[] = $achievement->nama;
             }
         }
-        return view('user.simplePresentQuiz.simplepresenthome', compact('notifications', 'userProgress', 'achievement'));
-    }
-
-    private function isAchievementUnlocked($user, $achievement)
-    {
-        return $user->achievement && array_key_exists($achievement->nama, $user->achievement);
+        return view('user.simplePresentQuiz.simplePresentHome', compact('notifications', 'userProgress'));
     }
 
     private function isAchievementRequirementsMet($achievement, $userProgress)
     {
         $requirement = json_decode($achievement->requirement, true);
 
-        foreach ($requirement['simple_present'] as $quest => $requiredProgress) {
-            if ($userProgress['simple_present'][$quest] < $requiredProgress) {
-                return false;
+        foreach ($requirement as $tense => $quests) {
+            foreach ($quests as $quest => $requiredProgress) {
+                if (!isset($userProgress[$tense][$quest]) || $userProgress[$tense][$quest] < $requiredProgress) {
+                    return false;
+                }
             }
         }
+
         return true;
     }
 

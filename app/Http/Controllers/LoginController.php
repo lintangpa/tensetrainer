@@ -96,7 +96,7 @@ class LoginController extends Controller
                 "quest_4": 0
             }
         }';
-        $data['progress'] = json_decode($progressData);
+        $data['progress'] = ($progressData);
 
         User::create($data);
 

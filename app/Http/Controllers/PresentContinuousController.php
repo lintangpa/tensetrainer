@@ -28,14 +28,7 @@ class PresentContinuousController extends Controller
             }
             $requirement = json_decode($achievement->requirement, true);
 
-            $isAchieved = true;
-            foreach ($requirement['simple_present'] as $quest => $requiredProgress) {
-                if ($userProgress['simple_present'][$quest] < $requiredProgress) {
-                    $isAchieved = false;
-                    break;
-                }
-            }
-            if ($isAchieved) {
+            if ($this->isAchievementRequirementsMet($achievement, $userProgress)) {
                 $this->storeAchievement($user, $achievement->nama);
                 $notifications[] = $achievement->nama;
             }
@@ -43,12 +36,19 @@ class PresentContinuousController extends Controller
         return view('user.presentContinuousQuiz.presentContinuousHome', compact('notifications', 'userProgress'));
     }
 
-    private function storeAchievement(User $user, $achievementName)
+    private function isAchievementRequirementsMet($achievement, $userProgress)
     {
+        $requirement = json_decode($achievement->requirement, true);
 
-        $achievements = $user->achievement ?: [];
-        $achievements[$achievementName] = true;
-        $user->update(['achievement' => $achievements]);
+        foreach ($requirement as $tense => $quests) {
+            foreach ($quests as $quest => $requiredProgress) {
+                if (!isset($userProgress[$tense][$quest]) || $userProgress[$tense][$quest] < $requiredProgress) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public function getKarma()
