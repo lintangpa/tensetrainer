@@ -10,7 +10,7 @@
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1
                         class="text-center text-2xl font-semiboldleading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Enter your registered email
+                        Masukkan email yang terdaftar
                     </h1>
                     <form class="space-y-4 md:space-y-6" action="{{ route('forgot-password-act') }}" method="POST">
                         @csrf
@@ -37,16 +37,14 @@
                     text: "{{ $message }}",
                 });
             @endif
-        </script>
 
-<script>
-    @if ($message = Session::get('failed'))
-        Swal.fire({
-            icon: "failed",
-            title: "Failed",
-            text: "{{ $message }}",
-        });
-    @endif
-</script>
+            @if ($message = Session::get('error'))
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "{{ $message }}",
+                });
+            @endif
+        </script>
     </section>
 @endsection

@@ -289,7 +289,7 @@
                         imageRose = currentQuestion.imagePath;
                     } else {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Rose's response must be a question that the answer is ${nextQuestion.correctAnswer}.Rose answer must based on context ${questions}`;
+                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Rose's response must be a question that the answer is ${currentQuestion.correctAnswer}.Rose answer must based on context ${questions}`;
                             imageRose = currentQuestion.imageSmile;
                         }
                 } else {
@@ -477,7 +477,7 @@
                 type: "POST",
                 url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50,
+                    exp: 50*correctAnswersCount/2.7,
                     _token: csrfToken
                 },
                 success: function(response) {},

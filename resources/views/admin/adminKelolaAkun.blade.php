@@ -119,7 +119,7 @@
 
             var userId;
 
-            $('.aksiBtn').click(function() {
+            $(document).on('click', '.aksiBtn', function() {
                 userId = $(this).data('user-id');
                 console.log(userId);
                 $('#user_id').val(userId);
@@ -163,7 +163,7 @@
                 });
             });
 
-            $('.deleteBtn').click(function() {
+            $(document).on('click', '.deleteBtn', function() {
                 var userId = $(this).data('user-id');
                 if (confirm("Are you sure you want to delete this user?")) {
                     $.ajax({

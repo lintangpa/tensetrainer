@@ -293,7 +293,7 @@
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}. Fred answer must based on context ${questions}`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${currentQuestion.correctAnswer}. Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
@@ -478,7 +478,7 @@
                 type: "POST",
                 url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50,
+                    exp: 50*correctAnswersCount/2.7,
                     _token: csrfToken
                 },
                 success: function(response) {},

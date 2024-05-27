@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminKelolaAchievementController extends Controller
 {
@@ -20,16 +21,25 @@ class AdminKelolaAchievementController extends Controller
     }
 
     public function updateDetail(Request $request, $id)
-    {
-        $penghargaan= Achievement::findOrFail($id);
+    {   
+        $penghargaan = Achievement::findOrFail($id);
         $penghargaan->nama = $request->input('nama');
         $penghargaan->deskripsi = $request->input('deskripsi');
         $penghargaan->requirement = $request->input('requirement');
-        $penghargaan->icon = $request->input('icon');
+        
+        if ($request->hasFile('icon')) {
+            $icon = $request->file('icon');
+            $filename = date('Y-m-d') . $icon->getClientOriginalName();
+            $path = 'images/' . $filename;
+            Storage::disk('public')->put($path, file_get_contents($icon));
+            $penghargaan->icon = $filename;
+        }
+        
         $penghargaan->save();
-
+    
         return response()->json($penghargaan);
     }
+    
 
     public function destroy($id)
     {
@@ -48,21 +58,24 @@ class AdminKelolaAchievementController extends Controller
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
             'requirement' => 'required|json',
-            'icon' => 'required|string',
+            'icon' => 'required|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $nama = $request->input('nama');
         $deskripsi = $request->input('deskripsi');
-        $requirement = $request->input('requirement'); 
-        $icon = $request->input('icon');
+        $requirement = $request->input('requirement');
+        $icon = $request->file('icon');
+        $filename = date('Y-m-d') . $icon->getClientOriginalName();
+        $path = 'images/' . $filename;
+
+        Storage::disk('public')->put($path, file_get_contents($icon));
 
         $penghargaan = new Achievement();
         $penghargaan->nama = $nama;
         $penghargaan->deskripsi = $deskripsi;
         $penghargaan->requirement = $requirement;
-        $penghargaan->icon = $icon;
+        $penghargaan->icon = $filename;
         $penghargaan->save();
         return redirect()->route('admin-kelola-achievement');
     }
 }
-

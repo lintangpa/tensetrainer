@@ -285,7 +285,7 @@
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${nextQuestion.correctAnswer}.Fred answer must based on context ${questions}`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${currentQuestion.correctAnswer}.Fred answer must based on context ${questions}`;
                         imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
@@ -297,12 +297,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
+                            `Dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple present tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}. Jawab dengan marah karena terdapat "${currentQuestion.negativeAnswer}"`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.Fred answer must based on context ${questions}`;
+                            `Jawab dengan maksimal 25 kata dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple present tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}"`;
                         imageFred = currentQuestion.imageWrong;
                     }
                 }
@@ -317,7 +317,8 @@
                         text: generatedText,
                         imageUrl: imageFred,
                         imageWidth: 100,
-                        imageHeight: 100
+                        imageHeight: 100,
+                        width: 500
                     });
                     stopTimer();
                     document.getElementById('nextBtn').style.display = 'block';
@@ -438,6 +439,7 @@
         document.getElementById('backmenu').addEventListener('click', function(event) {
             if (correctAnswersCount >= 2) {
                 updateProgress(event);
+                window.location.href = "{{ route('simple-present') }}";
             } else {
                 window.location.href = "{{ route('simple-present') }}";
             }
@@ -456,7 +458,6 @@
                 },
                 success: function(response) {
                     addExp(event);
-                    window.location.href = "{{ route('simple-present') }}";
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -471,7 +472,7 @@
                 type: "POST",
                 url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50,
+                    exp: 50*correctAnswersCount/2.7,
                     _token: csrfToken
                 },
                 success: function(response) {},

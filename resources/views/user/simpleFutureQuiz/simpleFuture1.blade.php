@@ -445,7 +445,7 @@
                 type: "POST",
                 url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50,
+                    exp: 50*correctAnswersCount/2.7,
                     _token: csrfToken
                 },
                 success: function(response) {},

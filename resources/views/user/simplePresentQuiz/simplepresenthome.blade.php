@@ -4,31 +4,37 @@
         <div id="tutorialPopup"
             class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4 text-center">Hey!! Welcome to Adelste:Re Memories</h2>
+                <h2 class="text-xl font-semibold mb-4 text-center">Selamat datang di Adelsten:ReMemories</h2>
                 <div id="tutorialSteps">
                     <div class="tutorial-step" style="display: none">
-                        <p class="text-gray-700 mb-4">Here you can learn how to navigate our website and make the most out of
-                            your experience.</p>
+                        <img src="{{ URL::asset('/image/chara/adelstenSmile.png') }}" class="h-auto w-24 mb-4 mx-auto"
+                        alt="">
+                        <p class="text-gray-700 mb-4">Disini anda akan mempelajari bagaimana cara melakukan percakapan sesuai dengan aturan tata bahasa</p>
+                    </div>
+                    <div class="tutorial-step flex flex-col items-center justify-center" style="display: none">
+                        <img src="{{ URL::asset('/image/chara/adelstenSmile.png') }}" class="h-auto w-24 mb-4 mx-auto"
+                        alt="">
+                        <p class="text-center">Berikut ini adalah bagaimana cara menggunakan aplikasi</p>
                     </div>
                     <div class="tutorial-step flex flex-col items-center justify-center" style="display: none">
                         <img src="{{ URL::asset('/image/dragAndDrop.gif') }}" class="h-auto w-72 mb-4 mx-auto"
                             alt="">
-                        <p class="text-center">Drag and drop words from the options provided into the conversation box.</p>
+                        <p class="text-center">Seret dan jatuhkan kata dari opsi yang disediakan ke dalam kotak yang disediakan.</p>
                     </div>
                     <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
                         <img src="{{ URL::asset('/image/resetButton.gif') }}" class="h-auto w-72 mb-4 mx-auto"
                             alt="">
-                        <p class="text-center">If you make a mistake, use the "Reset" button to start over.</p>
+                        <p class="text-center">Jika Anda melakukan kesalahan, gunakan tombol “Reset” untuk memulai kembali.</p>
                     </div>
                     <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
                         <img src="{{ URL::asset('/image/checkAnswer.gif') }}" class="h-auto w-72 mb-4 mx-auto"
                             alt="">
-                        <p class="text-center">Once you've arranged your response, click "Check Answer".</p>
+                        <p class="text-center">Setelah Anda mengatur jawaban Anda, klik Check Answer".</p>
                     </div>
                     <div class="tutorial-step flex flex-col items-center justify-center" style="display: none;">
                         <img src="{{ URL::asset('/image/chara/adelstenSmile.png') }}" class="h-auto w-24 mb-4 mx-auto"
                             alt="">
-                        <p class="text-center p-2">Make sure your response adheres to the correct tense rules to proceed.
+                        <p class="text-center p-2">Pastikan jawaban Anda mengikuti aturan bentuk kalimat yang benar.
                         </p>
                     </div>
                 </div>
@@ -36,7 +42,7 @@
                     class="mt-4 px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto">Next</button>
                 <button id="gotItBtn"
                     class="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 flex items-center justify-center mx-auto"
-                    style="display: none;">Got it!</button>
+                    style="display: none;">Yuk Mulai!</button>
             </div>
     @endif
 

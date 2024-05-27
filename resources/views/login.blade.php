@@ -10,7 +10,7 @@
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1
                         class="text-center text-2xl font-semiboldleading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign in to your account
+                        Masuk ke akun anda
                     </h1>
                     <form class="space-y-4 md:space-y-6" action="{{ route('login-proses') }}" method="POST">
                         @csrf
@@ -30,15 +30,14 @@
                         </div>
                         <div class="flex items-center justify-end">
                             <a href="{{route('forgot-password')}}"
-                                class=" text-sm font-light text-slate-600 hover:underline dark:text-slate-500">Forgot
+                                class=" text-sm font-light text-slate-600 hover:underline dark:text-slate-500">Lupa
                                 password?</a>
                         </div>
                         <button type="submit"
-                            class="w-full text-white bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-500 dark:hover:bg-slate-600 dark:focus:ring-slate-800">Sign
-                            in</button>
+                            class="w-full text-white bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-500 dark:hover:bg-slate-600 dark:focus:ring-slate-800">Masuk</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                            Don’t have an account yet? <a href="{{route('register')}}"
-                                class="font-medium text-slate-600 hover:underline dark:text-slate-500">Sign up</a>
+                            Belum punya akun? <a href="{{route('register')}}"
+                                class="font-medium text-slate-600 hover:underline dark:text-slate-500">Yuk daftar!</a>
                         </p>
                     </form>
                 </div>

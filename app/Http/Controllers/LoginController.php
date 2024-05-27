@@ -37,7 +37,7 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
         } else {
-            return redirect()->route('login')->with('failed', 'Wrong email or password');
+            return redirect()->route('login')->with('failed', 'Email atau password salah!');
         }
     }
 
@@ -83,7 +83,7 @@ class LoginController extends Controller
                 "quest_3": 0,
                 "quest_4": 0
             },
-            "future_continuous": {
+            "simple_future": {
                 "quest_1": 0,
                 "quest_2": 0,
                 "quest_3": 0,
@@ -96,7 +96,7 @@ class LoginController extends Controller
                 "quest_4": 0
             }
         }';
-        $data['progress'] = ($progressData);
+        $data['progress'] = json_decode($progressData);
 
         User::create($data);
 
@@ -108,7 +108,7 @@ class LoginController extends Controller
         if (Auth::attempt($login)) {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->route('login')->with('failed', 'Wrong email or password');
+            return redirect()->route('login')->with('failed', 'Email atau password salah!');
         };
     }
 
@@ -121,8 +121,13 @@ class LoginController extends Controller
     {
 
         $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
         ]);
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return redirect()->route('forgot-password')->with('error', 'Email tidak ada!');
+        }
 
         $token = \Str::random(60);
 
@@ -139,7 +144,7 @@ class LoginController extends Controller
 
         Mail::to($request->email)->send(new ResetPasswordMail($token));
 
-        return redirect()->route('forgot-password')->with('success', 'Please check your email to reset your password');
+        return redirect()->route('forgot-password')->with('success', 'Silahkan cek email anda untuk reset password');
     }
 
     public function validasi_forgot_password(Request $request, $token)
@@ -169,7 +174,7 @@ class LoginController extends Controller
         $user = User::where('email', $token->email)->first();
 
         if (!$user) {
-            return redirect()->route('login')->with('failed', 'Email not found');
+            return redirect()->route('login')->with('failed', 'Email tidak ada');
         }
 
         $user->update([
@@ -178,6 +183,6 @@ class LoginController extends Controller
 
         $token->delete();
 
-        return redirect()->route('login')->with('success', 'Password reset successfully');
+        return redirect()->route('login')->with('success', 'Password berhasil direset');
     }
 }

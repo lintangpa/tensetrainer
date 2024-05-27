@@ -2,7 +2,7 @@
 @section('konten')
     <style>
         .droppable {
-            min-height: 50px;
+            min-height: 70px;
             border: 2px dashed #4a5568;
             padding: 10px;
         }
@@ -21,15 +21,15 @@
         <div class=" p-1 rounded-lg shadow bg-white bg-opacity-15 backdrop-blur-lg">
             <div id="Header" class="mb-4">
                 <div class="relative w-full bg-center mx-auto bg-cover bg-no-repeat rounded p-6 shadow-md text-center"
-                    style="background-image: url('{{ asset('image/taman2.jpg') }}');">
+                    style="background-image: url('{{ asset('image/rumahFred.jpg') }}');">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
-                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">Bloom de Fleur</h2>
+                    <h2 class="text-2xl font-bold text-white shadow-black mb-4 z-10 relative">SIMPLE PRESENT 1</h2>
                 </div>
             </div>
             <!-- Bagian cerita -->
             <div id="cerita">
                 <div class="relative bg-cover bg-bottom h-full w-full mx-auto"
-                    style="background-image: url('image/taman2.jpg'); ">
+                    style="background-image: url('image/rumahFred.jpg'); ">
                     <div class="absolute inset-0 bg-gradient-to-t from-transparent to-slate-900"></div>
                     <div class="w-full mx-auto rounded p-6 shadow-md text-center relative z-10">
                         <p id="ceritaContent" class="text-white"></p>
@@ -52,8 +52,6 @@
                             </div>
                         </div>
                         <div class="draggable-container flex flex-wrap">
-                            {{-- <div class="draggable bg-gray-200 rounded p-2 m-1" draggable="true" ontouchstart="touchStart(event)"
-                            ontouchmove="touchMove(event)" ontouchend="touchEnd(event)" ondragstart="dragStart(event)"></div> --}}
                         </div>
                         <div class="flex mt-4">
                             <button id="resetBtn"
@@ -68,12 +66,8 @@
                             </button>
                         </div>
                     </div>
-                    <div id="result" class="mt-4 text-center font-semibold text-xl"></div>
-                    {{-- <a id="backmenu" href="{{ route('simple-past') }} " onclick="updateProgress(event)"
-                        style="display: none;">
-                        <button class="mb-6 w-full h-16 bg-amber-600 rounded-md text-white text-lg font-semibold">Back to
-                            Menu</button>
-                    </a> --}}
+                    <div id="result" class="mt-4 text-center font-semibold text-xl">
+                    </div>
                     <button id="backmenu" onclick="" style="display: none;"
                         class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
                         Back to Menu
@@ -89,7 +83,7 @@
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = @json($ceritaContent);
-
+        const questions = @json($questions);
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
         const lanjutCeritaBtn = document.getElementById('lanjutCeritaBtn')
@@ -187,9 +181,6 @@
         //Script dragndrop2
         let currentTouchTarget = null;
         let sentence = '';
-
-        const questions = @json($questions);
-
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
@@ -271,15 +262,15 @@
                 const currentQuestion = questions[currentQuestionIndex];
                 const nextQuestion = questions[currentQuestionIndex + 1];
                 const userAnswer = sentence.trim();
-                const simplePastPrompt =
-                    `Is this sentence in the simple past tense in either the interrogative, negative, or positive form? "${userAnswer}".The order must also be in accordance with the rules of the simple past tense. answer with yes or no.`;
+                const simplePresentPrompt =
+                    ` Is this sentence in the simple present tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no.`;
 
-                const simplePastResponse = await fetchOpenAI(simplePastPrompt);
-                const simplePastData = await simplePastResponse.json();
-                const simplePastAnswer = await simplePastData.choices[0].text.trim().toLowerCase();
-                let imageRose;
+                const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
+                const simplePresentData = await simplePresentResponse.json();
+                const simplePresentAnswer = await simplePresentData.choices[0].text.trim().toLowerCase();
+                let imageFred;
                 let prompt;
-                if (simplePastAnswer === 'yes') {
+                if (simplePresentAnswer === 'yes') {
                     correctAnswersCount++;
                     const negativeAnswerPrompt =
                         `If on "${userAnswer}" there is "${currentQuestion.negativeAnswer}" then the answer is negative if not the answer is not negative. Is "${userAnswer}" considered a negative answer? Answer with yes or no.`;
@@ -289,13 +280,13 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
-                        imageRose = currentQuestion.imageWrong;
+                        imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                        `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Rose should say without any command. Rose response happy because ${userAnswer} using simple past tenses. Rose answer must based on context ${questions}`;
-                        imageRose = currentQuestion.imageSmile;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"? Fred's response must be a question that the answer is ${currentQuestion.correctAnswer}.Fred answer must based on context ${questions}`;
+                        imageFred = currentQuestion.imageCorrect;
                     }
                 } else {
                     const negativeAnswerPrompt =
@@ -306,13 +297,13 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response angry because answer is negative`;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response angry because answer is negative. Fred answer must based on context ${questions}`;
                         karma += 1;
-                        imageRose = currentQuestion.imageWrong;
+                        imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused. Rose answer must based on context ${questions}`;
-                        imageRose = currentQuestion.imageWrong;
+                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using simple present tenses. feeling sad and confused.Fred answer must based on context ${questions}`;
+                        imageFred = currentQuestion.imageWrong;
                     }
                 }
 
@@ -324,7 +315,7 @@
                     const generatedText = data.choices[0].text.trim();
                     Swal.fire({
                         text: generatedText,
-                        imageUrl: imageRose,
+                        imageUrl: imageFred,
                         imageWidth: 100,
                         imageHeight: 100
                     });
@@ -353,6 +344,7 @@
         });
 
         window.OPENAI_API_KEY = "{{ env('OPENAI_API_KEY') }}";
+        const currentQuestion = questions[currentQuestionIndex];
 
         async function fetchOpenAI(prompt) {
             const response = await fetch('https://api.openai.com/v1/completions', {
@@ -370,7 +362,7 @@
             });
             return response;
         }
-        
+
         function showResult() {
             let resultText = '';
             if (correctAnswersCount >= 2) {
@@ -381,7 +373,8 @@
                 imagePath = 'image/chara/adelstenAngry.png';
             }
 
-            resultText += `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
+            resultText +=
+                `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
 
             document.getElementById('result').innerHTML = resultText;
             document.getElementById('timer').style.display = 'none';
@@ -393,15 +386,16 @@
         let touchStartX, touchStartY;
         let draggableElement;
 
-        // Fungsi touchStart
         function touchStart(event) {
             event.preventDefault();
             touchStartX = event.touches[0].clientX;
             touchStartY = event.touches[0].clientY;
             draggableElement = event.target;
+            const rect = draggableElement.getBoundingClientRect();
+            initialX = rect.left;
+            initialY = rect.top;
         }
 
-        // Fungsi touchMove
         function touchMove(event) {
             event.preventDefault();
             const touchX = event.touches[0].clientX;
@@ -413,29 +407,40 @@
             }
         }
 
-        // Fungsi touchEnd
         function touchEnd(event) {
             event.preventDefault();
             if (draggableElement) {
-                draggableElement.style.transition = 'transform 0.2s ease';
-                draggableElement.style.transform = 'translate(0, 0)';
-                sentence += draggableElement.textContent + ' ';
-                document.getElementById('droppable').innerHTML += draggableElement.textContent + ' ';
+                const droppable = document.getElementById('droppable');
+                const rect = droppable.getBoundingClientRect();
+                const elemRect = draggableElement.getBoundingClientRect();
+                if (
+                    elemRect.left >= rect.left &&
+                    elemRect.top >= rect.top &&
+                    elemRect.right <= rect.right &&
+                    elemRect.bottom <= rect.bottom
+                ) {
+                    draggableElement.style.transition = 'transform 0.2s ease';
+                    draggableElement.style.transform = 'translate(0, 0)';
+                    sentence += draggableElement.textContent + ' ';
+                    document.getElementById('droppable').innerHTML += draggableElement.textContent + ' ';
+                } else {
+                    draggableElement.style.transition = 'transform 0.2s ease';
+                    draggableElement.style.transform = 'translate(0, 0)';
+                    draggableElement.style.left = initialX + 'px';
+                    draggableElement.style.top = initialY + 'px';
+                }
                 draggableElement = null;
             }
         }
 
-        // Fungsi allowDrop
         function allowDrop(ev) {
             ev.preventDefault();
         }
 
-        // Fungsi dragStart
         function dragStart(ev) {
             ev.dataTransfer.setData("text", ev.target.textContent);
         }
 
-        // Fungsi drop
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
@@ -444,10 +449,11 @@
         }
 
         document.getElementById('backmenu').addEventListener('click', function(event) {
-            if (correctAnswersCount>=2){
+            if (correctAnswersCount >= 2) {
                 updateProgress(event);
+                window.location.href = "{{ route('simple-present') }}";
             } else {
-                window.location.href = "{{ route('simple-past') }}";
+                window.location.href = "{{ route('simple-present') }}";
             }
         });
 
@@ -455,7 +461,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $.ajax({
                 type: "POST",
-                url: "{{ route('updateprogress3Q3') }}",
+                url: "{{ route('updateprogress1Q1') }}",
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
@@ -464,7 +470,6 @@
                 },
                 success: function(response) {
                     addExp(event);
-                    window.location.href = "{{ route('simple-past') }}";
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -479,7 +484,7 @@
                 type: "POST",
                 url: "{{ route('addexp') }}",
                 data: {
-                    exp: 50*correctAnswersCount/2.7,
+                    exp: 50 * correctAnswersCount / 2.7,
                     _token: csrfToken
                 },
                 success: function(response) {},

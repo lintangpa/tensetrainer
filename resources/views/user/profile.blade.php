@@ -34,7 +34,7 @@
         <h2 class="font-semibold mb-4 text-3xl">Achievement</h2>
         @foreach ($achievementInfo as $achievement)
             <div class="bg-slate-100 p-6 rounded-lg shadow-md mb-2">
-                <img src="{{ URL::asset($achievement->icon) }}" alt="Icon Achievement" class="w-10 h-10">
+                <img src="{{ asset('storage/images/' . $achievement->icon) }}" alt="Icon Achievement" class="w-10 h-10">
                 <p><strong>{{ $achievement->nama }}</strong></p>
                 <p><strong>Description:</strong> {{ $achievement->deskripsi }}</p>
             </div>

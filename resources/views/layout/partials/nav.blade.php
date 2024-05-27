@@ -9,6 +9,11 @@
                 </svg>
             </button>
         </a>
+        <div class="inline-flex items-center fixed top-8 left-8">
+            <a id="languageSwitch">
+                <img id="flagImage" src="{{URL::asset('uk.png')}}" alt="Switch Language" width="48px" height="48px">
+            </a>
+        </div>
     </div>
     
 </header>
