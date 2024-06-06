@@ -295,14 +295,14 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Fred should say without any command. Fred response sad because answer is negative. Fred answer must based on context ${questions}.response is not shown for rose`;
+                            `Dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi past continuous tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}. Jawab dengan marah karena terdapat "${currentQuestion.negativeAnswer}"`;
                         karma += 1;
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Fred should say without any command. Fred response confused because ${userAnswer} not using past continuous tenses. feeling sad and confused.Fred answer must based on context ${questions}.response is not shown for rose`;
+                            `Jawab dengan maksimal 25 kata dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi past continuous tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}"`;
                         imageFred = currentQuestion.imageWrong;
-                        }
+                    }
                 }
 
                 const response = await fetchOpenAI(prompt);

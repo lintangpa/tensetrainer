@@ -169,11 +169,11 @@ class KontenSeeder extends Seeder
                 [
                     'question' => "Hi, Adelsten! How are you today?",
                     'draggableWords' => [
-                        "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
+                        "Are", "you", "ready", "for", "the",
                         "magic", "selection", "test", "next", "week?",
                     ],
                     'correctAnswer' => [
-                        "Hi,", "Fred!", "I'm", "doing", "fine.", "Are", "you", "ready", "for", "the",
+                        "Are", "you", "ready", "for", "the",
                         "magic", "selection", "test", "next", "week?",
                     ],
                     'imagePath' => 'image/chara/Fred.png',
@@ -245,10 +245,10 @@ class KontenSeeder extends Seeder
                 [
                     'question' => "Do we start tomorrow?",
                     'draggableWords' => [
-                        "Okay,", "then", "we'll", "practice", "tomorrow",
+                        "Okay,", "then", "we will", "practice", "tomorrow",
                     ],
                     'correctAnswer' => [
-                        "Okay,", "then", "we'll", "practice", "tomorrow",
+                        "Okay,", "then", "we will", "practice", "tomorrow",
                     ],
                     'imagePath' => 'image/chara/Fred.png',
                     'imageWrong' => 'image/chara/FredAngry.png',
@@ -275,7 +275,7 @@ class KontenSeeder extends Seeder
                 [
                     'question' => "No need to be sad, Adelsten, there is always a way",
                     'draggableWords' => [
-                        "Do", "we", "go", "to", "the", "library?", "Does", "Do", "Are", "Will",
+                        "Do", "we", "go", "to", "the", "library?", "Does", "Are", "Will",
                     ],
                     'correctAnswer' => ["Do", "we", "go", "to", "the", "library?"],
                     'imagePath' => 'image/chara/Fred.png',

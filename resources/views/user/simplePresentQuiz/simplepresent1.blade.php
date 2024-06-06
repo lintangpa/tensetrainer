@@ -302,7 +302,7 @@
                         imageFred = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `Jawab dengan maksimal 25 kata dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple present tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}"`;
+                            `Jawab dengan maksimal 17 kata dimana letak kesalahan dari “${userAnswer}”, bagaimana pembetulan supaya sesuai simple present tense?  Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}`;
                         imageFred = currentQuestion.imageWrong;
                     }
                 }
@@ -318,7 +318,7 @@
                         imageUrl: imageFred,
                         imageWidth: 100,
                         imageHeight: 100,
-                        width: 500
+                        width: 700
                     });
                     stopTimer();
                     document.getElementById('nextBtn').style.display = 'block';
@@ -367,10 +367,10 @@
         function showResult() {
             let resultText = '';
             if (correctAnswersCount >= 2) {
-                resultText = `Congratulations! You can proceed.`;
+                resultText = `Selamat anda bisa melanjutkan ke Quest selanjutnya. Jawaban benar anda sebanyak ${correctAnswersCount}`;
                 imagePath = 'image/chara/adelstenSmile.png';
             } else {
-                resultText = `Oops! You didn't pass.`;
+                resultText = `Oops! Kamu perlu belajar lagi. Jawaban benar anda sebanyak ${correctAnswersCount}`;
                 imagePath = 'image/chara/adelstenAngry.png';
             }
 

@@ -301,12 +301,12 @@
 
                     if (negativeAnswer === 'yes') {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.negativeAnswer}" ? Response only Rose should say without any command. Rose response sad because answer is negative. Rose answer must based on context ${questions}`;
+                            `Dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple past tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}. Jawab dengan marah karena terdapat "${currentQuestion.negativeAnswer}"'`;
                         karma += 1;
                         imageRose = currentQuestion.imageWrong;
                     } else {
                         prompt =
-                            `What should Rose response for "${userAnswer}" based on "${currentQuestion.correctAnswer}" ? Response only Rose should say without any command. Rose response confused because ${userAnswer} not using simple past tenses. feeling sad and confused.Rose answer must based on context ${questions}`;
+                            `Jawab dengan maksimal 25 kata dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple past tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}"`;
                         imageRose = currentQuestion.imageWrong;
                         }
                 }
