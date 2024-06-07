@@ -1,19 +1,38 @@
 @extends('layout.userlayout')
 @section('konten')
     <style>
-        .droppable {
-            min-height: 50px;
-            border: 2px dashed #4a5568;
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question-container img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .answer {
+            background-color: #f3f4f6;
             padding: 10px;
-        }
-
-        .draggable {
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: background-color 0.2s ease;
         }
 
-        .draggable:active {
-            transform: scale(1.1);
+        .answer:hover {
+            background-color: #e5e7eb;
+        }
+
+        .answer input {
+            margin-right: 10px;
         }
     </style>
     <div class="p-4 sm:ml-64">
@@ -42,18 +61,23 @@
             <!-- Bagian Pertanyaan -->
             <div id="pertanyaan" style="display: none;">
                 <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
-                    <div id="timer" class="mb-2 text-amber-500">Timer: 00:00</div>
+                    <div class="flex justify-between items-center mb-2">
+                        <div id="timer" class="text-amber-500">Timer: 00:00</div>
+                        <button id="showCeritaBtn" class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                                <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        
+                    </div>
                     <div id="isipertanyaan">
                         <div class="mb-4">
-                            <div class="question-container flex items-center">
+                            <div class="question-container">
                                 <p class="inline"></p>
                             </div>
-                            <div class="droppable mt-4" id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="answers-container" id="answers-container">
+                                <!-- Pilihan jawaban akan dimasukkan di sini -->
                             </div>
-                        </div>
-                        <div class="draggable-container flex flex-wrap">
-                            {{-- <div class="draggable bg-gray-200 rounded p-2 m-1" draggable="true" ontouchstart="touchStart(event)"
-                            ontouchmove="touchMove(event)" ontouchend="touchEnd(event)" ondragstart="dragStart(event)"></div> --}}
                         </div>
                         <div class="flex mt-4">
                             <button id="resetBtn"
@@ -69,7 +93,7 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4 text-center font-semibold text-xl">
-                        
+
                     </div>
                     <button id="backmenu" onclick="" style="display: none;"
                         class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
@@ -97,7 +121,7 @@
 
         let timerElement = document.getElementById('timer');
         let timerInterval;
-        let timertotal = {{$timertotal}};
+        let timertotal = {{ $timertotal }};
 
         function startTimer(durationInSeconds) {
             let timer = durationInSeconds;
@@ -183,10 +207,7 @@
             }, 20); // makin kecil makin cepet
         }
 
-        //Script dragndrop2
-        let currentTouchTarget = null;
-        let sentence = '';
-
+        // Script Multiple Choice
         let currentQuestionIndex = 0;
         initializeQuestion(currentQuestionIndex);
         let correctAnswersCount = 0;
@@ -194,289 +215,123 @@
         function initializeQuestion(index) {
             const question = questions[index];
             const questionElement = document.querySelector('.question-container');
-            const wordsContainer = document.querySelector('.draggable-container');
-            const questionHTML =
-                `<img src="${question.imagePath}" alt="Question Image" class="inline-block mr-2 w-10 h-10"> <p>${question.question}</p>`;
-            document.querySelector('.question-container').innerHTML = questionHTML;
-            wordsContainer.innerHTML = '';
-            const shuffledDraggableWords = shuffleArray(question.draggableWords);
-            shuffledDraggableWords.forEach(word => {
-                const draggableElement = createDraggableElement(word);
-                wordsContainer.appendChild(draggableElement);
+            const answersContainer = document.getElementById('answers-container');
+
+            const shuffledAnswers = question.draggableWords.sort(() => Math.random() - 0.5); // Acak pilihan jawaban
+
+            const questionHTML = `
+        <img src="${question.imagePath}" alt="Question Image">
+        <p>${question.question}</p>
+    `;
+            questionElement.innerHTML = questionHTML;
+
+            answersContainer.innerHTML = '';
+            shuffledAnswers.forEach((answer, i) => {
+                const answerHTML = `
+            <label class="answer">
+                <input type="radio" name="answer" value="${answer}">
+                ${answer}
+            </label>
+        `;
+                answersContainer.innerHTML += answerHTML;
             });
             startTimer(timertotal);
         }
 
-        function createDraggableElement(word) {
-            const draggableElement = document.createElement('div');
-            draggableElement.textContent = word;
-            draggableElement.classList.add('draggable', 'bg-gray-200', 'rounded', 'p-2', 'm-1');
-            draggableElement.setAttribute('draggable', true);
-            draggableElement.setAttribute('ontouchstart', 'touchStart(event)');
-            draggableElement.setAttribute('ontouchmove', 'touchMove(event)');
-            draggableElement.setAttribute('ontouchend', 'touchEnd(event)');
-            draggableElement.setAttribute('ondragstart', 'dragStart(event)');
-            return draggableElement;
+
+        document.getElementById('resetBtn').addEventListener('click', resetChoices);
+
+        function resetChoices() {
+            const answersContainer = document.getElementById('answers-container');
+            const radioButtons = answersContainer.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+            });
         }
 
-        // Fungsi acak
-        function shuffleArray(array) {
-            const shuffledArray = array.slice();
-            for (let i = shuffledArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[
-                    i]];
+        document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+
+        function checkAnswer() {
+            const answersContainer = document.getElementById('answers-container');
+            const selectedAnswer = answersContainer.querySelector('input[type="radio"]:checked');
+
+            if (!selectedAnswer) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please select an answer!',
+                });
+                return;
             }
-            return shuffledArray;
+
+            const selectedAnswerText = selectedAnswer.value;
+            const correctAnswerText = questions[currentQuestionIndex].correctAnswer;
+
+            if (selectedAnswerText === correctAnswerText) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Correct!',
+                    text: 'Your answer is correct.',
+                });
+                correctAnswersCount++;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Wrong!',
+                    text: 'Your answer is incorrect.',
+                });
+            }
+
+            stopTimer();
+            document.getElementById('nextBtn').style.display = 'block';
+            document.getElementById('resetBtn').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'none';
         }
-
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            document.getElementById('droppable').innerHTML = '';
-            const resultElement = document.getElementById('result');
-            resultElement.innerHTML = '';
-            sentence = '';
-        });
-
-        let answeredQuestionsCount = 0;
 
         document.getElementById('nextBtn').addEventListener('click', function() {
             currentQuestionIndex++;
-            answeredQuestionsCount++;
-            stopTimer();
+
             if (currentQuestionIndex < questions.length) {
                 initializeQuestion(currentQuestionIndex);
-                document.getElementById('droppable').innerHTML = '';
-                document.getElementById('result').innerHTML = '';
-                sentence = '';
                 document.getElementById('nextBtn').style.display = 'none';
                 document.getElementById('resetBtn').style.display = 'block';
                 document.getElementById('checkBtn').style.display = 'block';
-            } //cerita setelah berapa kalimat?
-            else {
-                document.getElementById('isipertanyaan').style.display = 'none';
-                showResult();
-            }
-
-            if (answeredQuestionsCount === 2) {
-                pertanyaanDiv.style.display = 'none';
-                ceritaDiv.style.display = 'block';
-                stopTimer();
-                return;
-            }
-        });
-        let karma = 0;
-
-        document.getElementById('checkBtn').addEventListener('click', async function() {
-            try {
-                const currentQuestion = questions[currentQuestionIndex];
-                const nextQuestion = questions[currentQuestionIndex + 1];
-                const userAnswer = sentence.trim();
-                const simplePresentPrompt =
-                    ` Is this sentence in the simple present tense in either the interrogative, negative, or positive form? "${userAnswer}". answer with yes or no. `;
-
-                const simplePresentResponse = await fetchOpenAI(simplePresentPrompt);
-                const simplePresentData = await simplePresentResponse.json();
-                const simplePresentAnswer = await simplePresentData.choices[0].text.trim().toLowerCase();
-                let imageFred;
-                let prompt;
-                if (simplePresentAnswer === 'yes') {
-                    prompt =
-                        `What should Fred response for "${userAnswer}" based on "${currentQuestion.correctAnswer}"?  Response only Fred should say without any command. Fred response happy because ${userAnswer} using simple present tenses. Fred answer must based on context ${questions}`;
-                    imageFred = currentQuestion.imageCorrect;
-                    correctAnswersCount ++;
-                } else {
-                    prompt =
-                        `Jawab dengan maksimal 25 kata dimana letak kesalahan dari “${userAnswer}” dan apa yang perlu diubah agar menjadi simple present tense? Pembetulan harus berdasar pada "${currentQuestion.correctAnswer}"`;
-                    imageFred = currentQuestion.imageWrong;
-                }
-
-                const response = await fetchOpenAI(prompt);
-                const data = await response.json();
-                const userAnswerWithoutPunctuation = userAnswer.replace(/[^\w\s]/g, '');
-
-                if (data && data.choices && data.choices.length > 0 && data.choices[0].text) {
-                    const generatedText = data.choices[0].text.trim();
-                    Swal.fire({
-                        text: generatedText,
-                        imageUrl: imageFred,
-                        imageWidth: 100,
-                        imageHeight: 100
-                    });
-                    stopTimer();
-                    document.getElementById('nextBtn').style.display = 'block';
-                    document.getElementById('resetBtn').style.display = 'none';
-                    document.getElementById('checkBtn').style.display = 'none';
-                } else {
-                    console.error('Error', data);
-                    Swal.fire({
-                        text: 'Please try another answer',
-                        imageUrl: currentQuestion.imageWrong,
-                        imageWidth: 100,
-                        imageHeight: 100
-                    });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    text: 'Please try another answer',
-                    imageUrl: currentQuestion.imageWrong,
-                    imageWidth: 100,
-                    imageHeight: 100
-                });
-            }
-        });
-
-        window.OPENAI_API_KEY = "{{ env('OPENAI_API_KEY') }}";
-
-        async function fetchOpenAI(prompt) {
-            const response = await fetch('https://api.openai.com/v1/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${window.OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo-instruct',
-                    prompt: prompt,
-                    max_tokens: 50,
-                    temperature: 0.7
-                })
-            });
-            return response;
-        }
-
-        function showResult() {
-            let resultText = '';
-            if (correctAnswersCount >= 2) {
-                resultText = `Congratulations! You can proceed.`;
-                imagePath = 'image/chara/adelstenSmile.png';
+                resetChoices();
             } else {
-                resultText = `Oops! You didn't pass.`;
-                imagePath = 'image/chara/adelstenAngry.png';
+                document.getElementById('pertanyaan').style.display = 'none';
+                document.getElementById('result').textContent = 'Quiz completed! Correct answers: ' +
+                    correctAnswersCount;
+                document.getElementById('backmenu').style.display = 'block';
             }
+        });
 
-            resultText += `<div class="flex justify-center mt-4"><img src="${imagePath}" alt="Fred" class="w-32 h-32 object-contain"></div>`;
 
-            document.getElementById('result').innerHTML = resultText;
-            document.getElementById('timer').style.display = 'none';
-            document.getElementById('checkBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                initializeQuestion(currentQuestionIndex);
+                resetChoices();
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('resetBtn').style.display = 'block';
+                document.getElementById('checkBtn').style.display = 'block';
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML =
+                `You answered ${correctAnswersCount} out of ${questions.length} questions correctly.`;
             document.getElementById('backmenu').style.display = 'block';
         }
 
-        let touchStartX, touchStartY;
-        let draggableElement;
-
-        // Fungsi touchStart
-        function touchStart(event) {
-            event.preventDefault();
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-            draggableElement = event.target;
-        }
-
-        // Fungsi touchMove
-        function touchMove(event) {
-            event.preventDefault();
-            const touchX = event.touches[0].clientX;
-            const touchY = event.touches[0].clientY;
-            const deltaX = touchX - touchStartX;
-            const deltaY = touchY - touchStartY;
-            if (draggableElement) {
-                draggableElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-            }
-        }
-
-        // Fungsi touchEnd
-        function touchEnd(event) {
-            event.preventDefault();
-            if (draggableElement) {
-                draggableElement.style.transition = 'transform 0.2s ease';
-                draggableElement.style.transform = 'translate(0, 0)';
-                sentence += draggableElement.textContent + ' ';
-                document.getElementById('droppable').innerHTML += draggableElement.textContent + ' ';
-                draggableElement = null;
-            }
-        }
-
-        // Fungsi allowDrop
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
-
-        // Fungsi dragStart
-        function dragStart(ev) {
-            ev.dataTransfer.setData("text", ev.target.textContent);
-        }
-
-        // Fungsi drop
-        function drop(ev) {
-            ev.preventDefault();
-            const data = ev.dataTransfer.getData("text");
-            sentence += data + ' ';
-            ev.target.innerHTML += data + ' ';
-        }
-
-        document.getElementById('backmenu').addEventListener('click', function(event) {
-            if (correctAnswersCount>=2){
-                updateProgress(event);
-            } else {
-                window.location.href = "{{ route('simple-present') }}";
-            }
-        });
-
-        function updateProgress(event) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $.ajax({
-                type: "POST",
-                url: "{{ route('updateprogress1Q2') }}",
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                data: {
-                    karmaValue: karma
-                },
-                success: function(response) {
-                    addExp(event);
-                    window.location.href = "{{ route('simple-present') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
+        document.getElementById('showCeritaBtn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Context',
+                html: ceritaContent.join('<br>'),
+                confirmButtonText: 'Close'
             });
-            event.preventDefault();
-        }
-
-        function addExp(event) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $.ajax({
-                type: "POST",
-                url: "{{ route('addexp') }}",
-                data: {
-                    exp: 50*correctAnswersCount/2.7,
-                    _token: csrfToken
-                },
-                success: function(response) {},
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            event.preventDefault();
-        }
-
-
-        //kontrol musik
-        document.addEventListener("DOMContentLoaded", function() {
-            var audio = document.getElementById("bgMusic");
-            if (audio) {
-                audio.volume = 0.1;
-            } else {
-                console.error("Audio element not found");
-            }
         });
     </script>
-
-    {{-- <audio id="bgMusic" loop autoplay>
-        <source src="{{ asset('Bloom.mp3') }}" type="audio/mpeg">
-    </audio> --}}
 @endsection
