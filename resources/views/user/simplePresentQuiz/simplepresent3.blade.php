@@ -44,19 +44,18 @@
             <!-- Bagian Pertanyaan -->
             <div id="pertanyaan" style="display: none;">
                 <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
-                    <div class="flex justify-between items-center mb-2">
-                        <div id="timer" class="text-amber-500">Timer: 00:00</div>
-                        <button id="showCeritaBtn"
-                            class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                                <path fill-rule="evenodd"
-                                    d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-
-                    </div>
                     <div id="isipertanyaan">
+                        <div class="flex justify-between items-center mb-2">
+                            <div id="timer" class="text-amber-500">Timer: 00:00</div>
+                            <button id="showCeritaBtn"
+                                class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                                    <path fill-rule="evenodd"
+                                        d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
                         <div class="mb-4">
                             <div class="question-container flex items-center">
                                 <p class="inline"></p>
@@ -94,12 +93,12 @@
         let ceritaIndex = 0;
         const ceritaContent = @json($ceritaContent);
         const questions = [{
-            "question": "Adelsten, ___ you're here",
+            "question": "If you want to pet an animal, I ___ you to pet a Persian cat. Persian cats are the most beautiful cats, I think. And from all Persian cats, Georgy, is the cutest and the sweetest. Here is the description of my Persian cat, Georgy. <br><br> Georgy is my beautiful Persian cat. Georgy has a large round head, a short nose, big eyes, full cheeks, and small ears with rounded tips. He has short legs and a short tail. He is so fat with a long, thick, shiny golden coat with a fine texture. He is so cute.",
             "imagePath": "image/chara/Fred.png",
             "imageWrong": "image/chara/FredAngry.png",
             "imageCorrect": "image/chara/FredSmile.png",
-            "correctAnswer": "Do",
-            "draggableWords": ["Do", "What", "Are", "When"]
+            "correctAnswer": "suggest",
+            "draggableWords": ["suggest", "beautiful", "Are", "When"]
         }];
 
         const ceritaDiv = document.getElementById('cerita');
@@ -238,28 +237,37 @@
             event.preventDefault();
             const data = event.dataTransfer.getData("text");
             const wordElement = document.getElementById(data);
-            if (event.target.className.includes("drop-zone")) {
-                event.target.textContent = wordElement.textContent;
-                wordElement.remove();
+            const dropZoneText = document.querySelector('.drop-zone').textContent;
+            if (dropZoneText.trim()) {
+                initializeQuestion(currentQuestionIndex);
+                document.querySelector('.drop-zone').textContent = wordElement.textContent;
+            } else {
+                document.querySelector('.drop-zone').textContent = wordElement.textContent;
             }
+            wordElement.remove();
         }
 
         function checkAnswer() {
             const dropZone = document.querySelector('.drop-zone');
-            const selectedAnswerText = dropZone.textContent;
-            const correctAnswerText = questions[currentQuestionIndex].correctAnswer;
-
+            const selectedAnswerText = dropZone.textContent.trim();
+            const correctAnswerText = questions[currentQuestionIndex].correctAnswer.trim();
             if (selectedAnswerText === correctAnswerText) {
+                document.getElementById('success-sound').play();
+                imageFred = questions[currentQuestionIndex].imageCorrect;
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Correct!',
+                    imageUrl: imageFred,
+                    imageWidth: 100,
+                    imageHeight: 100,
                     text: 'Your answer is correct.',
                 });
                 correctAnswersCount++;
             } else {
+                document.getElementById('wrong-sound').play();
+                imageFred = questions[currentQuestionIndex].imageWrong;
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Wrong!',
+                    imageUrl: imageFred,
+                    imageWidth: 100,
+                    imageHeight: 100,
                     text: 'Your answer is incorrect.',
                 });
             }
@@ -272,19 +280,33 @@
 
         document.getElementById('nextBtn').addEventListener('click', function() {
             currentQuestionIndex++;
-
+            stopTimer();
             if (currentQuestionIndex < questions.length) {
                 initializeQuestion(currentQuestionIndex);
+                document.getElementById('droppable').innerHTML = '';
+                document.getElementById('result').innerHTML = '';
+                sentence = '';
                 document.getElementById('nextBtn').style.display = 'none';
                 document.getElementById('resetBtn').style.display = 'block';
                 document.getElementById('checkBtn').style.display = 'block';
             } else {
-                document.getElementById('pertanyaan').style.display = 'none';
-                document.getElementById('result').textContent = 'Quiz completed! Correct answers: ' +
-                    correctAnswersCount;
-                document.getElementById('backmenu').style.display = 'block';
+                document.getElementById('isipertanyaan').style.display = 'none';
+                showResult();
             }
+            //cerita setelah berapa kalimat?
+            // if (answeredQuestionsCount === 2) {
+            //     document.getElementById('pertanyaan').style.display = 'none';
+            //     document.getElementById('cerita').style.display = 'block';
+            //     return;
+            // }
         });
+
+        function showResult() {
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML =
+                `You answered ${correctAnswersCount} out of ${questions.length} questions correctly.`;
+            document.getElementById('backmenu').style.display = 'block';
+        }
 
         document.getElementById('resetBtn').addEventListener('click', function() {
             initializeQuestion(currentQuestionIndex);
@@ -304,7 +326,8 @@
         });
     </script>
 
-
+<audio id="success-sound" src="correct-buzzer.mp3" preload="auto"></audio>
+<audio id="wrong-sound" src="wrong-1.mp3" preload="auto"></audio>
     {{-- <audio id="bgMusic" loop autoplay>
         <source src="{{ asset('Bloom.mp3') }}" type="audio/mpeg">
     </audio> --}}

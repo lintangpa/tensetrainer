@@ -61,16 +61,19 @@
             <!-- Bagian Pertanyaan -->
             <div id="pertanyaan" style="display: none;">
                 <div class="w-full mx-auto bg-white rounded p-6 shadow-md">
-                    <div class="flex justify-between items-center mb-2">
-                        <div id="timer" class="text-amber-500">Timer: 00:00</div>
-                        <button id="showCeritaBtn" class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                                <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        
-                    </div>
                     <div id="isipertanyaan">
+                        <div class="flex justify-between items-center mb-2">
+                            <div id="timer" class="text-amber-500 font-bold">Timer: 00:00</div>
+                            <button id="showCeritaBtn"
+                                class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="h-6 w-6">
+                                    <path fill-rule="evenodd"
+                                        d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
                         <div class="mb-4">
                             <div class="question-container">
                                 <p class="inline"></p>
@@ -93,7 +96,6 @@
                         </div>
                     </div>
                     <div id="result" class="mt-4 text-center font-semibold text-xl">
-
                     </div>
                     <button id="backmenu" onclick="" style="display: none;"
                         class="mb-6 w-full h-16 bg-amber-500 text-white px-4 py-2 rounded mt-4 hover:bg-amber-600 focus:outline-none focus:bg-amber-600 mx-auto text-lg font-semibold">
@@ -111,7 +113,20 @@
         //Script Cerita
         let ceritaIndex = 0;
         const ceritaContent = @json($ceritaContent);
-        const questions = @json($questions);
+        // const questions = @json($questions);
+        const questions = [{
+            "question": "Adelsten, you're here",
+            "imagePath": "image/chara/Fred.png",
+            "imageWrong": "image/chara/FredAngry.png",
+            "imageCorrect": "image/chara/FredSmile.png",
+            "correctAnswer": "Do we learn today?",
+            "draggableWords": [
+                "Do we learn today?",
+                "What are we going to learn today?",
+                "Do you understand the lesson?",
+                "When do we start learning?"
+            ]
+        }];
         const ceritaDiv = document.getElementById('cerita');
         const pertanyaanDiv = document.getElementById('pertanyaan');
         const lanjutCeritaBtn = document.getElementById('lanjutCeritaBtn')
@@ -163,7 +178,6 @@
                 stopTimer();
             }
         }
-
         typeWriter();
 
         lanjutCeritaBtn.addEventListener('click', function() {
@@ -268,16 +282,22 @@
             const correctAnswerText = questions[currentQuestionIndex].correctAnswer;
 
             if (selectedAnswerText === correctAnswerText) {
+                document.getElementById('success-sound').play();
+                imageFred = questions[currentQuestionIndex].imageCorrect;
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Correct!',
+                    imageUrl: imageFred,
+                    imageWidth: 100,
+                    imageHeight: 100,
                     text: 'Your answer is correct.',
                 });
                 correctAnswersCount++;
             } else {
+                document.getElementById('wrong-sound').play();
+                imageFred = questions[currentQuestionIndex].imageWrong;
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Wrong!',
+                    imageUrl: imageFred,
+                    imageWidth: 100,
+                    imageHeight: 100,
                     text: 'Your answer is incorrect.',
                 });
             }
@@ -290,41 +310,42 @@
 
         document.getElementById('nextBtn').addEventListener('click', function() {
             currentQuestionIndex++;
-
+            stopTimer();
             if (currentQuestionIndex < questions.length) {
                 initializeQuestion(currentQuestionIndex);
-                document.getElementById('nextBtn').style.display = 'none';
-                document.getElementById('resetBtn').style.display = 'block';
-                document.getElementById('checkBtn').style.display = 'block';
-                resetChoices();
-            } else {
-                document.getElementById('pertanyaan').style.display = 'none';
-                document.getElementById('result').textContent = 'Quiz completed! Correct answers: ' +
-                    correctAnswersCount;
-                document.getElementById('backmenu').style.display = 'block';
-            }
-        });
-
-
-        document.getElementById('nextBtn').addEventListener('click', function() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                initializeQuestion(currentQuestionIndex);
-                resetChoices();
+                document.getElementById('droppable').innerHTML = '';
+                document.getElementById('result').innerHTML = '';
+                sentence = '';
                 document.getElementById('nextBtn').style.display = 'none';
                 document.getElementById('resetBtn').style.display = 'block';
                 document.getElementById('checkBtn').style.display = 'block';
             } else {
-                showResults();
+                document.getElementById('isipertanyaan').style.display = 'none';
+                showResult();
             }
+            //cerita setelah berapa kalimat?
+            // if (answeredQuestionsCount === 2) {
+            //     document.getElementById('pertanyaan').style.display = 'none';
+            //     document.getElementById('cerita').style.display = 'block';
+            //     return;
+            // }
         });
 
-        function showResults() {
+        function showResult() {
             const resultContainer = document.getElementById('result');
             resultContainer.innerHTML =
                 `You answered ${correctAnswersCount} out of ${questions.length} questions correctly.`;
             document.getElementById('backmenu').style.display = 'block';
         }
+
+        document.getElementById('backmenu').addEventListener('click', function(event) {
+            if (correctAnswersCount >= 2) {
+                updateProgress(event);
+                window.location.href = "{{ route('simple-present') }}";
+            } else {
+                window.location.href = "{{ route('simple-present') }}";
+            }
+        });
 
         document.getElementById('showCeritaBtn').addEventListener('click', function() {
             Swal.fire({
@@ -334,4 +355,7 @@
             });
         });
     </script>
+
+    <audio id="success-sound" src="correct-buzzer.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="wrong-1.mp3" preload="auto"></audio>
 @endsection

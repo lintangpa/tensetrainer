@@ -510,7 +510,8 @@
             });
         });
     </script>
-
+    <audio id="success-sound" src="correct-buzzer.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="wrong-1.mp3" preload="auto"></audio>
     {{-- <audio id="bgMusic" loop autoplay>
         <source src="{{ asset('Bloom.mp3') }}" type="audio/mpeg">
     </audio> --}}
